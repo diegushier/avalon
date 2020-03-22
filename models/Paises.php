@@ -76,4 +76,9 @@ class Paises extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Usuarios::className(), ['pais_id' => 'id'])->inverseOf('pais');
     }
+
+    public static function lista()
+    {
+        return static::find()->select('nombre')->orderBy('nombre')->indexBy('id')->column();
+    }
 }

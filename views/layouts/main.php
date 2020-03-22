@@ -45,17 +45,28 @@ AppAsset::register($this);
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
+                ['label' => 'Usuarios', 'items' => [
+                    ['label' => 'Login', 'url' => ['/site/login']],
+                    ['label' => 'Regitrarse', 'url' => ['/usuarios/registrar']],
+                    
+                ]]
             ) : (
-                '<li class="nav-item">'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->nickname . ')',
-                    ['class' => 'btn btn-dark nav-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
+                ['label' => Yii::$app->user->identity->nickname, 'items' => [
+                    Html::beginForm(['usuarios/modificar'], 'get')
+                        . Html::submitButton(
+                            'Modificar perfil',
+                            ['class' => 'dropdown-item'],
+                        )
+                        . Html::endForm(),
+                        Html::beginForm(['/site/logout'], 'post')
+                        . Html::submitButton(
+                            'Salir-Desconectar',
+                            ['class' => 'dropdown-item'],
+                        )
+                        . Html::endForm()
+
+                ]]
+            ),
         ],
     ]);
     NavBar::end();
