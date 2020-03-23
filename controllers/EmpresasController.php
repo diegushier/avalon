@@ -105,7 +105,22 @@ class EmpresasController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = Empresas::findOne($id);
+        $model->entidad_id = null;
+
+        if ($model->getObjetos()->exists()) {
+            if ($model->update()) {
+                Yii::$app->session->setFlash('success', 'Su usuario ha sido desvinculado.');
+                return $this->redirect(['/site/index']);
+            } else {
+                Yii::$app->session->setFlash('error', 'No ha sido posible desvincular su usuario.');
+            }
+        } elseif ($model->delete()) {
+            Yii::$app->session->setFlash('success', 'La empresa se ha borrado.');
+            return $this->redirect(['/site/index']);
+        } else {
+            Yii::$app->session->setFlash('error', 'Ha ocurrido un error interno.');
+        }
 
         return $this->redirect(['index']);
     }

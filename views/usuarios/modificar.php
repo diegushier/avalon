@@ -18,6 +18,7 @@ $this->title = 'Modificar perfil';
 
             <?php $form = ActiveForm::begin([
                 'id' => 'login-form',
+                'enableAjaxValidation' => true,
                 'layout' => 'horizontal',
                 'fieldConfig' => [
                     'horizontalCssClasses' => ['wrapper' => 'col-sm-5'],
@@ -53,16 +54,16 @@ $this->title = 'Modificar perfil';
 
 
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#borrarUsuario">
                         Eliminar
                     </button>
 
                     <!-- Modal -->
-                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal fade" id="borrarUsuario" tabindex="-1" role="dialog" aria-labelledby="borrarUsuarioCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">Borrar cuenta</h5>
+                                    <h5 class="modal-title" id="borrarUsuarioLongTitle">Borrar cuenta</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -107,10 +108,9 @@ $this->title = 'Modificar perfil';
 
     <?php if ($exists == false) : ?>
         <div>
-            <section class="m-4" >
+            <section class="m-4">
                 <h2>Empresa</h2>
                 <p>Para mostrar sus propios libros, peliculas o series deberá tener creada una entidad. Desde aqúi puede hacerlo.</p>
-                <!-- <?php echo Html::a('Crear Empresa', ['empresas/create'], ['class' => 'btn btn-success']) ?> -->
                 <?= $this->render('/empresas/_form', [
                     'model' => $empresa,
                     'pais' => Yii::$app->user->identity->pais_id,
@@ -121,17 +121,46 @@ $this->title = 'Modificar perfil';
         </div>
     <?php else : ?>
         <div>
-            <section >
-            <section>
+            <section class="m-4">
                 <h2>Empresa</h2>
 
-                <?php Html::a('Eliminar ' . $get[0]['nombre'], ['empresas/delete'], [
-                    'class' => 'btn btn-danger',
-                    'data' => [
-                        'confirm' => '¿Esta seguro de eliminar esta empresa? La acción será irreversible.',
-                        'method' => 'post',
-                    ],
-                ]) ?>
+                <button type="button" id="delete" class="btn btn-danger" data-toggle="modal" data-target="#borrarEmpresa">
+                    Eliminar <?= $get[0]['nombre'] ?>
+                </button>
+
+                <div class="modal fade" id="borrarEmpresa" tabindex="-1" role="dialog" aria-labelledby="#borrarEmpresaCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="#borrarEmpresaLongTitle">Borrar // Desvincular empresa.</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ¿Esta usted seguro de que desea desvicular esta empresa?
+                                La acción será irreversible y no podrá volver a vincularse a ella.
+                                <br>
+                                Solo en caso de que no tenga ninguna relación con series libros o películas se borrará.
+                                <br>
+                            </div>
+                            <div class="modal-footer">
+                                <?= Html::a('Desvincular ' . $get[0]['nombre'], ['empresas/delete', 'id' => $get[0]['id']], [
+                                    'class' => 'btn btn-danger',
+                                    'id' => 'liberar',
+                                    'data' => [
+                                        'method' => 'post',
+                                    ],
+                                ]) ?>
+
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
             </section>
         </div>
     <?php endif ?>
