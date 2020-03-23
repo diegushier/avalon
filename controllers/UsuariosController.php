@@ -31,7 +31,7 @@ class UsuariosController extends Controller
                     ],
                     // everything else is denied by default
                 ],
-            ], 
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -65,7 +65,7 @@ class UsuariosController extends Controller
         ]);
     }
 
-    public function actionDelete($id, $entidad)
+    public function actionDelete($id, $entidad = null)
     {
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
@@ -75,15 +75,16 @@ class UsuariosController extends Controller
 
         if (Yii::$app->request->isPost) {
             $model = Usuarios::findOne($id);
-            $empresa = Empresas::findOne($entidad);
-            $empresa->entidad_id = null;
-
-            if ($empresa->update() !== false) {
-                if ($model->delete()) {
-                    Yii::$app->session->setFlash('success', 'El usuario ha sido eliminado.');
-                } else {
+            if ($entidad !== null) {
+                $empresa = Empresas::findOne($entidad);
+                $empresa->entidad_id = null;
+                if ($empresa->update() === false) {
                     Yii::$app->session->setFlash('error', 'No se ha podido eliminar el usuario indicado.');
                 }
+            }
+
+            if ($model->delete()) {
+                Yii::$app->session->setFlash('success', 'El usuario ha sido eliminado.');
             } else {
                 Yii::$app->session->setFlash('error', 'No se ha podido eliminar el usuario indicado.');
             }
@@ -119,7 +120,13 @@ class UsuariosController extends Controller
 
 
         $exists = Usuarios::findOne(Yii::$app->user->id)->getEmpresas()->exists();
-        $empresa = (new Query())->from('empresas')->where('entidad_id = ' . Yii::$app->user->id)->all();
+
+        $get = (new Query())->from('empresas')->where('entidad_id = ' . Yii::$app->user->id)->all();
+        $empresa = new Empresas();
+
+        if ($empresa->load(Yii::$app->request->post()) && $empresa->save()) {
+            return $this->redirect(['/empresas/view', 'id' => $empresa->id]);
+        }
 
         $paises = Paises::lista();
 
@@ -130,6 +137,7 @@ class UsuariosController extends Controller
             'model' => $model,
             'paises' => ['' => ''] + $paises,
             'empresa' => $empresa,
+            'get' => $get,
             'exists' => $exists,
         ]);
     }

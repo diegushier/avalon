@@ -62,7 +62,7 @@ $this->title = 'Modificar perfil';
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Borrar cuenta</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -72,12 +72,24 @@ $this->title = 'Modificar perfil';
                                     La acción será irreversible
                                 </div>
                                 <div class="modal-footer">
-                                    <?= Html::a('Eliminar', ['delete', 'id' => $model->id, 'entidad' => $empresa[0]['id']], [
-                                        'class' => 'btn btn-danger',
-                                        'data' => [
-                                            'method' => 'post',
-                                        ],
-                                    ]) ?>
+                                    <?php if ($exists) : ?>
+                                        <?= Html::a('Eliminar', ['delete', 'id' => $model->id, 'entidad' => $get[0]['id']], [
+                                            'class' => 'btn btn-danger',
+                                            'data' => [
+                                                'method' => 'post',
+                                            ],
+                                        ]) ?>
+
+                                    <?php else : ?>
+                                        <?= Html::a('Eliminar', ['delete', 'id' => $model->id], [
+                                            'class' => 'btn btn-danger',
+                                            'data' => [
+                                                'method' => 'post',
+                                            ],
+                                        ]) ?>
+                                    <?php endif ?>
+
+
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                 </div>
                             </div>
@@ -95,18 +107,25 @@ $this->title = 'Modificar perfil';
 
     <?php if ($exists == false) : ?>
         <div>
-            <section>
+            <section class="m-4" >
                 <h2>Empresa</h2>
-                <p>Para mostrar sus ppropios libros, peliculas o series deberá tener creada una entidad. Desde aqúi puede hacerlo.</p>
-                <?= Html::a('Crear Empresa', ['empresas/create'], ['class' => 'btn btn-success']) ?>
+                <p>Para mostrar sus propios libros, peliculas o series deberá tener creada una entidad. Desde aqúi puede hacerlo.</p>
+                <!-- <?php echo Html::a('Crear Empresa', ['empresas/create'], ['class' => 'btn btn-success']) ?> -->
+                <?= $this->render('/empresas/_form', [
+                    'model' => $empresa,
+                    'pais' => Yii::$app->user->identity->pais_id,
+                    'entidad' => Yii::$app->user->identity->id,
+                ]) ?>
+
             </section>
         </div>
     <?php else : ?>
         <div>
+            <section >
             <section>
                 <h2>Empresa</h2>
 
-                <?= Html::a('Eliminar ' . $empresa[0]['nombre'], ['empresas/delete'], [
+                <?php Html::a('Eliminar ' . $get[0]['nombre'], ['empresas/delete'], [
                     'class' => 'btn btn-danger',
                     'data' => [
                         'confirm' => '¿Esta seguro de eliminar esta empresa? La acción será irreversible.',
