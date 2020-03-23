@@ -2,12 +2,15 @@
 
 namespace app\controllers;
 
+use app\models\Empresas;
 use app\models\Paises;
 use app\models\Usuarios;
 use Yii;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Alert;
+use yii\db\Query;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\Response;
@@ -27,6 +30,12 @@ class UsuariosController extends Controller
                         'roles' => ['?'],
                     ],
                     // everything else is denied by default
+                ],
+            ], 
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
                 ],
             ],
         ];
@@ -86,9 +95,6 @@ class UsuariosController extends Controller
             $model = Usuarios::findOne($id);
         }
 
-        
-
-
         $model->scenario = Usuarios::SCENARIO_UPDATE;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -101,6 +107,10 @@ class UsuariosController extends Controller
             return ActiveForm::validate($model);
         }
 
+
+        $exists = Usuarios::findOne(Yii::$app->user->id)->getEmpresas()->exists();
+        $empresa = (new Query())->from('empresas')->where('entidad_id = ' . Yii::$app->user->id)->all();
+
         $paises = Paises::lista();
 
         $model->passwd = '';
@@ -109,6 +119,8 @@ class UsuariosController extends Controller
         return $this->render('modificar', [
             'model' => $model,
             'paises' => ['' => ''] + $paises,
+            'empresa' => $empresa,
+            'exists' => $exists,
         ]);
     }
 }
