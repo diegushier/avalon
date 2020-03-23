@@ -50,13 +50,39 @@ $this->title = 'Modificar perfil';
             <div class="form-group">
                 <div class="offset-sm-2">
                     <?= Html::submitButton('Modificar', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                    <?= Html::a('Eliminar', ['delete', 'id' => $model->id], [
-                        'class' => 'btn btn-danger',
-                        'data' => [
-                            'confirm' => '¿Esta seguro de eliminar este usuario? La acción será irreversible.',
-                            'method' => 'post',
-                        ],
-                    ]) ?>
+
+
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
+                        Eliminar
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    ¿Esta usted seguro de eliminar este usuario?
+                                    La acción será irreversible
+                                </div>
+                                <div class="modal-footer">
+                                    <?= Html::a('Eliminar', ['delete', 'id' => $model->id], [
+                                        'class' => 'btn btn-danger',
+                                        'data' => [
+                                            'method' => 'post',
+                                        ],
+                                    ]) ?>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
