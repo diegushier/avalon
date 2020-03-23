@@ -72,7 +72,7 @@ $this->title = 'Modificar perfil';
                                     La acción será irreversible
                                 </div>
                                 <div class="modal-footer">
-                                    <?= Html::a('Eliminar', ['delete', 'id' => $model->id], [
+                                    <?= Html::a('Eliminar', ['delete', 'id' => $model->id, 'entidad' => $empresa[0]['id']], [
                                         'class' => 'btn btn-danger',
                                         'data' => [
                                             'method' => 'post',

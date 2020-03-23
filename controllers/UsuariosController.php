@@ -65,7 +65,7 @@ class UsuariosController extends Controller
         ]);
     }
 
-    public function actionDelete($id)
+    public function actionDelete($id, $entidad)
     {
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
@@ -75,9 +75,19 @@ class UsuariosController extends Controller
 
         if (Yii::$app->request->isPost) {
             $model = Usuarios::findOne($id);
-            $model->delete();
+            $empresa = Empresas::findOne($entidad);
+            $empresa->entidad_id = null;
+
+            if ($empresa->update() !== false) {
+                if ($model->delete()) {
+                    Yii::$app->session->setFlash('success', 'El usuario ha sido eliminado.');
+                } else {
+                    Yii::$app->session->setFlash('error', 'No se ha podido eliminar el usuario indicado.');
+                }
+            } else {
+                Yii::$app->session->setFlash('error', 'No se ha podido eliminar el usuario indicado.');
+            }
         }
-        // $this->findModel($id)->delete();
 
         return $this->redirect(['/site/login']);
     }

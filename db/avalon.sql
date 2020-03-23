@@ -56,7 +56,7 @@ CREATE TABLE empresas
         id          bigserial       PRIMARY KEY
     ,   nombre      VARCHAR(255)    NOT NULL UNIQUE
     ,   pais_id     bigint          NOT NULL REFERENCES paises (id)
-    ,   entidad_id  bigint          UNIQUE REFERENCES usuarios(id)
+    ,   entidad_id  bigint          UNIQUE REFERENCES usuarios(id) 
 );
 
 CREATE TABLE integrantes
