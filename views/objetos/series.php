@@ -12,36 +12,33 @@ $this->title = 'Series';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="objetos-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
 
         <?php Html::a('Create Objetos', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-<?php echo $this->render('_search', ['model' => $searchModel, 'tipo' => 'series']);?>
+    <?php echo $this->render('_search', ['model' => $searchModel, 'tipo' => 'series']); ?>
 
 
     <div class="container">
-    <div class="row">
-        <?php foreach ($series as $series) : ?>
-            <div class="col-lg-3 col-sm-12 d-flex justify-content-center">
-            <div class="card mt-2" style="width: 15rem;">
-                <img class="card-img-top" src="<?= Yii::getAlias('@imgUrl/' . 'notfound.png') ?>" alt="Card image cap">
-                <div class="card-body d-flex flex-column mt-auto">
-                    <h5 class="card-title"><?= $series['nombre'] ?></h5>
-                    <p class="card-text"><?= $series['sinopsis'] ?></p>
-                    <?= Html::a('Ver',
-                        ['objetos/view', 'id' => $series['id'], 'tipo' => 'series'],
-                        [
-                            'class' => 'btn btn-primary btn-block mt-auto',
-                        ]
-                    ) ?>
+        <div class="row">
+            <?php foreach ($series as $series) : ?>
+                <div class="col-lg-3 col-sm-12 d-flex justify-content-center">
+                    <div class="card mt-2" style="width: 15rem;">
+                        <img class="card-img-top" src="<?= Yii::getAlias('@imgUrl/' . 'notfound.png') ?>" alt="Card image cap">
+                        <div class="card-body d-flex flex-column mt-auto">
+                            <h5 class="card-title"><?= $series['nombre'] ?></h5>
+                            <?= Html::a(
+                                'Ver',
+                                ['objetos/view', 'id' => $series['id'], 'tipo' => 'series'],
+                                [
+                                    'class' => 'btn btn-primary btn-block mt-auto',
+                                ]
+                            ) ?>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            </div>
-        <?php endforeach ?>
-    </div>
+            <?php endforeach ?>
+        </div>
     </div>
 </div>

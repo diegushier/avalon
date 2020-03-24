@@ -766,11 +766,19 @@ VALUES  ('El caballero oscuro', 1, 1, 244)                  --
 
 
 INSERT INTO objetos (nombre, isbn, productora_id, tipo_id, pais_id)
-VALUES  ('La Legión Perdida', 9788408176374, 6, 3, 208)
-    ,   ('Los asesinos del emperador', 9788408118329, 6, 3, 208)
+VALUES  ('Los asesinos del emperador', 9788408118329, 6, 3, 208)
     ,   ('Circo Máximo', 9788408141778, 6, 3, 208)
     ,   ('Historia torcida de la Filosofía', 9788416223572, 8, 3, 208)
     ,   ('Un día de cólera', 9788466323079, 7, 3, 208);
+
+INSERT INTO objetos (nombre, isbn, productora_id, tipo_id, pais_id, sinopsis)
+VALUES  ('La Legión Perdida', 9788408176374, 6, 3, 208, 'En el año 53 a.C., el cónsul Craso cruzó el Éufrates para conquistar Oriente, pero su ejercito
+        fue destrozado en Carrhae. Una legión entera cayó prisionera de los partos. Nadie sabe a ciencia cierta que pasó con aquella legión perdida.
+        50 años después Trajano está a punto de volver a cruzar el Éufrates. Los partos esperan al otro lado. Las tropas de César dudan. Temen terminar
+        como la legíon perdida. Pero Trajano no tiene miedo y emprende la mayor campaña militar de Roma, hacia la victoria o hacia el desastre, Intrigas, 
+        batallas, dos mujeres adolescentes, idiomas extraños, Roma, Partia, India, China, dos Césares y una emperatriz se entrecruzan en el mayor relato 
+        épico del mundo antiguo.');
+
 
 INSERT INTO generos(nombre, tipo_id)
 VALUES  ('películas actuales', 1)

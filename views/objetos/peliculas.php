@@ -11,9 +11,6 @@ $this->title = 'Peliculas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="objetos-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
 
         <?php Html::a('Create Objetos', ['create'], ['class' => 'btn btn-success']) ?>
@@ -26,10 +23,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php foreach ($peliculas as $peliculas) : ?>
                 <div class="col-lg-3 col-sm-12 d-flex justify-content-center">
                     <div class="card mt-2" style="width: 15rem;">
-                        <img class="card-img-top" src="<?= Yii::getAlias('@imgUrl/' . 'notfound.png') ?>" alt="Card image cap">
+                        <img class="card-img-top" src="" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'" alt="Card image cap">
                         <div class="card-body d-flex flex-column mt-auto">
                             <h5 class="card-title"><?= $peliculas['nombre'] ?></h5>
-                            <p class="card-text"><?= $peliculas['sinopsis'] ?></p>
                             <?= Html::a(
                                 'Ver',
                                 ['objetos/view', 'id' => $peliculas['id'], 'tipo' => 'peliculas'],

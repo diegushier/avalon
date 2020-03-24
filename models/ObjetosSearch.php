@@ -41,7 +41,7 @@ class ObjetosSearch extends Objetos
      */
     public function search($params)
     {
-        $query = Objetos::findCapitulos();
+        $query = Objetos::find();
 
         // add conditions that should always apply here
 
@@ -87,5 +87,21 @@ class ObjetosSearch extends Objetos
         ->andFilterWhere(['ilike', 'nombre', $this->nombre])
         ->andFilterWhere(['ilike', 'sinopsis', $this->sinopsis])
         ->all();
+    }
+
+    public function getOneObject($id, $params)
+    {
+        $this->load($params);
+        return (new Query())->from('objetos')->orderBy('id')
+        ->andFilterWhere([
+            'id' => $this->id,
+            'productora_id' => $this->productora_id,
+            'tipo_id' => $id,
+            'pais_id' => $this->pais_id,
+            'fecha' => $this->fecha,
+        ])
+        ->andFilterWhere(['ilike', 'nombre', $this->nombre])
+        ->andFilterWhere(['ilike', 'sinopsis', $this->sinopsis])
+        ->one();
     }
 }

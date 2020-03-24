@@ -72,7 +72,7 @@ AppAsset::register($this);
     NavBar::end();
     ?>
 
-    <div class="container">
+    <div id="back" class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
@@ -81,11 +81,9 @@ AppAsset::register($this);
     </div>
 </div>
 
-<footer class="footer">
+<footer class="footer bg-dark">
     <div class="container">
         <p class="float-left">&copy; Proyecto Final Integrado Avalon <?= date('Y') ?></p>
-
-        <p class="float-right"><?= Yii::powered() ?></p>
     </div>
 </footer>
 

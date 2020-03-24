@@ -2,10 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\Empresas;
 use app\models\ImagenForm;
 use Yii;
 use app\models\Objetos;
 use app\models\ObjetosSearch;
+use app\models\Paises;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -39,7 +41,7 @@ class ObjetosController extends Controller
     {
         $searchModel = new ObjetosSearch();
         $libros = $searchModel->getObjetos(Objetos::LIBROS, Yii::$app->request->queryParams);
-        
+
         return $this->render('libros', [
             'libros' =>  $libros,
             'tipo' => Objetos::LIBROS,
@@ -85,10 +87,18 @@ class ObjetosController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView($id, $tipo)
     {
+        $model = $this->findModel($id);
+        $productora = Empresas::findOne($model->productora_id);
+        $pais = Paises::findOne($model->pais_id);
+        $duenio = $productora->entidad_id;
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'tipo' => $tipo,
+            'productora' => $productora->nombre,
+            'pais' => $pais->nombre,
         ]);
     }
 
