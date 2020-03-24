@@ -37,10 +37,12 @@ $this->registerJs($back);
                         <td><?= 'alguien' ?></td>
                     </tr>
 
+                    <?php if ($tipo === 'libros') : ?>
                     <tr>
                         <td>ISBN</td>
                         <td><?= $model->isbn ?></td>
                     </tr>
+                    <?php endif ?>
 
                     <tr>
                         <td>Pais</td>
