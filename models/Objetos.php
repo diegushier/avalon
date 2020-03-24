@@ -9,7 +9,6 @@ use Yii;
  *
  * @property int $id
  * @property string $nombre
- * @property int $isbn
  * @property int $productora_id
  * @property int $tipo_id
  * @property int $pais_id
@@ -27,6 +26,14 @@ use Yii;
  */
 class Objetos extends \yii\db\ActiveRecord
 {
+
+    const PELICULAS = 1;
+    const SERIES = 2;
+    const LIBROS = 3;
+
+    private $_imagen = null;
+    private $_imagenUrl = null;
+
     /**
      * {@inheritdoc}
      */
@@ -46,6 +53,8 @@ class Objetos extends \yii\db\ActiveRecord
             [['sinopsis'], 'string'],
             [['nombre'], 'string', 'max' => 255],
             [['nombre'], 'unique'],
+            [['isbn'], 'unique'],
+            [['isbn'], 'integer'],
             [['productora_id'], 'exist', 'skipOnError' => true, 'targetClass' => Empresas::className(), 'targetAttribute' => ['productora_id' => 'id']],
             [['pais_id'], 'exist', 'skipOnError' => true, 'targetClass' => Paises::className(), 'targetAttribute' => ['pais_id' => 'id']],
             [['tipo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tipoobjeto::className(), 'targetAttribute' => ['tipo_id' => 'id']],
@@ -60,10 +69,10 @@ class Objetos extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nombre' => 'Nombre',
-            'isbn' => 'Isbn',
-            'productora_id' => 'Productora ID',
-            'tipo_id' => 'Tipo ID',
-            'pais_id' => 'Pais ID',
+            'productora_id' => 'Productora',
+            'isbn' => 'ISBN',
+            'tipo_id' => 'Tipo',
+            'pais_id' => 'Pais',
             'fecha' => 'Fecha',
             'sinopsis' => 'Sinopsis',
         ];
@@ -97,6 +106,11 @@ class Objetos extends \yii\db\ActiveRecord
     public function getProductora()
     {
         return $this->hasOne(Empresas::className(), ['id' => 'productora_id'])->inverseOf('objetos');
+    }
+
+    public function getUsuarios()
+    {
+        return $this->hasMany(Usuarios::class, ['id' => 'entidad_id'])->via('productora');
     }
 
     /**
@@ -147,5 +161,35 @@ class Objetos extends \yii\db\ActiveRecord
     public function getValoraciones()
     {
         return $this->hasMany(Valoraciones::className(), ['objetos_id' => 'id'])->inverseOf('objetos');
+    }
+
+    public function getImagen()
+    {
+        if ($this->_imagen !== null) {
+            return $this->_imagen;
+        }
+
+        $this->setImagen(Yii::getAlias('@img/' . $this->id . '.jpg'));
+        return $this->_imagen;
+    }
+
+    public function setImagen($imagen)
+    {
+        $this->_imagen = $imagen;
+    }
+
+    public function getImagenUrl()
+    {
+        if ($this->_imagenUrl !== null) {
+            return $this->_imagenUrl;
+        }
+
+        $this->setImagenUrl(Yii::getAlias('@imgUrl/' . $this->id . '.jpg'));
+        return $this->_imagenUrl;
+    }
+
+    public function setImagenUrl($imagenUrl)
+    {
+        $this->_imagenUrl = $imagenUrl;
     }
 }

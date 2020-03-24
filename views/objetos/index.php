@@ -4,18 +4,18 @@ use yii\bootstrap4\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\EmpresasSearch */
+/* @var $searchModel app\models\ObjetosSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Empresas';
+$this->title = 'Objetos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="empresas-index">
+<div class="objetos-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Empresas', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Objetos', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -28,8 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'nombre',
-            'pais_id',
-            'entidad_id',
+            'isbn',
+            'productora_id',
+            'tipo_id',
+            //'pais_id',
+            //'fecha',
+            //'sinopsis:ntext',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

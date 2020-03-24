@@ -2,18 +2,19 @@
 
 namespace app\controllers;
 
+use app\models\ImagenForm;
 use Yii;
-use app\models\Empresas;
-use app\models\EmpresasSearch;
-use app\models\Usuarios;
+use app\models\Objetos;
+use app\models\ObjetosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
- * EmpresasController implements the CRUD actions for Empresas model.
+ * ObjetosController implements the CRUD actions for Objetos model.
  */
-class EmpresasController extends Controller
+class ObjetosController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -31,7 +32,25 @@ class EmpresasController extends Controller
     }
 
     /**
-     * Displays a single Empresas model.
+     * Lists all Books as models.
+     * @return mixed
+     */
+    public function actionLibros()
+    {
+        
+
+        $searchModel = new ObjetosSearch();
+        $libros = $searchModel->getObjetos(Objetos::LIBROS, Yii::$app->request->queryParams);
+        
+        return $this->render('libros', [
+            'libros' =>  $libros,
+            'tipo' => Objetos::LIBROS,
+            'searchModel' => $searchModel,
+        ]);
+    }
+
+    /**
+     * Displays a single Objetos model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -44,13 +63,13 @@ class EmpresasController extends Controller
     }
 
     /**
-     * Creates a new Empresas model.
+     * Creates a new Objetos model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Empresas();
+        $model = new Objetos();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -62,7 +81,7 @@ class EmpresasController extends Controller
     }
 
     /**
-     * Updates an existing Empresas model.
+     * Updates an existing Objetos model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -82,7 +101,7 @@ class EmpresasController extends Controller
     }
 
     /**
-     * Deletes an existing Empresas model.
+     * Deletes an existing Objetos model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -90,36 +109,21 @@ class EmpresasController extends Controller
      */
     public function actionDelete($id)
     {
-        $model = Empresas::findOne($id);
-        $model->entidad_id = null;
-
-        if ($model->getObjetos()->exists()) {
-            if ($model->update()) {
-                Yii::$app->session->setFlash('success', 'Su usuario ha sido desvinculado.');
-                return $this->redirect(['/site/index']);
-            } else {
-                Yii::$app->session->setFlash('error', 'No ha sido posible desvincular su usuario.');
-            }
-        } elseif ($model->delete()) {
-            Yii::$app->session->setFlash('success', 'La empresa se ha borrado.');
-            return $this->redirect(['/site/index']);
-        } else {
-            Yii::$app->session->setFlash('error', 'Ha ocurrido un error interno.');
-        }
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Empresas model based on its primary key value.
+     * Finds the Objetos model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Empresas the loaded model
+     * @return Objetos the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Empresas::findOne($id)) !== null) {
+        if (($model = Objetos::findOne($id)) !== null) {
             return $model;
         }
 
