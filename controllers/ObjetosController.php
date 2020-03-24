@@ -37,14 +37,24 @@ class ObjetosController extends Controller
      */
     public function actionLibros()
     {
-        
-
         $searchModel = new ObjetosSearch();
         $libros = $searchModel->getObjetos(Objetos::LIBROS, Yii::$app->request->queryParams);
         
         return $this->render('libros', [
             'libros' =>  $libros,
             'tipo' => Objetos::LIBROS,
+            'searchModel' => $searchModel,
+        ]);
+    }
+
+    public function actionPeliculas()
+    {
+        $searchModel = new ObjetosSearch();
+        $peliculas = $searchModel->getObjetos(Objetos::PELICULAS, Yii::$app->request->queryParams);
+
+        return $this->render('peliculas', [
+            'peliculas' =>  $peliculas,
+            'tipo' => Objetos::PELICULAS,
             'searchModel' => $searchModel,
         ]);
     }

@@ -42,7 +42,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav'],
         'items' => [
             ['label' => 'Libros', 'url' => ['/objetos/libros']],
-            ['label' => 'About', 'url' => ['/site/about']],
+            ['label' => 'Peliculas', 'url' => ['/objetos/peliculas']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Usuarios', 'items' => [
