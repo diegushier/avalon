@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="row">
             <?php foreach ($peliculas as $peliculas) : ?>
                 <div class="col-lg-3 col-sm-12 d-flex justify-content-center">
-                    <div class="card mt-2" style="width: 18rem;">
+                    <div class="card mt-2" style="width: 15rem;">
                         <img class="card-img-top" src="<?= Yii::getAlias('@imgUrl/' . 'notfound.png') ?>" alt="Card image cap">
                         <div class="card-body d-flex flex-column mt-auto">
                             <h5 class="card-title"><?= $peliculas['nombre'] ?></h5>

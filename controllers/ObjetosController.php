@@ -32,7 +32,7 @@ class ObjetosController extends Controller
     }
 
     /**
-     * Lists all Books as models.
+     * Lists all Books of the models.
      * @return mixed
      */
     public function actionLibros()
@@ -47,6 +47,10 @@ class ObjetosController extends Controller
         ]);
     }
 
+    /**
+     * Lists all Films of the models.
+     * @return mixed
+     */
     public function actionPeliculas()
     {
         $searchModel = new ObjetosSearch();
@@ -55,6 +59,22 @@ class ObjetosController extends Controller
         return $this->render('peliculas', [
             'peliculas' =>  $peliculas,
             'tipo' => Objetos::PELICULAS,
+            'searchModel' => $searchModel,
+        ]);
+    }
+
+    /**
+     * Lists all series as models.
+     * @return mixed
+     */
+    public function actionSeries()
+    {
+        $searchModel = new ObjetosSearch();
+
+        $series = $searchModel->getObjetos(Objetos::SERIES, Yii::$app->request->queryParams);
+        return $this->render('series', [
+            'series' =>  $series,
+            'tipo' => Objetos::SERIES,
             'searchModel' => $searchModel,
         ]);
     }
