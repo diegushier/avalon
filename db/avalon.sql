@@ -760,7 +760,7 @@ VALUES  ('El caballero oscuro', 1, 1, 244)                  --
     ,   ('HEAT', 1, 1, 244)
     ,   ('UP', 2, 1, 244)
     ,   ('El último samurái', 1, 1, 244)
-    ,   ('Jessica Jones', 4, 2, 244)
+    ,   ('Jessica Jones', 8, 2, 244)
     ,   ('The Witcher', 4, 2, 244)
     ,   ('The wire', 5, 2, 244);
 

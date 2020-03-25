@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php foreach ($libros as $libros) : ?>
             <div class="col-lg-3 col-sm-5 d-flex justify-content-center">
             <div class="card mt-2" style="width: 15rem;">
-                <img class="card-img-top" src="<?= Yii::getAlias('@imgUrl/' . $libros['id'] . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'" alt="Card image cap">
+                <img class="card-img-top mw-100 mh-100" src="<?= Yii::getAlias('@imgUrl/' . $libros['id'] . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'" alt="Card image cap">
                 <div class="card-body d-flex flex-column mt-auto">
                     <h5 class="card-title"><?= $libros['nombre'] ?></h5>
                     <?= Html::a('Ver',

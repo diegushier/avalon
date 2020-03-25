@@ -8,7 +8,7 @@ use yii\bootstrap4\ActiveForm;
 /* @var $form yii\bootstrap4\ActiveForm */
 ?>
 
-<div class="objetos-search">
+<div class="objetos-searchview">
 
 
     <?php $form = ActiveForm::begin([

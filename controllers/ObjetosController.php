@@ -99,6 +99,7 @@ class ObjetosController extends Controller
             'tipo' => $tipo,
             'productora' => $productora->nombre,
             'pais' => $pais->nombre,
+            'duenio' => $duenio
         ]);
     }
 

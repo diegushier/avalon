@@ -38,24 +38,25 @@ $this->registerJs($back);
                     </tr>
 
                     <?php if ($tipo === 'libros') : ?>
-                    <tr>
-                        <td>ISBN</td>
-                        <td><?= $model->isbn ?></td>
-                    </tr>
+                        <tr>
+                            <td>ISBN</td>
+                            <td><?= $model->isbn ?></td>
+                        </tr>
+                        <tr>
+                            <td>Editorial</td>
+                            <td><?= $productora ?></td>
+                        </tr>
+                    <?php else : ?>
+                        <tr>
+                            <td>Productora</td>
+                            <td><?= $productora ?></td>
+                        </tr>
                     <?php endif ?>
 
                     <tr>
                         <td>Pais</td>
                         <td><?= $pais ?></td>
                     </tr>
-<!-- 
-                    <tr>
-                        <td>Sinopsis:</td>
-                    </tr>
-                    <tr>
-                        <td><?= $model->sinopsis ?></td>
-                    </tr> -->
-
                 </tbody>
             </table>
 
@@ -64,5 +65,5 @@ $this->registerJs($back);
         </div>
     </div>
 
-
+    <?= var_dump($duenio) ?>
 </div>
