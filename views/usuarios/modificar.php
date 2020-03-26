@@ -18,7 +18,6 @@ $this->title = 'Modificar perfil';
 
             <?php $form = ActiveForm::begin([
                 'id' => 'login-form',
-                'enableAjaxValidation' => true,
                 'layout' => 'horizontal',
                 'fieldConfig' => [
                     'horizontalCssClasses' => ['wrapper' => 'col-sm-5'],
@@ -90,7 +89,6 @@ $this->title = 'Modificar perfil';
                                         ]) ?>
                                     <?php endif ?>
 
-
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                 </div>
                             </div>
@@ -158,9 +156,6 @@ $this->title = 'Modificar perfil';
                         </div>
                     </div>
                 </div>
-
-
-
             </section>
         </div>
     <?php endif ?>
