@@ -58,7 +58,6 @@ class UsuariosController extends Controller
 
         $paises = Paises::lista();
 
-
         return $this->render('registrar', [
             'model' => $model,
             'paises' => ['' => ''] + $paises,

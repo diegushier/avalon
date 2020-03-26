@@ -72,6 +72,12 @@ $config = [
         ],
     ],
     'params' => $params,
+    'modules' => [
+        'datecontrol' => [
+            'class' => \kartik\datecontrol\Module::class,
+            'displayTimezone' => 'Europe/Madrid',
+        ],
+    ],
 ];
 
 if (YII_ENV_DEV) {

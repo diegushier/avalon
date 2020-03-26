@@ -11,10 +11,6 @@ $this->title = 'Peliculas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="objetos-index">
-    <p>
-
-        <?php Html::a('Create Objetos', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 
     <?php echo $this->render('_search', ['model' => $searchModel, 'tipo' => 'peliculas']); ?>
 

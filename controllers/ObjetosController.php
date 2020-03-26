@@ -128,16 +128,21 @@ class ObjetosController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id, $tipo)
     {
         $model = $this->findModel($id);
+        $paises = Paises::lista();
+
+        Yii::debug(Yii::$app->request->post());
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id, 'tipo' => $tipo]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'tipo' => $tipo,
+            'paises' => $paises,
         ]);
     }
 

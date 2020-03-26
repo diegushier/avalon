@@ -5,10 +5,7 @@ use yii\bootstrap4\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Objetos */
 
-$this->title = 'Update Objetos: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Objetos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Modificar: ' . $model->nombre;
 ?>
 <div class="objetos-update">
 
@@ -16,6 +13,9 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'paises' => $paises,
     ]) ?>
+
+    <?= Html::a('Volver', ['view', 'id' => $model->id, 'tipo' => $tipo], ['class' => 'btn btn-warning']) ?>
 
 </div>

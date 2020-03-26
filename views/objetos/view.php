@@ -65,5 +65,10 @@ $this->registerJs($back);
         </div>
     </div>
 
-    <?= var_dump($duenio) ?>
+    <?php if ($duenio === Yii::$app->user->id) : ?>
+        <div>
+            <?= Html::a('Modificar ' . $model->nombre, ['update', 'id' => $model->id, 'tipo' => $tipo], ['class' => 'btn btn-success']) ?>
+        </div>
+    <?php endif ?>
+
 </div>

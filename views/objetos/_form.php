@@ -1,7 +1,10 @@
 <?php
 
+use kartik\date\DatePicker;
+use kartik\datecontrol\DateControl;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\ActiveForm;
+use yii\helpers\Json;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Objetos */
@@ -14,15 +17,28 @@ use yii\bootstrap4\ActiveForm;
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'isbn')->textInput() ?>
+    <?php if ($model->tipo_id === 1) : ?>
+        <?= $form->field($model, 'isbn')->textInput() ?>
+    <?php endif ?>
 
-    <?= $form->field($model, 'productora_id')->textInput() ?>
+    <?= $form->field($model, 'productora_id')->hiddenInput(['value' => $model->productora_id])->label(false) ?>
 
-    <?= $form->field($model, 'tipo_id')->textInput() ?>
+    <?= $form->field($model, 'tipo_id')->hiddenInput(['value' => $model->tipo_id])->label(false) ?>
 
-    <?= $form->field($model, 'pais_id')->textInput() ?>
 
-    <?= $form->field($model, 'fecha')->textInput() ?>
+    <?php echo $form->field($model, 'fecha')->widget(DateControl::class, [
+                'type' => DateControl::FORMAT_DATE,
+                'widgetOptions' => [
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                    ],
+                ],
+            ]) ?>
+
+    <!-- <?= $form->field($model, 'fecha')->textInput() ?> -->
+
+    <?= $form->field($model, 'pais_id')->dropDownList($paises) ?>
+
 
     <?= $form->field($model, 'sinopsis')->textarea(['rows' => 6]) ?>
 
