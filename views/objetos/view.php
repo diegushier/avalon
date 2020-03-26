@@ -68,6 +68,39 @@ $this->registerJs($back);
     <?php if ($duenio === Yii::$app->user->id) : ?>
         <div>
             <?= Html::a('Modificar ' . $model->nombre, ['update', 'id' => $model->id, 'tipo' => $tipo], ['class' => 'btn btn-success']) ?>
+            <button type="button" id="delete" class="btn btn-danger" data-toggle="modal" data-target="#borrarEmpresa">
+                Eliminar <?= $model->nombre ?>
+            </button>
+
+            <div class="modal fade" id="borrarEmpresa" tabindex="-1" role="dialog" aria-labelledby="#borrarEmpresaCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="#borrarEmpresaLongTitle">Borrar <?= substr($tipo, 0, -1) ?> </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            ¿Esta usted seguro de que desea ELIMINAR <?= $tipo === 'libros' ? 'este' :  'esta'?>  <?= substr($tipo, 0, -1) ?>?
+                            La acción será irreversible. 
+                            <?php if ($tipo === 'series') : ?>
+                                Si la serie contiene capítulos, esta no podrá ser borrada.
+                            <?php endif ?>
+                        </div>
+                        <div class="modal-footer">
+                            <?= Html::a('Borrar ' . $model->nombre, ['delete', 'id' => $model->id], [
+                                'class' => 'btn btn-danger',
+                                'data' => [
+                                    'method' => 'post',
+                                ],
+                            ]) ?>
+
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     <?php endif ?>
 
