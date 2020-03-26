@@ -24,8 +24,8 @@ $this->registerJs($back);
 
     <div class="row">
         <img src="<?= Yii::getAlias('@imgUrl/' . $model->id . '.jpg') ?>" class="col-lg-3  m-3 p-0 shadow" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'">
-        <div class="views-container mt-3 mb-3 col-lg-3">
-            <table class="table ">
+        <div class="views-container mt-3 mb-3 col-lg-8">
+            <table class="table col-lg-5">
                 <tbody>
                     <tr>
                         <td>Nombre</td>
