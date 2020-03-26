@@ -23,7 +23,9 @@ $this->registerJs($back);
     <?php echo $this->render('_searchview', ['model' => $model, 'tipo' => $tipo]); ?>
 
     <div class="row">
-        <img src="<?= Yii::getAlias('@imgUrl/' . $model->id . '.jpg') ?>" class="col-lg-3  m-3 p-0 shadow" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'">
+        <div class="col-lg-3">
+            <img src="<?= Yii::getAlias('@imgUrl/' . $model->id . '.jpg') ?>" class="m-3 p-1 w-100 shadow" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'">
+        </div>
         <div class="views-container mt-3 mb-3 col-lg-8">
             <table class="table col-lg-5">
                 <tbody>
@@ -82,8 +84,8 @@ $this->registerJs($back);
                             </button>
                         </div>
                         <div class="modal-body">
-                            ¿Esta usted seguro de que desea ELIMINAR <?= $tipo === 'libros' ? 'este' :  'esta'?>  <?= substr($tipo, 0, -1) ?>?
-                            La acción será irreversible. 
+                            ¿Esta usted seguro de que desea ELIMINAR <?= $tipo === 'libros' ? 'este' :  'esta' ?> <?= substr($tipo, 0, -1) ?>?
+                            La acción será irreversible.
                             <?php if ($tipo === 'series') : ?>
                                 Si la serie contiene capítulos, esta no podrá ser borrada.
                             <?php endif ?>
