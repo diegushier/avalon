@@ -68,7 +68,7 @@ class EmpresasController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id, $action)
     {
         $model = $this->findModel($id);
 
@@ -78,6 +78,7 @@ class EmpresasController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'action' => $action
         ]);
     }
 

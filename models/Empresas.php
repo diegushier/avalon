@@ -51,7 +51,7 @@ class Empresas extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nombre' => 'Nombre',
-            'pais_id' => 'Pais ID',
+            'pais_id' => 'Pais',
             'entidad_id' => 'Entidad ID',
         ];
     }

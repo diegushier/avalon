@@ -119,25 +119,47 @@ class UsuariosController extends Controller
 
 
         $exists = Usuarios::findOne(Yii::$app->user->id)->getEmpresas()->exists();
-
         $get = (new Query())->from('empresas')->where('entidad_id = ' . Yii::$app->user->id)->all();
-        $empresa = new Empresas();
-
-        if ($empresa->load(Yii::$app->request->post()) && $empresa->save()) {
-            return $this->redirect(['/empresas/view', 'id' => $empresa->id]);
-        }
-
+        $empresa = $this->updatearEmpresa($exists, $get);
         $paises = Paises::lista();
 
         $model->passwd = '';
         $model->passwd_repeat = '';
-
-        return $this->render('modificar', [
+        $render = [
             'model' => $model,
             'paises' => ['' => ''] + $paises,
-            'empresa' => $empresa,
             'get' => $get,
             'exists' => $exists,
-        ]);
+            'empresa' => $empresa,
+        ];
+
+        return $this->render('modificar', $this->exists($exists, $render, $get));
+    }
+
+    protected function exists($exists, $render, $get)
+    {
+
+        if ($exists) {
+            $empresaModel = Empresas::findOne($get[0]['id']);
+            $render += ['empresaModel' => $empresaModel];
+        }
+
+        return $render;
+    }
+
+    protected function updatearEmpresa($exists, $get)
+    {
+        $exists ? $empresa =  Empresas::findOne($get[0]['id']) : $empresa = new Empresas();
+
+        Yii::debug($empresa->load(Yii::$app->request->post()) && $empresa->save());
+        Yii::debug($empresa->save());
+        Yii::debug($empresa->load(Yii::$app->request->post()));
+        Yii::debug(Yii::$app->request->post());
+
+        if ($empresa->load(Yii::$app->request->post()) && $empresa->save()) {
+            Yii::$app->session->setFlash('success', 'Se ha modificado la empresa.');
+        };
+
+        return $empresa;
     }
 }

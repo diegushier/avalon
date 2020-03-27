@@ -8,13 +8,24 @@ use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use yii\widgets\DetailView;
 
+$js = "
+    var aux = true;
+    $('#mod-can').click(() => {
+        aux = !aux
+        aux ? $('#mod-can').html('MODIFICAR EMPRESA') : $('#mod-can').html('CANCELAR');
+        console.log('hola')
+    })
+";
+
+$this->registerJs($js);
+
 $this->title = 'Modificar perfil';
 ?>
 <div class="site-login">
     <h1 class='text-center'><?= Html::encode($this->title) ?></h1>
 
     <div class="row">
-        <div class="col px-md-5">
+        <div class="col-lg-12 px-md-5">
 
             <?php $form = ActiveForm::begin([
                 'id' => 'login-form',
@@ -99,64 +110,88 @@ $this->title = 'Modificar perfil';
 
             <?php ActiveForm::end(); ?>
         </div>
-    </div>
 
-    <hr>
-    <br><br><br>
+        <hr>
+        <br><br><br>
 
-    <?php if ($exists == false) : ?>
-        <div>
-            <section class="m-4">
-                <h2>Empresa</h2>
-                <p>Para mostrar sus propios libros, peliculas o series deberá tener creada una entidad. Desde aqúi puede hacerlo.</p>
-                <?= $this->render('/empresas/_form', [
-                    'model' => $empresa,
-                    'pais' => Yii::$app->user->identity->pais_id,
-                    'entidad' => Yii::$app->user->identity->id,
-                ]) ?>
+        <?php if ($exists == false) : ?>
+            <div>
+                <section class="m-4">
+                    <h2 class="pl-3 pt-4">Empresa</h2>
+                    <p>Para mostrar sus propios libros, peliculas o series deberá tener creada una entidad. Desde aqúi puede hacerlo.</p>
+                    <?= $this->render('/empresas/create', [
+                        'model' => $empresa,
+                        'pais' => Yii::$app->user->identity->pais_id,
+                        'entidad' => Yii::$app->user->identity->id,
+                        'action' => 'crear'
+                    ]) ?>
 
-            </section>
-        </div>
-    <?php else : ?>
-        <div>
-            <section class="m-4">
-                <h2>Empresa</h2>
+                </section>
+            </div>
+        <?php else : ?>
+            <div class="col-lg-12 px-md-5">
+                <section>
+                    <div class="border rounded">
+                        <?=
+                            $this->render('/empresas/view', [
+                                'id' => $get[0]['id'],
+                                'model' => $empresaModel,
+                                'pais' => $paises[Yii::$app->user->identity->pais_id],
+                            ]);
+                        ?>
+                    </div>
 
-                <button type="button" id="delete" class="btn btn-danger" data-toggle="modal" data-target="#borrarEmpresa">
-                    Eliminar <?= $get[0]['nombre'] ?>
-                </button>
+                    <div class="collapse mt-2" id="mod">
+                            <?= $this->render('/empresas/update', [
+                                'model' => $empresa,
+                                'pais' => Yii::$app->user->identity->pais_id,
+                                'action' => 'modificar'
+                            ]) ?>
+                    </div>
 
-                <div class="modal fade" id="borrarEmpresa" tabindex="-1" role="dialog" aria-labelledby="#borrarEmpresaCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="#borrarEmpresaLongTitle">Borrar // Desvincular empresa.</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                ¿Esta usted seguro de que desea desvicular esta empresa?
-                                La acción será irreversible y no podrá volver a vincularse a ella.
-                                <br>
-                                Solo en caso de que no tenga ninguna relación con series libros o películas se borrará.
-                                <br>
-                            </div>
-                            <div class="modal-footer">
-                                <?= Html::a('Desvincular ' . $get[0]['nombre'], ['empresas/delete', 'id' => $get[0]['id']], [
-                                    'class' => 'btn btn-danger',
-                                    'id' => 'liberar',
-                                    'data' => [
-                                        'method' => 'post',
-                                    ],
-                                ]) ?>
+                    <div class="modal fade" id="borrarEmpresa" tabindex="-1" role="dialog" aria-labelledby="#borrarEmpresaCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="#borrarEmpresaLongTitle">Borrar // Desvincular empresa.</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    ¿Esta usted seguro de que desea desvicular esta empresa?
+                                    La acción será irreversible y no podrá volver a vincularse a ella.
+                                    <br>
+                                    Solo en caso de que no tenga ninguna relación con series libros o películas se borrará.
+                                    <br>
+                                </div>
+                                <div class="modal-footer">
+                                    <?= Html::a('Desvincular ' . $get[0]['nombre'], ['empresas/delete', 'id' => $get[0]['id']], [
+                                        'class' => 'btn btn-danger',
+                                        'id' => 'liberar',
+                                        'data' => [
+                                            'method' => 'post',
+                                        ],
+                                    ]) ?>
 
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-        </div>
-    <?php endif ?>
+                </section>
+
+                <section class="mt-3 offset-sm-2">
+                    <button class="btn btn-warning" type="button" id="mod-can" data-toggle="collapse" data-target="#mod" aria-expanded="false" aria-controls="collapseExample">
+                        Modificar empresa
+                    </button>
+                    <button type="button" id="delete" class="btn btn-danger" data-toggle="modal" data-target="#borrarEmpresa">
+                        Eliminar <?= $get[0]['nombre'] ?>
+                    </button>
+                </section>
+
+            </div>
+        <?php endif ?>
+    </div>
+
 </div>
