@@ -67,7 +67,7 @@ $this->registerJs($back);
         </div>
     </div>
 
-    <?php if ($duenio === Yii::$app->user->id) : ?>
+    <?php if (!(Yii::$app->user->isGuest) && $duenio === Yii::$app->user->id) : ?>
         <div>
             <?= Html::a('Modificar ' . $model->nombre, ['update', 'id' => $model->id, 'tipo' => $tipo], ['class' => 'btn btn-success']) ?>
             <button type="button" id="delete" class="btn btn-danger" data-toggle="modal" data-target="#borrarEmpresa">
