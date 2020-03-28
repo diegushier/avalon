@@ -61,7 +61,7 @@ class UsuariosController extends Controller
 
         $paises = Paises::lista();
 
-        
+
 
         return $this->render('registrar', [
             'model' => $model,
@@ -122,6 +122,7 @@ class UsuariosController extends Controller
             return ActiveForm::validate($model);
         }
 
+        $this->updatearClave($model, Yii::$app->request->post());
 
         $exists = Usuarios::findOne(Yii::$app->user->id)->getEmpresas()->exists();
         $get = (new Query())->from('empresas')->where('entidad_id = ' . Yii::$app->user->id)->all();
@@ -150,6 +151,22 @@ class UsuariosController extends Controller
         }
 
         return $render;
+    }
+
+    protected function updatearClave($model, $params)
+    {
+        $model = Usuarios::findOne($model->id);
+        if (isset($params['Usuarios']['clave'])) {
+            if ($params['Usuarios']['clave'] === $model->clave) {
+                $model->setAttribute('clave', null);
+                if ($model->update()) {
+                    Yii::$app->session->setFlash('success', 'El usuario se ha comfirmado');
+                    return $this->redirect(['/site/index']);
+                } else {
+                    Yii::$app->session->setFlash('error', 'la clave no es correcta.');
+                }
+            }
+        }
     }
 
     protected function updatearEmpresa($exists, $get)
