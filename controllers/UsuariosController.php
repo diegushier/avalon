@@ -45,8 +45,11 @@ class UsuariosController extends Controller
     public function actionRegistrar()
     {
         $model = new Usuarios(['scenario' => Usuarios::SCENARIO_CREAR]);
+        $clave = $this->generarClave();
+        $model->setAttribute('clave', $clave);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $this->sendMail($model->correo, $clave);
             Yii::$app->session->setFlash('success', 'Se ha creado el usuario correctamente.');
             return $this->redirect(['site/login']);
         }
@@ -57,6 +60,8 @@ class UsuariosController extends Controller
         }
 
         $paises = Paises::lista();
+
+        
 
         return $this->render('registrar', [
             'model' => $model,
@@ -151,15 +156,32 @@ class UsuariosController extends Controller
     {
         $exists ? $empresa =  Empresas::findOne($get[0]['id']) : $empresa = new Empresas();
 
-        Yii::debug($empresa->load(Yii::$app->request->post()) && $empresa->save());
-        Yii::debug($empresa->save());
-        Yii::debug($empresa->load(Yii::$app->request->post()));
-        Yii::debug(Yii::$app->request->post());
-
         if ($empresa->load(Yii::$app->request->post()) && $empresa->save()) {
             Yii::$app->session->setFlash('success', 'Se ha modificado la empresa.');
         };
 
         return $empresa;
+    }
+
+    protected function sendMail($correo, $clave)
+    {
+        Yii::$app->mailer->compose()
+            ->setFrom(Yii::$app->params['smtpUsername'])
+            ->setTo($correo)
+            ->setSubject('Avalon')
+            ->setTextBody('Este correo ha sido generado para pruebas. Esta es su clave: ' . $clave)
+            ->send();
+    }
+
+    protected function generarClave()
+    {
+        $matches = ['1', 'a', '2', 'b', '3', 'c', '4', 'd', '5', 'e', '6', 'f', '7', 'g', '8', 'h', '9', 'i'];
+        shuffle($matches);
+        $clave = [];
+        for ($i = 0; $i <= 5; $i++) {
+            $aux = array_rand($matches, 1);
+            array_push($clave, $matches[$aux]);
+        }
+        return implode('', $clave);
     }
 }

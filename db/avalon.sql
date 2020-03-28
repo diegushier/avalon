@@ -49,6 +49,7 @@ CREATE TABLE usuarios
     ,   auth_key    VARCHAR(255)
     ,   pais_id     bigint          REFERENCES paises (id)
     ,   rol_id      bigint          REFERENCES usuarioRol (id)
+    ,   clave       VARCHAR(6)      
 );
 
 CREATE TABLE empresas
