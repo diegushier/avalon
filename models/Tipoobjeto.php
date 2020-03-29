@@ -65,4 +65,9 @@ class Tipoobjeto extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Objetos::className(), ['tipo_id' => 'id'])->inverseOf('tipo');
     }
+
+    public static function lista()
+    {
+        return static::find()->select('nombre')->orderBy('nombre')->indexBy('id')->column();
+    }
 }

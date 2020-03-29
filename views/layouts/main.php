@@ -9,12 +9,16 @@ use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
 use yii\bootstrap4\Breadcrumbs;
 use app\assets\AppAsset;
+use app\controllers\SiteController;
+use app\models\Empresas;
+use app\models\Usuarios;
 
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
+
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,71 +27,82 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body>
-<?php $this->beginBody() ?>
 
-<div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => 'Avalon',
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-dark bg-dark navbar-expand-md fixed-top',
-        ],
-        'collapseOptions' => [
-            'class' => 'justify-content-end',
-        ],
-    ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav'],
-        'items' => [
+<body>
+    <?php $this->beginBody() ?>
+
+    <div class="wrap">
+        <?php
+        NavBar::begin([
+            'brandLabel' => 'Avalon',
+            'brandUrl' => Yii::$app->homeUrl,
+            'options' => [
+                'class' => 'navbar-dark bg-dark navbar-expand-md fixed-top',
+            ],
+            'collapseOptions' => [
+                'class' => 'justify-content-end',
+            ],
+        ]);
+
+        $menu = [
             ['label' => 'Libros', 'url' => ['/objetos/libros']],
             ['label' => 'Peliculas', 'url' => ['/objetos/peliculas']],
-            ['label' => 'Series', 'url' => ['/objetos/series']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Usuarios', 'items' => [
-                    ['label' => 'Login', 'url' => ['/site/login']],
-                    ['label' => 'Regitrarse', 'url' => ['/usuarios/registrar']],
-                    
-                ]]
-            ) : (
-                ['label' => Yii::$app->user->identity->nickname, 'items' => [
-                    Html::beginForm(['usuarios/modificar'], 'get')
-                        . Html::submitButton(
-                            'Modificar perfil',
-                            ['class' => 'dropdown-item'],
-                        )
-                        . Html::endForm(),
-                        Html::beginForm(['/site/logout'], 'post')
-                        . Html::submitButton(
-                            'Salir-Desconectar',
-                            ['class' => 'dropdown-item'],
-                        )
-                        . Html::endForm()
+            ['label' => 'Series', 'url' => ['/objetos/series']]
+        ];
 
-                ]]
-            ),
-        ],
-    ]);
-    NavBar::end();
-    ?>
+        if (Yii::$app->user->isGuest) {
+            $menu[] = ['label' => 'Usuarios', 'items' => [
+                ['label' => 'Login', 'url' => ['/site/login']],
+                ['label' => 'Regitrarse', 'url' => ['/usuarios/registrar']],
+            ]];
+        } elseif (Yii::$app->user->identity->clave === null) {
+            $menu[] = ['label' => Yii::$app->user->identity->nickname, 'items' => [
+                ['label' => 'Modificar', 'url' => ['/usuarios/modificar']],
+                Html::beginForm(['/site/logout'], 'post')
+                    . Html::submitButton(
+                        'Salir-Desconectar',
+                        ['class' => 'dropdown-item'],
+                    )
+                    . Html::endForm(),
+                ['label' => 'Crear', 'url' => ['/objetos/create']],
 
-    <div id="back" class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
+            ]];
+        } else {
+            $menu[] = ['label' => Yii::$app->user->identity->nickname, 'items' => [
+                ['label' => 'Modificar', 'url' => ['/usuarios/modificar']],
+                Html::beginForm(['/site/logout'], 'post')
+                    . Html::submitButton(
+                        'Salir-Desconectar',
+                        ['class' => 'dropdown-item'],
+                    )
+                    . Html::endForm(),
+            ]];
+        }
+
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav'],
+            'items' => $menu,
+        ]);
+        NavBar::end();
+        ?>
+
+        <div id="back" class="container">
+            <?= Breadcrumbs::widget([
+                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            ]) ?>
+            <?= Alert::widget() ?>
+            <?= $content ?>
+        </div>
     </div>
-</div>
 
-<footer class="footer bg-dark">
-    <div class="container">
-        <p class="float-left">&copy; Proyecto Final Integrado Avalon <?= date('Y') ?></p>
-    </div>
-</footer>
+    <footer class="footer bg-dark">
+        <div class="container">
+            <p class="float-left">&copy; Proyecto Final Integrado Avalon <?= date('Y') ?></p>
+        </div>
+    </footer>
 
-<?php $this->endBody() ?>
+    <?php $this->endBody() ?>
 </body>
+
 </html>
 <?php $this->endPage() ?>

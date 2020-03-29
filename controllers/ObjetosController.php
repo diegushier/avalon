@@ -8,6 +8,8 @@ use Yii;
 use app\models\Objetos;
 use app\models\ObjetosSearch;
 use app\models\Paises;
+use app\models\Tipoobjeto;
+use app\models\Usuarios;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -111,13 +113,21 @@ class ObjetosController extends Controller
     public function actionCreate()
     {
         $model = new Objetos();
+        $paises = Paises::lista();
+        $empresa = Usuarios::findOne(Yii::$app->user->identity->id);
+        $empresa = $empresa->getEmpresas()->one();
+        $tipo = Tipoobjeto::lista();
 
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id, 'tipo' => $tipo[$model->tipo_id]]);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'paises' => $paises,
+            'empresa' => $empresa,
+            'tipo' => $tipo,
         ]);
     }
 
@@ -132,8 +142,6 @@ class ObjetosController extends Controller
     {
         $model = $this->findModel($id);
         $paises = Paises::lista();
-
-        Yii::debug(Yii::$app->request->post());
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id, 'tipo' => $tipo]);
@@ -177,4 +185,5 @@ class ObjetosController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
 }

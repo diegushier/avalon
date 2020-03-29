@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\bootstrap4\Html;
 
 /**
  * This is the model class for table "objetos".

@@ -35,8 +35,6 @@ use yii\helpers\Json;
                 ],
             ]) ?>
 
-    <!-- <?= $form->field($model, 'fecha')->textInput() ?> -->
-
     <?= $form->field($model, 'pais_id')->dropDownList($paises) ?>
 
 
