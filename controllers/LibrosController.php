@@ -2,9 +2,14 @@
 
 namespace app\controllers;
 
+use app\models\Empresas;
+use app\models\Generos;
+use app\models\Integrantes;
 use Yii;
 use app\models\Libros;
 use app\models\LibrosSearch;
+use app\models\Paises;
+use app\models\Usuarios;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -52,8 +57,20 @@ class LibrosController extends Controller
      */
     public function actionView($id)
     {
+        $model = Libros::findOne($id);
+        $productora = $model->getEditorial()->one();
+        $autor = $model->getAutor()->one();
+        $pais = Paises::findOne($model->pais_id);
+        $genero = $model->getGenero()->one();
+        $duenio = $productora->entidad_id;
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'autor' => $autor->nombre,
+            'productora' => $productora->nombre,
+            'pais' => $pais->nombre,
+            'genero' => $genero->nombre,
+            'duenio' => $duenio
         ]);
     }
 

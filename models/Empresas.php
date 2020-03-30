@@ -81,8 +81,13 @@ class Empresas extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getObjetos()
+    public function getShows()
     {
-        return $this->hasMany(Objetos::className(), ['productora_id' => 'id'])->inverseOf('productora');
+        return $this->hasMany(Shows::className(), ['productora_id' => 'id'])->inverseOf('productora');
+    }
+
+    public function getLibros()
+    {
+        return $this->hasMany(Libros::className(), ['editorial_id' => 'id'])->inverseOf('editorial');
     }
 }

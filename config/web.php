@@ -15,7 +15,9 @@ $config = [
         '@imgUrl'  => '/img',
         '@imgLibrosUrl'  => '/img/libros',
         '@imgCineUrl'  => '/img/cine',
-        '@imgBackUrl'  => '/img/back'
+        '@imgBackUrl'  => '/img/back',
+        '@imgBackLibrosUrl'  => '/img/back/libros',
+        '@imgBackCineUrl'  => '/img/back/cine',
     ],
     'language' => 'es-ES',
     'components' => [
