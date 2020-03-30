@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Paises;
 use Yii;
 use app\models\Shows;
 use app\models\ShowsSearch;
@@ -64,8 +65,16 @@ class ShowsController extends Controller
      */
     public function actionView($id)
     {
+        $model = Shows::findOne($id);
+        $productora = $model->getProductora()->one();
+        $pais = Paises::findOne($model->pais_id);
+        $duenio = $productora->entidad_id;
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'productora' => $productora->nombre,
+            'pais' => $pais->nombre,
+            'duenio' => $duenio
         ]);
     }
 

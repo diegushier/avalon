@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Libros */
 
-$this->title = $model->id;
+$this->title = $model->nombre;
 $this->params['breadcrumbs'][] = ['label' => 'Libros', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -18,7 +18,7 @@ $back = "$('body').css('background-image', 'url( " . Yii::getAlias('@imgBackLibr
 
 $this->registerJs($back);
 ?>
-<div class="objetos-view">
+<div class="libros-view">
     <div class="row">
         <div class="col-lg-3">
             <img src="<?= Yii::getAlias('@imgLibrosUrl/' . $model->id . '.jpg') ?>" class="m-3 p-1 w-100 shadow" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'">
@@ -71,7 +71,7 @@ $this->registerJs($back);
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="#borrarEmpresaLongTitle">Borrar <?= substr($tipo, 0, -1) ?> </h5>
+                            <h5 class="modal-title" id="#borrarEmpresaLongTitle">Borrar Libro</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
