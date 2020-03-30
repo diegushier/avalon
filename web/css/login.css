@@ -1,0 +1,50 @@
+.web{
+    margin-top: 1%;
+    text-align: center;
+    font-size: 60px;
+    color: white;
+}
+
+
+.titles{
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+@media (max-width: 700px) {
+    .w-sm{
+        width: 60%;
+    }
+}
+
+@media (min-width: 701px) and (max-width: 1374px) {
+    .w-lg{
+        width: 50%;
+    }
+}
+
+@media (min-width: 1375px) {
+    .w-xl{
+        width: 33%;
+    }
+}
+
+.btn-orange{
+    color:#fff;
+    background-color:#FEB177;
+    border-color:#FEB177;
+}
+
+.btn-orange:hover{
+    color:#fff;
+    background-color:#F3AB75;
+    border-color:#F3AB75;
+}
+
+.inputs {
+    padding: 4px;  
+    border: 1px solid #999;
+    border-radius: 4px;
+    width: 100%;
+    margin-left: -10%;
+}

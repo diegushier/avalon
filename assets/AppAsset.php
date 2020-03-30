@@ -23,6 +23,7 @@ class AppAsset extends AssetBundle
         'css/site.css',
         'css/bootstrap.css',
         'https://use.fontawesome.com/releases/v5.3.1/css/all.css',
+        'css/login.css',
 
     ];
     public $js = [
