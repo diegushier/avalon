@@ -36,11 +36,11 @@ class LibrosController extends Controller
     public function actionIndex()
     {
         $searchModel = new LibrosSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $libros = $searchModel->getObjetos(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'libros' =>  $libros,
             'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
         ]);
     }
 

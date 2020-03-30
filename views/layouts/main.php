@@ -45,7 +45,7 @@ AppAsset::register($this);
         ]);
 
         $menu = [
-            ['label' => 'Libros', 'url' => ['/objetos/libros']],
+            ['label' => 'Libros', 'url' => ['/libros/index']],
             ['label' => 'Peliculas', 'url' => ['/objetos/peliculas']],
             ['label' => 'Series', 'url' => ['/objetos/series']]
         ];

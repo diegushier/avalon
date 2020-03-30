@@ -5,6 +5,7 @@ namespace app\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Libros;
+use yii\db\Query;
 
 /**
  * LibrosSearch represents the model behind the search form of `app\models\Libros`.
@@ -72,4 +73,20 @@ class LibrosSearch extends Libros
 
         return $dataProvider;
     }
+
+    public function getObjetos($params)
+    {
+        $this->load($params);
+        return (new Query())->from('libros')->orderBy('id')
+        ->andFilterWhere([
+            'id' => $this->id,
+            'editorial_id' => $this->editorial_id,
+            'pais_id' => $this->pais_id,
+            'fecha' => $this->fecha,
+        ])
+        ->andFilterWhere(['ilike', 'nombre', $this->nombre])
+        ->andFilterWhere(['ilike', 'sinopsis', $this->sinopsis])
+        ->all();
+    }
+
 }

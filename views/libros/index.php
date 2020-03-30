@@ -11,34 +11,31 @@ $this->title = 'Libros';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="libros-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Create Libros', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'nombre',
-            'isbn',
-            'editorial_id',
-            'autor_id',
-            //'genero_id',
-            //'pais_id',
-            //'fecha',
-            //'sinopsis:ntext',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+    <div class="container">
+        <div class="row">
+            <?php foreach ($libros as $libros) : ?>
+                <div class="col-lg-3 col-sm-5 d-flex justify-content-center">
+                    <div class="card mt-2" style="width: 15rem;">
+                        <img class="card-img-top mw-100 mh-100" src="<?= Yii::getAlias('@imgLibrosUrl/' . $libros['id'] . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'" alt="Card image cap">
+                        <div class="card-body d-flex flex-column mt-auto">
+                            <h5 class="card-title"><?= $libros['nombre'] ?></h5>
+                            <?= Html::a(
+                                'Ver',
+                                ['libros/view', 'id' => $libros['id']],
+                                [
+                                    'class' => 'btn btn-primary btn-block mt-auto',
+                                ]
+                            ) ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach ?>
+        </div>
+    </div>    
 
 
 </div>

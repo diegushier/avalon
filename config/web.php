@@ -13,6 +13,8 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
         '@img'   => '@app/web/img',
         '@imgUrl'  => '/img',
+        '@imgLibrosUrl'  => '/img/libros',
+        '@imgCineUrl'  => '/img/cine',
         '@imgBackUrl'  => '/img/back'
     ],
     'language' => 'es-ES',
