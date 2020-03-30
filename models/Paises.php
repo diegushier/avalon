@@ -62,9 +62,14 @@ class Paises extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getObjetos()
+    public function getShows()
     {
-        return $this->hasMany(Objetos::className(), ['pais_id' => 'id'])->inverseOf('pais');
+        return $this->hasMany(Shows::className(), ['pais_id' => 'id'])->inverseOf('pais');
+    }
+
+    public function getLibros()
+    {
+        return $this->hasMany(Libros::className(), ['pais_id' => 'id'])->inverseOf('pais');
     }
 
     /**

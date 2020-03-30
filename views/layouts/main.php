@@ -64,7 +64,8 @@ AppAsset::register($this);
                         ['class' => 'dropdown-item'],
                     )
                     . Html::endForm(),
-                ['label' => 'Crear', 'url' => ['/objetos/create']],
+                ['label' => 'Nuevo Libro', 'url' => ['/libros/create']],
+                ['label' => 'Nuevo Show', 'url' => ['/shows/create']],
 
             ]];
         } else {

@@ -23,7 +23,7 @@ $this->registerJs($back);
         <div class="col-lg-3">
             <img src="<?= Yii::getAlias('@imgLibrosUrl/' . $model->id . '.jpg') ?>" class="m-3 p-1 w-100 shadow" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'">
         </div>
-        <div class="views-container mt-3 mb-3 col-lg-8">
+        <div class="views-container  mt-3 mb-3 col-lg-8">
             <table class="table col-lg-5">
                 <tbody>
                     <tr>

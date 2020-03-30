@@ -205,4 +205,8 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
                 
         return true;
     }
+
+    public static function obtainEmpresa() {
+        return Usuarios::findOne(Yii::$app->user->identity->id)->getEmpresas();
+    }
 }

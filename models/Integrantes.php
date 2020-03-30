@@ -70,4 +70,9 @@ class Integrantes extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Reparto::className(), ['integrante_id' => 'id'])->inverseOf('integrante');
     }
+
+    public static function lista()
+    {
+        return static::find()->select('nombre')->orderBy('nombre')->indexBy('id')->column();
+    }
 }
