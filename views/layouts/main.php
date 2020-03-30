@@ -46,8 +46,8 @@ AppAsset::register($this);
 
         $menu = [
             ['label' => 'Libros', 'url' => ['/libros/index']],
-            ['label' => 'Peliculas', 'url' => ['/objetos/peliculas']],
-            ['label' => 'Series', 'url' => ['/objetos/series']]
+            ['label' => 'Peliculas', 'url' => ['/shows/peliculas']],
+            ['label' => 'Series', 'url' => ['/shows/series']]
         ];
 
         if (Yii::$app->user->isGuest) {

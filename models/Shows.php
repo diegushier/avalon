@@ -25,6 +25,9 @@ use Yii;
  */
 class Shows extends \yii\db\ActiveRecord
 {
+    const PELICULAS = 'cine';
+    const SERIES = 'serie';
+
     /**
      * {@inheritdoc}
      */

@@ -33,16 +33,28 @@ class ShowsController extends Controller
      * Lists all Shows models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionPeliculas()
     {
         $searchModel = new ShowsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $peliculas = $searchModel->getObjetos(Shows::PELICULAS, Yii::$app->request->queryParams);
 
-        return $this->render('index', [
+        return $this->render('peliculas', [
+            'peliculas' =>  $peliculas,
             'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
         ]);
     }
+
+    public function actionSeries()
+    {
+        $searchModel = new ShowsSearch();
+        $series = $searchModel->getObjetos(Shows::SERIES, Yii::$app->request->queryParams);
+
+        return $this->render('series', [
+            'series' =>  $series,
+            'searchModel' => $searchModel,
+        ]);
+    }
+
 
     /**
      * Displays a single Shows model.

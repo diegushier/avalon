@@ -11,7 +11,7 @@ use yii\bootstrap4\ActiveForm;
 <div class="libros-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['index'],
+        'action' => ['peliculas'],
         'method' => 'get',
     ]); ?>
     <div class="row">
