@@ -10,7 +10,8 @@ DROP TABLE IF EXISTS listaCapitulos CASCADE;                    -- B C I
 DROP TABLE IF EXISTS capitulos CASCADE;                         -- B C I
 DROP TABLE IF EXISTS reparto CASCADE;                           -- B C I
 DROP TABLE IF EXISTS tipoObjeto CASCADE;                        -- B C I
-DROP TABLE IF EXISTS objetos CASCADE;                           -- B C I
+DROP TABLE IF EXISTS libros CASCADE;                           -- B C I
+DROP TABLE IF EXISTS cinematorgraficos CASCADE;                           -- B C I
 DROP TABLE IF EXISTS listaGeneros CASCADE;                      -- B C I
 DROP TABLE IF EXISTS integrantes CASCADE;                       -- B C I
 DROP TABLE IF EXISTS paises CASCADE;                            -- B C I
@@ -87,17 +88,30 @@ CREATE TABLE generos
     ,   tipo_id     bigserial       NOT NULL REFERENCES tipoObjeto (id)
 );
 
-CREATE TABLE objetos
+CREATE TABLE libros
 (
         id              bigserial       PRIMARY KEY
     ,   nombre          VARCHAR(255)    NOT NULL UNIQUE
     ,   isbn            bigserial       UNIQUE
-    ,   productora_id   bigserial       NOT NULL REFERENCES empresas (id)
+    ,   editorial_id    bigserial       NOT NULL REFERENCES empresas (id)
+    ,   autor_id        bigserial       NOT NULL REFERENCES integrantes (id)
     ,   tipo_id         bigserial       NOT NULL REFERENCES tipoObjeto (id)
     ,   pais_id         bigserial       NOT NULL REFERENCES paises (id)
     ,   fecha           date
     ,   sinopsis        text
 );
+
+CREATE TABLE cinematorgraficos
+(
+        id              bigserial       PRIMARY KEY
+    ,   nombre          VARCHAR(255)    NOT NULL UNIQUE
+    ,   productora_id   bigserial       NOT NULL REFERENCES empresas (id)
+    ,   tipo_id         bigserial       NOT NULL REFERENCES tipoObjeto (id)
+    ,   pais_id         bigserial       NOT NULL REFERENCES paises (id)
+    ,   fecha           date
+    ,   sinopsis        text 
+);
+
 
 CREATE TABLE capitulos
 (
@@ -752,7 +766,7 @@ VALUES  ('director')
     ,   ('guionista')
     ,   ('autor');
 
-INSERT INTO objetos (nombre, productora_id, tipo_id, pais_id)
+INSERT INTO cinematorgraficos (nombre, productora_id, tipo_id, pais_id)
 VALUES  ('El caballero oscuro', 1, 1, 244)                  --
     ,   ('Piratas del Caribe: La maldición de la perla negra', 2, 1, 244)                   --
     ,   ('El truco final', 1, 1, 244)                       
@@ -765,21 +779,19 @@ VALUES  ('El caballero oscuro', 1, 1, 244)                  --
     ,   ('The Witcher', 4, 2, 244)
     ,   ('The wire', 5, 2, 244);
 
+INSERT INTO libros (nombre, isbn, editorial_id, autor_id, tipo_id, pais_id)
+VALUES  ('Los asesinos del emperador', 9788408118329, 6, (select id from integrantes where nombre = 'Santiago Posteguillo'), 3, 208)
+    ,   ('Circo Máximo', 9788408141778, 6,  (select id from integrantes where nombre = 'Santiago Posteguillo'), 3, 208)
+    ,   ('Historia torcida de la Filosofía', 9788416223572, 8, (select id from integrantes where nombre = 'Luis Soravilla'), 3, 208)
+    ,   ('Un día de cólera', 9788466323079, 7, (select id from integrantes where nombre = 'Arturo Pérez-Reverte'), 3, 208);
 
-INSERT INTO objetos (nombre, isbn, productora_id, tipo_id, pais_id)
-VALUES  ('Los asesinos del emperador', 9788408118329, 6, 3, 208)
-    ,   ('Circo Máximo', 9788408141778, 6, 3, 208)
-    ,   ('Historia torcida de la Filosofía', 9788416223572, 8, 3, 208)
-    ,   ('Un día de cólera', 9788466323079, 7, 3, 208);
-
-INSERT INTO objetos (nombre, isbn, productora_id, tipo_id, pais_id, sinopsis)
-VALUES  ('La Legión Perdida', 9788408176374, 6, 3, 208, 'En el año 53 a.C., el cónsul Craso cruzó el Éufrates para conquistar Oriente, pero su ejercito
+INSERT INTO libros (nombre, isbn, editorial_id, autor_id,tipo_id, pais_id, sinopsis)
+VALUES  ('La Legión Perdida', 9788408176374, 6, (select id from integrantes where nombre = 'Santiago Posteguillo'), 3, 208, 'En el año 53 a.C., el cónsul Craso cruzó el Éufrates para conquistar Oriente, pero su ejercito
         fue destrozado en Carrhae. Una legión entera cayó prisionera de los partos. Nadie sabe a ciencia cierta que pasó con aquella legión perdida.
         50 años después Trajano está a punto de volver a cruzar el Éufrates. Los partos esperan al otro lado. Las tropas de César dudan. Temen terminar
         como la legíon perdida. Pero Trajano no tiene miedo y emprende la mayor campaña militar de Roma, hacia la victoria o hacia el desastre, Intrigas, 
         batallas, dos mujeres adolescentes, idiomas extraños, Roma, Partia, India, China, dos Césares y una emperatriz se entrecruzan en el mayor relato 
         épico del mundo antiguo.');
-
 
 INSERT INTO generos(nombre, tipo_id)
 VALUES  ('películas actuales', 1)
@@ -1196,12 +1208,6 @@ VALUES  ((SELECT id FROM integrantes WHERE nombre = 'David Simon'), (SELECT id F
     ,   ((SELECT id FROM integrantes WHERE nombre = 'Clark Johnson'), (SELECT id FROM objetos WHERE nombre = 'The wire'), 2)
     ,   ((SELECT id FROM integrantes WHERE nombre = 'Michael B. Jordan'), (SELECT id FROM objetos WHERE nombre = 'The wire'), 2);
 
-INSERT INTO reparto(integrante_id, objetos_id, rol_id)
-VALUES  ((SELECT id FROM integrantes WHERE nombre = 'Luis Soravilla'), (SELECT id FROM objetos WHERE nombre = 'Historia torcida de la Filosofía'), 4)
-    ,   ((SELECT id FROM integrantes WHERE nombre = 'Santiago Posteguillo'), (SELECT id FROM objetos WHERE nombre = 'La Legión Perdida'), 4)
-    ,   ((SELECT id FROM integrantes WHERE nombre = 'Santiago Posteguillo'), (SELECT id FROM objetos WHERE nombre = 'Los asesinos del emperador'), 4)
-    ,   ((SELECT id FROM integrantes WHERE nombre = 'Santiago Posteguillo'), (SELECT id FROM objetos WHERE nombre = 'Circo Máximo'), 4)
-    ,   ((SELECT id FROM integrantes WHERE nombre = 'Arturo Pérez-Reverte'), (SELECT id FROM objetos WHERE nombre = 'Un día de cólera'), 4);
 
 INSERT INTO capitulos(nombre, sinopsis)
 VALUES  ('AKA Ladies Night', 'Jessica is hired to find a pretty NYU student who´s vanished, but it turns out to be more than a simple missing persons case.')
