@@ -11,9 +11,9 @@ $this->title = 'Libros';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="libros-index">
-    <p>
-        <?= Html::a('Create Libros', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+
+    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+
 
     <div class="container">
         <div class="row">
@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             <?php endforeach ?>
         </div>
-    </div>    
+    </div>
 
 
 </div>

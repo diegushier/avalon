@@ -14,28 +14,16 @@ use yii\bootstrap4\ActiveForm;
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
+    <div class="row">
+        <div class="col-lg-10 col-sm-12">
+            <?= $form->field($model, 'nombre')->textInput(['class' =>  'form-control', 'value' => '', 'placeholder' => 'Escriba el nombre del libro....'])->label(false) ?>
+        </div>
 
-    <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'nombre') ?>
+        <div class="form-group col-lg-1">
+            <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary']) ?>
+        </div>
 
-    <?= $form->field($model, 'isbn') ?>
-
-    <?= $form->field($model, 'editorial_id') ?>
-
-    <?= $form->field($model, 'autor_id') ?>
-
-    <?php // echo $form->field($model, 'genero_id') ?>
-
-    <?php // echo $form->field($model, 'pais_id') ?>
-
-    <?php // echo $form->field($model, 'fecha') ?>
-
-    <?php // echo $form->field($model, 'sinopsis') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
