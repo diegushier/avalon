@@ -33,7 +33,7 @@ class ShowsController extends Controller
     }
 
     /**
-     * Lists all Shows models.
+     * Listado de todas las películas.
      * @return mixed
      */
     public function actionPeliculas()
@@ -47,6 +47,10 @@ class ShowsController extends Controller
         ]);
     }
 
+    /**
+     * Listado de todas las series.
+     * @return mixed
+     */
     public function actionSeries()
     {
         $searchModel = new ShowsSearch();
@@ -148,6 +152,8 @@ class ShowsController extends Controller
             Yii::$app->session->setFlash('error', 'No es posible borrar esa serie porque contiene capítulos.');
             return $this->redirect(['view', 'id' => $model->id]);
         }
+
+        $model->getListageneros()->delete();
         
         if (!$model->delete()) {
             Yii::$app->session->setFlash('error', 'Ha ocurrido un fallo en el servidor.');

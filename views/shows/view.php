@@ -1,10 +1,11 @@
 <?php
 
+use wbraganca\videojs\VideoJsWidget;
 use yii\bootstrap4\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Shows */
-
+// https://www.youtube.com/watch?v=nWHUjuJ8zxE
 $this->title = $model->nombre;
 $this->params['breadcrumbs'][] = ['label' =>  'shows', 'url' => [$model->tipo . 's']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -23,6 +24,46 @@ $this->registerJs($back);
             <img src="<?= Yii::getAlias('@imgCineUrl/' . $model->id . '.jpg') ?>" class="m-3 p-1 w-100 shadow" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'">
         </div>
         <div class="views-container mt-3 mb-3 col-lg-8">
+            <button type="button" id="trailer" class="btn btn-danger" data-toggle="modal" data-target="#vertrailer">
+                Ver Trailer
+            </button>
+            <div class="modal fade" id="vertrailer"  tabindex="-1" role="dialog" aria-labelledby="#vertrailerCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content" style="width: 840px; height :464px;">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="#vertrailerLongTitle"><?= $model->nombre ?></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <?= VideoJsWidget::widget([
+                                'options' => [
+                                    'class' => 'video-js vjs-default-skin vjs-big-play-centered',
+                                    'width' => '640',
+                                    'height' => '264',
+                                    'controls' => true,
+                                ],
+                                'jsOptions' => [
+                                    'preload' => 'auto',
+                                ],
+                                'tags' => [
+                                    'source' => [
+                                        ['src' => 'http://vjs.zencdn.net/v/oceans.mp4', 'type' => 'video/mp4'],
+                                        ['src' => 'http://vjs.zencdn.net/v/oceans.webm', 'type' => 'video/webm']
+                                    ],
+                                    'track' => [
+                                        ['kind' => 'captions', 'src' => 'http://vjs.zencdn.net/vtt/captions.vtt', 'srclang' => 'en', 'label' => 'English']
+                                    ]
+                                ]
+                            ]) ?>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <table class="table col-lg-5">
                 <tbody>
                     <tr>
