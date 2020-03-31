@@ -12,16 +12,18 @@ class ImageForm extends Model
     public function rules()
     {
         return [
-            [['imagen'], 'image', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg', 'jpeg']],
+            [['imagen'], 'image', 'skipOnEmpty' => false, 'extensions' => [ 'jpg', 'jpeg', 'png']],
         ];
     }
 
-    public function upload($id)
+    public function upload($id, $tipo)
     {
         if ($this->validate()) {
+            $tipo === 'libro' ? $alias = '@imgLibros/' : $alias = '@imgCine/';
+
             $filename = $id;
-            $origen = Yii::getAlias('@imgCine/' . $filename . '.' . $this->imagen->extension);
-            $destino = Yii::getAlias('@imgCine/' . $filename . '.jpg');
+            $origen = Yii::getAlias($alias . $filename . '.' . $this->imagen->extension);
+            $destino = Yii::getAlias($alias . $filename . '.jpg');
             $this->imagen->saveAs($origen);
             \yii\imagine\Image::resize($origen, 400, null)->save($destino);
             unlink($origen);

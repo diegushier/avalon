@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Generos;
+use app\models\ImageForm;
 use app\models\Integrantes;
 use Yii;
 use app\models\Libros;
@@ -13,6 +14,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use kartik\mpdf\Pdf;
+use yii\web\UploadedFile;
 
 /**
  * LibrosController implements the CRUD actions for Libros model.
@@ -133,6 +135,18 @@ class LibrosController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $imagen = new ImageForm();
+        $tipo = 'libro';
+
+        $editorial = Usuarios::obtainEmpresa()->one()->id;
+        $paises = Paises::lista();
+        $autor = Integrantes::lista();
+        $genero = Generos::lista();
+
+        if (Yii::$app->request->post()) {
+            $imagen->imagen = UploadedFile::getInstance($imagen, 'imagen');
+            $imagen->upload($id, $tipo);
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -140,6 +154,11 @@ class LibrosController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'imagen' => $imagen,
+            'editorial' => $editorial,
+            'paises' => $paises,
+            'genero' => $genero,
+            'autor' => $autor,
         ]);
     }
 

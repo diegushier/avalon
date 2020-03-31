@@ -109,10 +109,11 @@ class ShowsController extends Controller
     {
         $model = $this->findModel($id);
         $imagen = new ImageForm();
+        $tipo = 'cine';
 
         if (Yii::$app->request->post()) {
             $imagen->imagen = UploadedFile::getInstance($imagen, 'imagen');
-            $imagen->upload($id);
+            $imagen->upload($id, $tipo);
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {

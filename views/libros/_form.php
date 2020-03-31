@@ -14,6 +14,9 @@ use yii\helpers\Json;
 <div class="libros-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <?php if (isset($imagen)) : ?>
+        <?= $form->field($imagen, 'imagen')->fileInput() ?>
+    <?php endif ?>
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
 
