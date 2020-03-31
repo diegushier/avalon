@@ -13,6 +13,7 @@ use app\models\Usuarios;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use kartik\mpdf\Pdf;
 
 /**
  * LibrosController implements the CRUD actions for Libros model.
@@ -64,14 +65,36 @@ class LibrosController extends Controller
         $genero = $model->getGenero()->one();
         $duenio = $productora->entidad_id;
 
-        return $this->render('view', [
+        $render = [
             'model' => $model,
             'autor' => $autor->nombre,
             'productora' => $productora->nombre,
             'pais' => $pais->nombre,
             'genero' => $genero->nombre,
             'duenio' => $duenio
+        ];
+
+        return $this->render('view', $render);
+    }
+
+    public function actionResumen($id)
+    {
+        $model = Libros::findOne($id);
+        $content = file_get_contents(Yii::getAlias('@resumen/' . $id . '.txt'));
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_CORE, // leaner size using standard fonts
+            'destination' => Pdf::DEST_BROWSER,
+            'content' => $content,
+            'options' => [
+                // any mpdf options you wish to set
+            ],
+            'methods' => [
+                'SetTitle' => $model->nombre,
+                'SetFooter' => ['|Page {PAGENO}|'],
+                'SetAuthor' => $model->getAutor()->one()->nombre,
+            ]
         ]);
+        return $pdf->render();
     }
 
     /**

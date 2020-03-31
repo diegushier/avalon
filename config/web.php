@@ -1,5 +1,7 @@
 <?php
 
+use kartik\mpdf\Pdf;
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 $log = require __DIR__ . '/log.php';
@@ -11,6 +13,7 @@ $config = [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
+        '@resumen'  => '@app/web/resumen',
         '@img'   => '@app/web/img',
         '@imgUrl'  => '/img',
         '@imgLibrosUrl'  => '/img/libros',
@@ -53,6 +56,12 @@ $config = [
                 'encryption' => 'tls',
             ],
             
+        ],
+        'pdf' => [
+            'class' => Pdf::className(),
+            'format' => Pdf::FORMAT_A4,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
         ],
         'log' => $log,
         'db' => $db,

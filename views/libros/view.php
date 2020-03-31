@@ -57,6 +57,10 @@ $this->registerJs($back);
 
             <h5>Sinopsis</h5>
             <p><?= $model->sinopsis ?></p>
+
+            <?php if (file_exists(Yii::getAlias('@resumen/' . $model->id . '.txt'))) :?>
+                <?= Html::a('Ver', ['resumen', 'id' => $model->id], ['class' => 'btn btn-orange', 'target' => '_blank']) ?>
+            <?php endif ?>
         </div>
     </div>
 
