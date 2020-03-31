@@ -15,7 +15,7 @@ use yii\helpers\Json;
 
     <?php $form = ActiveForm::begin(); ?>
     <?php if (isset($imagen)) : ?>
-        <?= $form->field($imagen, 'imagen')->fileInput() ?>
+        <?= $form->field($imagen, 'imagen')->fileInput(['class' => ''])->label(false) ?>
     <?php endif ?>
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>

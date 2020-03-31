@@ -105,19 +105,25 @@ class LibrosController extends Controller
     public function actionCreate()
     {
         $model = new Libros();
+        $imagen = new ImageForm();
 
         $editorial = Usuarios::obtainEmpresa()->one()->id;
         $paises = Paises::lista();
         $autor = Integrantes::lista();
         $genero = Generos::lista();
-
+        $tipo = 'libro';
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if (Yii::$app->request->post()) {
+                $imagen->imagen = UploadedFile::getInstance($imagen, 'imagen');
+                $imagen->upload($model->id, $tipo);
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'imagen' => $imagen,
             'editorial' => $editorial,
             'paises' => $paises,
             'genero' => $genero,

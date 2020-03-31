@@ -88,13 +88,21 @@ class ShowsController extends Controller
     public function actionCreate()
     {
         $model = new Shows();
+        $imagen = new ImageForm();
+        $tipo = 'cine';
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if (Yii::$app->request->post()) {
+                $imagen->imagen = UploadedFile::getInstance($imagen, 'imagen');
+                $imagen->upload($model->id, $tipo);
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'imagen' => $imagen
         ]);
     }
 
