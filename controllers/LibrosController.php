@@ -110,7 +110,7 @@ class LibrosController extends Controller
         $paises = Paises::lista();
         $autor = Integrantes::lista();
         $genero = Generos::lista();
-        
+
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -145,7 +145,9 @@ class LibrosController extends Controller
 
         if (Yii::$app->request->post()) {
             $imagen->imagen = UploadedFile::getInstance($imagen, 'imagen');
-            $imagen->upload($id, $tipo);
+            if ($imagen->upload($id, $tipo)) {
+                return $this->redirect(['index']);
+            }
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
