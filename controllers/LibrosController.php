@@ -9,6 +9,7 @@ use Yii;
 use app\models\Libros;
 use app\models\LibrosSearch;
 use app\models\Paises;
+use app\models\Shows;
 use app\models\Usuarios;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -179,7 +180,9 @@ class LibrosController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findOne($id);
+        
+        $model->delete();
 
         return $this->redirect(['index']);
     }

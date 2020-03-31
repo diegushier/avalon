@@ -143,9 +143,18 @@ class ShowsController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $model = $this->findModel($id);
+        if ($model->getListacapitulos()->exists()) {
+            Yii::$app->session->setFlash('error', 'No es posible borrar esa serie porque contiene capítulos.');
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+        
+        if (!$model->delete()) {
+            Yii::$app->session->setFlash('error', 'Ha ocurrido un fallo en el servidor.');
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->redirect(['index']);
+        }
     }
 
     /**
