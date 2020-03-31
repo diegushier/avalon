@@ -24,6 +24,7 @@ $this->registerJs($back);
             <img src="<?= Yii::getAlias('@imgLibrosUrl/' . $model->id . '.jpg') ?>" class="m-3 p-1 w-100 shadow" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'">
         </div>
         <div class="views-container  mt-3 mb-3 col-lg-8">
+
             <table class="table col-lg-5">
                 <tbody>
                     <tr>
@@ -54,13 +55,11 @@ $this->registerJs($back);
                     </tr>
                 </tbody>
             </table>
-
+            <?php if (file_exists(Yii::getAlias('@resumen/' . $model->id . '.txt'))) : ?>
+                <?= Html::a('Ver', ['resumen', 'id' => $model->id], ['class' => 'btn btn-orange mb-2 w-50', 'target' => '_blank']) ?>
+            <?php endif ?>
             <h5>Sinopsis</h5>
             <p><?= $model->sinopsis ?></p>
-
-            <?php if (file_exists(Yii::getAlias('@resumen/' . $model->id . '.txt'))) :?>
-                <?= Html::a('Ver', ['resumen', 'id' => $model->id], ['class' => 'btn btn-orange', 'target' => '_blank']) ?>
-            <?php endif ?>
         </div>
     </div>
 
