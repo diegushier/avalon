@@ -2,7 +2,6 @@
 
 namespace app\controllers;
 
-use app\models\Empresas;
 use app\models\Generos;
 use app\models\Integrantes;
 use Yii;
@@ -90,7 +89,6 @@ class LibrosController extends Controller
             ],
             'methods' => [
                 'SetTitle' => $model->nombre,
-                'SetFooter' => ['|Page {PAGENO}|'],
                 'SetAuthor' => $model->getAutor()->one()->nombre,
             ]
         ]);

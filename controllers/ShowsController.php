@@ -2,10 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\ImageForm;
 use app\models\Paises;
 use Yii;
 use app\models\Shows;
 use app\models\ShowsSearch;
+use yii\web\UploadedFile;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -106,6 +108,12 @@ class ShowsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $imagen = new ImageForm();
+
+        if (Yii::$app->request->post()) {
+            $imagen->imagen = UploadedFile::getInstance($imagen, 'imagen');
+            $imagen->upload($id);
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -113,6 +121,7 @@ class ShowsController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'imagen' => $imagen
         ]);
     }
 

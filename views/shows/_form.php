@@ -12,6 +12,10 @@ use yii\bootstrap4\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?php if (isset($imagen)) : ?>
+        <?= $form->field($imagen, 'imagen')->fileInput() ?>
+    <?php endif ?>
+
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'productora_id')->textInput() ?>

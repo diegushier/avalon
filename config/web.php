@@ -13,8 +13,14 @@ $config = [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
+
+        //resumenes
         '@resumen'  => '@app/web/resumen',
+
+        //imagenes
         '@img'   => '@app/web/img',
+        '@imgCine'  => '@app/web/img/cine',
+        '@imgLibros'  => '@app/web/img/libros',
         '@imgUrl'  => '/img',
         '@imgLibrosUrl'  => '/img/libros',
         '@imgCineUrl'  => '/img/cine',
