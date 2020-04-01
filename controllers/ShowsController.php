@@ -88,7 +88,7 @@ class ShowsController extends Controller
 
         if ($model->tipo === 'serie') {
             $capitulos = $model->getCapitulos()->all();
-            $render[] = ['capitulos' => $capitulos,];
+            $render += ['capitulos' => $capitulos,];
         }
 
         return $this->render('view', $render);
