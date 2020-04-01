@@ -56,4 +56,8 @@ class Capitulos extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Listacapitulos::className(), ['capitulo_id' => 'id'])->inverseOf('capitulo');
     }
+
+    public static function findPorNombre($nombre) {
+        return static::findOne(['nombre' => $nombre]);
+    }
 }

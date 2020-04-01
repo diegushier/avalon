@@ -89,13 +89,18 @@ $this->registerJs($back);
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php foreach ($capitulos as $fila) : ?>
+                                        <?php $contador = 1; foreach ($capitulos as $fila) : ?>
+                                            <tr>
+                                                <td class="w-25"><?= $contador++ ?></td>
+                                                <td class="w-25"><?= $fila->nombre ?></td>
+                                                <td class="w-50"><?= $fila->sinopsis ?></td>
+                                            </tr>
+                                        <?php endforeach ?>
                                         <tr>
-                                            <td class="w-25"><?= $fila->id ?></td>
-                                            <td class="w-25"><?= $fila->nombre ?></td>
-                                            <td class="w-50"><?= $fila->sinopsis ?></td>
+                                            <?= Html::a('Añadir capítulo', ['/listacapitulos/create', 'id' => $model->id], [
+                                                    'class' => 'btn btn-warning w-100',
+                                                ]) ?>
                                         </tr>
-                                    <?php endforeach ?>
                                     </tbody>
                                 </table>
                             </div>
