@@ -25,7 +25,7 @@ $this->registerJs($back);
             <img src="<?= Yii::getAlias('@imgCineUrl/' . $model->id . '.jpg') ?>" class="m-3 p-1 w-100 shadow" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'">
         </div>
         <div class="views-container mt-3 mb-3 col-lg-8">
-            <button type="button" id="trailer" class="btn btn-orange mb-2" data-toggle="modal" data-target="#vertrailer">
+            <button type="button" id="trailer" class="btn btn-orange mb-2 mr-1" data-toggle="modal" data-target="#vertrailer">
                 Ver Trailer
             </button>
             <div class="modal fade" id="vertrailer" tabindex="-1" role="dialog" aria-labelledby="#vertrailerCenterTitle" aria-hidden="true">
