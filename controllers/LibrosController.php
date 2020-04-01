@@ -180,7 +180,7 @@ class LibrosController extends Controller
      */
     public function actionDelete($id)
     {
-        $model = $this->findOne($id);
+        $model = $this->findModel($id);
         
         $model->delete();
 
