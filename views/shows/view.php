@@ -2,6 +2,7 @@
 
 use wbraganca\videojs\VideoJsWidget;
 use yii\bootstrap4\Html;
+use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Shows */
@@ -24,10 +25,10 @@ $this->registerJs($back);
             <img src="<?= Yii::getAlias('@imgCineUrl/' . $model->id . '.jpg') ?>" class="m-3 p-1 w-100 shadow" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'">
         </div>
         <div class="views-container mt-3 mb-3 col-lg-8">
-            <button type="button" id="trailer" class="btn btn-danger" data-toggle="modal" data-target="#vertrailer">
+            <button type="button" id="trailer" class="btn btn-orange mb-2" data-toggle="modal" data-target="#vertrailer">
                 Ver Trailer
             </button>
-            <div class="modal fade" id="vertrailer"  tabindex="-1" role="dialog" aria-labelledby="#vertrailerCenterTitle" aria-hidden="true">
+            <div class="modal fade" id="vertrailer" tabindex="-1" role="dialog" aria-labelledby="#vertrailerCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content" style="width: 840px; height :464px;">
                         <div class="modal-header">
@@ -64,6 +65,47 @@ $this->registerJs($back);
                     </div>
                 </div>
             </div>
+            <?php if (isset($capitulos)) : ?>
+                <button type="button" id="delete" class="btn btn-orange mb-2" data-toggle="modal" data-target="#capitulos">
+                    Ver capitulos
+                </button>
+
+                <div class="modal fade" id="capitulos" tabindex="-1" role="dialog" aria-labelledby="#capitulosCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="#capitulosLongTitle">Capitulos</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Capitulo</th>
+                                            <th>Nombre</th>
+                                            <th>Sinopsis</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php foreach ($capitulos as $fila) : ?>
+                                        <tr>
+                                            <td class="w-25"><?= $fila->id ?></td>
+                                            <td class="w-25"><?= $fila->nombre ?></td>
+                                            <td class="w-50"><?= $fila->sinopsis ?></td>
+                                        </tr>
+                                    <?php endforeach ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endif ?>
             <table class="table col-lg-5">
                 <tbody>
                     <tr>

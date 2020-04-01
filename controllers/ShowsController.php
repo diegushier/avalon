@@ -2,11 +2,15 @@
 
 namespace app\controllers;
 
+use app\models\Capitulos;
 use app\models\ImageForm;
+use app\models\Listacapitulos;
 use app\models\Paises;
 use Yii;
 use app\models\Shows;
 use app\models\ShowsSearch;
+use yii\data\ActiveDataProvider;
+use yii\db\Query;
 use yii\web\UploadedFile;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -76,11 +80,16 @@ class ShowsController extends Controller
         $pais = Paises::findOne($model->pais_id);
         $duenio = $productora->entidad_id;
 
+        if ($model->tipo === 'serie') {
+            $capitulos = $model->getCapitulos()->all();
+        }
+
         return $this->render('view', [
             'model' => $model,
             'productora' => $productora->nombre,
             'pais' => $pais->nombre,
-            'duenio' => $duenio
+            'duenio' => $duenio,
+            'capitulos' => $capitulos,
         ]);
     }
 
