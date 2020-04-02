@@ -58,7 +58,7 @@ $this->registerJs($back);
                 </div>
             </div>
             <?php if (isset($capitulos)) : ?>
-                <button type="button" id="vercapitulos" class="btn btn-orange mb-2" data-toggle="modal" data-target="#capitulos">
+                <button type="button" id="vercapitulos" class="btn btn-orange mb-2 mr-1" data-toggle="modal" data-target="#capitulos">
                     Ver capitulos
                 </button>
 
@@ -90,6 +90,9 @@ $this->registerJs($back);
                                                 <?php if (!(Yii::$app->user->isGuest) && $duenio === Yii::$app->user->id) : ?>
                                                     <td style="width: 20%">
                                                         <button type="button" id="<?= str_replace(' ', '_', $model->nombre) . '-' . $fila->id ?>" class="btn btn-orange mb-2 mr-1" data-toggle="modal" data-target="#borrarCapitulo">X</button>
+                                                        <?= Html::a('&#x2699', ['/capitulos/update', 'id' => $fila->id, 'modelid' => $model->id], [
+                                                            'class' => 'btn btn-orange mb-2 mr-1',
+                                                        ]) ?>
                                                     </td>
                                                 <?php endif ?>
                                             </tr>
@@ -109,6 +112,13 @@ $this->registerJs($back);
                     </div>
                 </div>
             <?php endif ?>
+            <?php if (!(Yii::$app->user->isGuest) && $duenio === Yii::$app->user->id) : ?>
+                <?= Html::a('&#x2699', ['update', 'id' => $model->id], ['style' => 'font-size: 15px', 'class' => 'btn btn-success mb-2 mr-1']) ?>
+                <button type="button" id="delete" class="btn btn-danger mb-2 mr-1" style="font-size: 20px" data-toggle="modal" data-target="#borrarEmpresa">
+                    &times
+                </button>
+            <?php endif ?>
+
             <table class="table col-lg-5">
                 <tbody>
                     <tr>
@@ -133,11 +143,6 @@ $this->registerJs($back);
 
     <?php if (!(Yii::$app->user->isGuest) && $duenio === Yii::$app->user->id) : ?>
         <div>
-            <?= Html::a('Modificar ' . $model->nombre, ['update', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
-            <button type="button" id="delete" class="btn btn-danger" data-toggle="modal" data-target="#borrarEmpresa">
-                Eliminar <?= $model->nombre ?>
-            </button>
-
             <div class="modal fade" id="borrarEmpresa" tabindex="-1" role="dialog" aria-labelledby="#borrarEmpresaCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
