@@ -15,6 +15,7 @@ use yii\web\UploadedFile;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * ShowsController implements the CRUD actions for Shows model.
@@ -88,7 +89,12 @@ class ShowsController extends Controller
 
         if ($model->tipo === 'serie') {
             $capitulos = $model->getCapitulos()->all();
-            $render += ['capitulos' => $capitulos,];
+            $ids = $model->getCapitulos()->select('id')->all();
+
+            $render += [
+                'capitulos' => $capitulos,
+                'ids' => $ids,
+            ];
         }
 
         return $this->render('view', $render);

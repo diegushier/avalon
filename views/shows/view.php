@@ -3,6 +3,8 @@
 use wbraganca\videojs\VideoJsWidget;
 use yii\bootstrap4\Html;
 use yii\grid\GridView;
+use yii\helpers\Json;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Shows */
@@ -15,6 +17,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $back = "$('body').css('background-image', 'url( " . Yii::getAlias('@imgBackLibrosUrl/' . $model->id . '.jpg') . ")')
          $('#back').css('background-color', '#fff')
+
+         ids = " . Json::encode($ids) . "
+         $.each(ids, (k, v) => {
+            $('#" . str_replace(' ', '_', $model->nombre) . "' + '-' +v['id']).click(() => {
+                var aux = $('#output').attr('href');
+                aux = aux.replace(/\&id\=\d+\&/, '&id='+v['id']+'&');
+                $('#output').attr('href', aux);
+            });
+         });
 ";
 
 $this->registerJs($back);
@@ -38,26 +49,7 @@ $this->registerJs($back);
                             </button>
                         </div>
                         <div class="modal-body">
-                            <?= VideoJsWidget::widget([
-                                'options' => [
-                                    'class' => 'video-js vjs-default-skin vjs-big-play-centered',
-                                    'width' => '640',
-                                    'height' => '264',
-                                    'controls' => true,
-                                ],
-                                'jsOptions' => [
-                                    'preload' => 'auto',
-                                ],
-                                'tags' => [
-                                    'source' => [
-                                        ['src' => 'http://vjs.zencdn.net/v/oceans.mp4', 'type' => 'video/mp4'],
-                                        ['src' => 'http://vjs.zencdn.net/v/oceans.webm', 'type' => 'video/webm']
-                                    ],
-                                    'track' => [
-                                        ['kind' => 'captions', 'src' => 'http://vjs.zencdn.net/vtt/captions.vtt', 'srclang' => 'en', 'label' => 'English']
-                                    ]
-                                ]
-                            ]) ?>
+                            EN MANTENIMIENTO.......................
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -66,7 +58,7 @@ $this->registerJs($back);
                 </div>
             </div>
             <?php if (isset($capitulos)) : ?>
-                <button type="button" id="delete" class="btn btn-orange mb-2" data-toggle="modal" data-target="#capitulos">
+                <button type="button" id="vercapitulos" class="btn btn-orange mb-2" data-toggle="modal" data-target="#capitulos">
                     Ver capitulos
                 </button>
 
@@ -89,17 +81,23 @@ $this->registerJs($back);
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php $contador = 1; foreach ($capitulos as $fila) : ?>
+                                        <?php $contador = 1;
+                                        foreach ($capitulos as $fila) : ?>
                                             <tr>
-                                                <td class="w-25"><?= $contador++ ?></td>
-                                                <td class="w-25"><?= $fila->nombre ?></td>
-                                                <td class="w-50"><?= $fila->sinopsis ?></td>
+                                                <td style="width: 10%"><?= $contador++ ?></td>
+                                                <td style="width: 10%"><?= $fila->nombre ?></td>
+                                                <td style="width: 60%"><?= $fila->sinopsis ?></td>
+                                                <?php if (!(Yii::$app->user->isGuest) && $duenio === Yii::$app->user->id) : ?>
+                                                    <td style="width: 20%">
+                                                        <button type="button" id="<?= str_replace(' ', '_', $model->nombre) . '-' . $fila->id ?>" class="btn btn-orange mb-2 mr-1" data-toggle="modal" data-target="#borrarCapitulo">X</button>
+                                                    </td>
+                                                <?php endif ?>
                                             </tr>
                                         <?php endforeach ?>
                                         <tr>
                                             <?= Html::a('Añadir capítulo', ['/listacapitulos/create', 'id' => $model->id], [
-                                                    'class' => 'btn btn-warning w-100',
-                                                ]) ?>
+                                                'class' => 'btn btn-warning w-100',
+                                            ]) ?>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -163,6 +161,32 @@ $this->registerJs($back);
 
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="borrarCapitulo" tabindex="-1" role="dialog" aria-labelledby="#borrarCapituloCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="borrarCapituloLongTitle"><?= $fila->nombre ?></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Está seguro de borrar este capítulo?
+                    </div>
+                    <div class="modal-footer">
+                        <?= Html::a('Si', ['/listacapitulos/delete', 'id' => $fila->id, 'serie' => $model->id], [
+                            'id' => 'output',
+                            'class' => 'btn btn-danger',
+                            'data' => [
+                                'method' => 'post',
+                            ],
+                        ]) ?>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
             </div>

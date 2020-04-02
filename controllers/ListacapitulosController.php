@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Capitulos;
 use app\models\CapitulosForm;
 use Yii;
 use app\models\Listacapitulos;
@@ -78,11 +79,18 @@ class ListacapitulosController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($id, $serie)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $model = $this->findModel($id);
+        $capitulo = Capitulos::findOne($model->capitulo_id);
+        if ($model->delete()) {
+            $capitulo->delete();
+            Yii::$app->session->setFlash('success', 'El capitulo ha sido eliminado');
+        } else {
+            Yii::$app->session->setFlash('Error', 'No ha sido posible borrar el capítulo.');
+        }
+        
+        return $this->redirect(['/shows/view', 'id' => $serie]);
     }
 
     /**
