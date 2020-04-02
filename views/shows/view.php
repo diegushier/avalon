@@ -13,20 +13,25 @@ $this->title = $model->nombre;
 $this->params['breadcrumbs'][] = ['label' =>  'shows', 'url' => [$model->tipo . 's']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+$quest = (Yii::$app->user->isGuest) && $duenio === Yii::$app->user->id;
 
 
 $back = "$('body').css('background-image', 'url( " . Yii::getAlias('@imgBackLibrosUrl/' . $model->id . '.jpg') . ")')
-         $('#back').css('background-color', '#fff')
+         $('#back').css('background-color', '#fff') ";
 
-         ids = " . Json::encode($ids) . "
-         $.each(ids, (k, v) => {
-            $('#" . str_replace(' ', '_', $model->nombre) . "' + '-' +v['id']).click(() => {
-                var aux = $('#output').attr('href');
-                aux = aux.replace(/\&id\=\d+\&/, '&id='+v['id']+'&');
-                $('#output').attr('href', aux);
+
+if (!$quest && isset($ids)) {
+    $js = "ids = " . Json::encode($ids) . "
+            $.each(ids, (k, v) => {
+                $('#" . str_replace(' ', '_', $model->nombre) . "' + '-' +v['id']).click(() => {
+                    var aux = $('#output').attr('href');
+                    aux = aux.replace(/\&id\=\d+\&/, '&id='+v['id']+'&');
+                    $('#output').attr('href', aux);
+                });
             });
-         });
-";
+    ";
+}
+
 
 $this->registerJs($back);
 ?>
@@ -87,7 +92,7 @@ $this->registerJs($back);
                                                 <td style="width: 10%"><?= $contador++ ?></td>
                                                 <td style="width: 10%"><?= $fila->nombre ?></td>
                                                 <td style="width: 60%"><?= $fila->sinopsis ?></td>
-                                                <?php if (!(Yii::$app->user->isGuest) && $duenio === Yii::$app->user->id) : ?>
+                                                <?php if (!($quest)) : ?>
                                                     <td style="width: 20%">
                                                         <button type="button" id="<?= str_replace(' ', '_', $model->nombre) . '-' . $fila->id ?>" class="btn btn-orange mb-2 mr-1" data-toggle="modal" data-target="#borrarCapitulo">X</button>
                                                         <?= Html::a('&#x2699', ['/capitulos/update', 'id' => $fila->id, 'modelid' => $model->id], [
@@ -95,6 +100,31 @@ $this->registerJs($back);
                                                         ]) ?>
                                                     </td>
                                                 <?php endif ?>
+                                                <div class="modal fade" id="borrarCapitulo" tabindex="-1" role="dialog" aria-labelledby="#borrarCapituloCenterTitle" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="borrarCapituloLongTitle"><?= $fila->nombre ?></h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                ¿Está seguro de borrar este capítulo?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <?= Html::a('Si', ['/listacapitulos/delete', 'id' => $fila->id, 'serie' => $model->id], [
+                                                                    'id' => 'output',
+                                                                    'class' => 'btn btn-danger',
+                                                                    'data' => [
+                                                                        'method' => 'post',
+                                                                    ],
+                                                                ]) ?>
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </tr>
                                         <?php endforeach ?>
                                         <tr>
@@ -112,7 +142,7 @@ $this->registerJs($back);
                     </div>
                 </div>
             <?php endif ?>
-            <?php if (!(Yii::$app->user->isGuest) && $duenio === Yii::$app->user->id) : ?>
+            <?php if (!($quest)) : ?>
                 <?= Html::a('&#x2699', ['update', 'id' => $model->id], ['style' => 'font-size: 15px', 'class' => 'btn btn-success mb-2 mr-1']) ?>
                 <button type="button" id="delete" class="btn btn-danger mb-2 mr-1" style="font-size: 20px" data-toggle="modal" data-target="#borrarEmpresa">
                     &times
@@ -141,7 +171,7 @@ $this->registerJs($back);
         </div>
     </div>
 
-    <?php if (!(Yii::$app->user->isGuest) && $duenio === Yii::$app->user->id) : ?>
+    <?php if (!($quest)) : ?>
         <div>
             <div class="modal fade" id="borrarEmpresa" tabindex="-1" role="dialog" aria-labelledby="#borrarEmpresaCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -166,32 +196,6 @@ $this->registerJs($back);
 
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="borrarCapitulo" tabindex="-1" role="dialog" aria-labelledby="#borrarCapituloCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="borrarCapituloLongTitle"><?= $fila->nombre ?></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        ¿Está seguro de borrar este capítulo?
-                    </div>
-                    <div class="modal-footer">
-                        <?= Html::a('Si', ['/listacapitulos/delete', 'id' => $fila->id, 'serie' => $model->id], [
-                            'id' => 'output',
-                            'class' => 'btn btn-danger',
-                            'data' => [
-                                'method' => 'post',
-                            ],
-                        ]) ?>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
             </div>

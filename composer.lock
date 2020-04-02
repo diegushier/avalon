@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d40f98a58662d0c7b5548ac2ad1935e9",
+    "content-hash": "243505fbde19b0c0b669733e6c7960aa",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -32,7 +32,7 @@
             "version": "3.4.1",
             "source": {
                 "type": "git",
-                "url": "git@github.com:jquery/jquery-dist.git",
+                "url": "https://github.com/jquery/jquery-dist.git",
                 "reference": "15bc73803f76bc53b654b9fdbbbc096f56d7c03d"
             },
             "dist": {
@@ -78,21 +78,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/bestiejs/punycode.js/zipball/38c8d3131a82567bfef18da09f7f4db68c84f8a3",
                 "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3"
-            },
-            "type": "bower-asset"
-        },
-        {
-            "name": "bower-asset/video.js",
-            "version": "v5.1.0",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:videojs/video.js.git",
-                "reference": "19ee5100eaed903862203e169b1567f84c093548"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/videojs/video.js/zipball/19ee5100eaed903862203e169b1567f84c093548",
-                "reference": "19ee5100eaed903862203e169b1567f84c093548"
             },
             "type": "bower-asset"
         },
@@ -806,6 +791,47 @@
             "time": "2019-12-16T09:37:15+00:00"
         },
         {
+            "name": "lesha724/yii2-youtube-widget",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lesha724/yii2-youtube-widget.git",
+                "reference": "a731e80deab7eb8f1ffa06e3f134153f1b7d0144"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lesha724/yii2-youtube-widget/zipball/a731e80deab7eb8f1ffa06e3f134153f1b7d0144",
+                "reference": "a731e80deab7eb8f1ffa06e3f134153f1b7d0144",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "lesha724\\youtubewidget\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "lesha724",
+                    "email": "neff.alexey@gmail.com"
+                }
+            ],
+            "description": "yii2-youtube-widget",
+            "keywords": [
+                "extension",
+                "yii2",
+                "youtube"
+            ],
+            "time": "2017-03-03T13:18:40+00:00"
+        },
+        {
             "name": "mpdf/mpdf",
             "version": "v8.0.5",
             "source": {
@@ -1383,64 +1409,6 @@
                 "shim"
             ],
             "time": "2020-02-27T09:26:54+00:00"
-        },
-        {
-            "name": "wbraganca/yii2-videojs-widget",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/wbraganca/yii2-videojs-widget.git",
-                "reference": "e8d0f161af6a5cc47e3c74edee680879d94818a8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/wbraganca/yii2-videojs-widget/zipball/e8d0f161af6a5cc47e3c74edee680879d94818a8",
-                "reference": "e8d0f161af6a5cc47e3c74edee680879d94818a8",
-                "shasum": ""
-            },
-            "require": {
-                "bower-asset/video.js": "~5.1.0",
-                "yiisoft/yii2": "~2.0"
-            },
-            "type": "yii2-extension",
-            "extra": {
-                "asset-installer-paths": {
-                    "npm-asset-library": "vendor/npm",
-                    "bower-asset-library": "vendor/bower"
-                },
-                "asset-ignore-files": {
-                    "bower-asset/video.js": [
-                        "*/**",
-                        "!dist/*"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "wbraganca\\videojs\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Wanderson Bragança",
-                    "email": "wanderson.wbc@gmail.com",
-                    "homepage": "http://wbraganca.com"
-                }
-            ],
-            "description": "The yii2-videojs-widget is a Yii 2 wrapper for the [video.js](http://www.videojs.com/). A JavaScript and CSS library that makes it easier to work with and build on HTML5 video. This is also known as an HTML5 Video Player.",
-            "keywords": [
-                "html5 video",
-                "videojs",
-                "yii2",
-                "yii2-extension",
-                "yii2-videojs",
-                "yii2-videojs-widget"
-            ],
-            "time": "2015-11-05T18:39:32+00:00"
         },
         {
             "name": "xtetis/yii2-bootstrap4-glyphicons",
@@ -2429,16 +2397,16 @@
         },
         {
             "name": "codeception/module-webdriver",
-            "version": "1.0.6",
+            "version": "1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/module-webdriver.git",
-                "reference": "9ee54108860859b120ed4a22e50f37d33aa3a518"
+                "reference": "f05c5c25e39d10fbfb2d508779e1537df019ff9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/module-webdriver/zipball/9ee54108860859b120ed4a22e50f37d33aa3a518",
-                "reference": "9ee54108860859b120ed4a22e50f37d33aa3a518",
+                "url": "https://api.github.com/repos/Codeception/module-webdriver/zipball/f05c5c25e39d10fbfb2d508779e1537df019ff9b",
+                "reference": "f05c5c25e39d10fbfb2d508779e1537df019ff9b",
                 "shasum": ""
             },
             "require": {
@@ -2480,7 +2448,7 @@
                 "browser-testing",
                 "codeception"
             ],
-            "time": "2020-03-23T17:08:27+00:00"
+            "time": "2020-04-01T10:18:18+00:00"
         },
         {
             "name": "codeception/module-yii2",
@@ -2830,20 +2798,21 @@
         },
         {
             "name": "doctrine/annotations",
-            "version": "v1.8.0",
+            "version": "1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "904dca4eb10715b92569fbcd79e201d5c349b6bc"
+                "reference": "233e36632422cfc5cc499f14ad6c1476b50cb7b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/904dca4eb10715b92569fbcd79e201d5c349b6bc",
-                "reference": "904dca4eb10715b92569fbcd79e201d5c349b6bc",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/233e36632422cfc5cc499f14ad6c1476b50cb7b1",
+                "reference": "233e36632422cfc5cc499f14ad6c1476b50cb7b1",
                 "shasum": ""
             },
             "require": {
                 "doctrine/lexer": "1.*",
+                "ext-tokenizer": "*",
                 "php": "^7.1"
             },
             "require-dev": {
@@ -2853,7 +2822,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.7.x-dev"
+                    "dev-master": "1.9.x-dev"
                 }
             },
             "autoload": {
@@ -2894,7 +2863,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2019-10-01T18:55:10+00:00"
+            "time": "2020-04-02T08:15:55+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -7688,7 +7657,6 @@
         "kartik-v/yii2-widget-datetimepicker": 20,
         "kartik-v/yii2-widget-datepicker": 20,
         "kartik-v/yii2-mpdf": 20,
-        "wbraganca/yii2-videojs-widget": 20,
         "yiisoft/yii2-apidoc": 20,
         "codeception/verify": 20
     },
