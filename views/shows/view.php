@@ -1,6 +1,6 @@
 <?php
 
-use wbraganca\videojs\VideoJsWidget;
+use lesha724\youtubewidget\Youtube;
 use yii\bootstrap4\Html;
 use yii\grid\GridView;
 use yii\helpers\Json;
@@ -8,7 +8,7 @@ use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Shows */
-// https://www.youtube.com/watch?v=nWHUjuJ8zxE
+
 $this->title = $model->nombre;
 $this->params['breadcrumbs'][] = ['label' =>  'shows', 'url' => [$model->tipo . 's']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -46,7 +46,7 @@ $this->registerJs($back);
             </button>
             <div class="modal fade" id="vertrailer" tabindex="-1" role="dialog" aria-labelledby="#vertrailerCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content" style="width: 840px; height :464px;">
+                    <div class="modal-content" style="width: 840px; height :500px;">
                         <div class="modal-header">
                             <h5 class="modal-title" id="#vertrailerLongTitle"><?= $model->nombre ?></h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -54,7 +54,6 @@ $this->registerJs($back);
                             </button>
                         </div>
                         <div class="modal-body">
-                            EN MANTENIMIENTO.......................
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
