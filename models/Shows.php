@@ -61,9 +61,9 @@ class Shows extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nombre' => 'Nombre',
-            'productora_id' => 'Productora ID',
+            'productora_id' => 'Productora',
             'tipo' => 'Tipo',
-            'pais_id' => 'Pais ID',
+            'pais_id' => 'Pais',
             'fecha' => 'Fecha',
             'sinopsis' => 'Sinopsis',
         ];

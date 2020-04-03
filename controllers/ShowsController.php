@@ -9,6 +9,7 @@ use app\models\Paises;
 use Yii;
 use app\models\Shows;
 use app\models\ShowsSearch;
+use app\models\Usuarios;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
 use yii\web\UploadedFile;
@@ -110,6 +111,11 @@ class ShowsController extends Controller
         $model = new Shows();
         $imagen = new ImageForm();
         $tipo = 'cine';
+        $empresa = Usuarios::findOne(Yii::$app->user->id)->getEmpresas()->one()->id;
+        $paises = Paises::lista();
+
+        Yii::debug(Yii::$app->request->post());
+        Yii::debug($model->save());
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if (Yii::$app->request->post()) {
@@ -122,7 +128,9 @@ class ShowsController extends Controller
 
         return $this->render('create', [
             'model' => $model,
-            'imagen' => $imagen
+            'imagen' => $imagen,
+            'empresa' => $empresa,
+            'paises' => $paises,
         ]);
     }
 
@@ -138,6 +146,8 @@ class ShowsController extends Controller
         $model = $this->findModel($id);
         $imagen = new ImageForm();
         $tipo = 'cine';
+        $empresa = Usuarios::findOne(Yii::$app->user->id)->getEmpresas()->one()->id;
+
 
         if (Yii::$app->request->post()) {
             $imagen->imagen = UploadedFile::getInstance($imagen, 'imagen');
@@ -150,7 +160,8 @@ class ShowsController extends Controller
 
         return $this->render('update', [
             'model' => $model,
-            'imagen' => $imagen
+            'imagen' => $imagen,
+            'empresa' => $empresa,
         ]);
     }
 
@@ -164,18 +175,31 @@ class ShowsController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
+        $tipo = $model->tipo === 'serie';
         if ($model->getListacapitulos()->exists()) {
             Yii::$app->session->setFlash('error', 'No es posible borrar esa serie porque contiene capítulos.');
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
-        $model->getListageneros()->delete();
         
+        $generos = $model->getListageneros()->all();
+        foreach ($generos as $generos) {
+            $generos->delete();
+        }
+
+        $reparto = $model->getRepartos()->all();
+        foreach ($reparto as $reparto) {
+            $reparto->delete();
+        }
+
         if (!$model->delete()) {
             Yii::$app->session->setFlash('error', 'Ha ocurrido un fallo en el servidor.');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->redirect(['index']);
+            if ($tipo) {
+                return $this->redirect(['series']);
+            } else {
+                return $this->redirect(['peliculas']);
+            }
         }
     }
 
