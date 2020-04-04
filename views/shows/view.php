@@ -148,7 +148,7 @@ $this->registerJs($back);
                 </button>
             <?php endif ?>
 
-            <table class="table col-lg-5">
+            <table class="table col-lg-8 col-sm-12">
                 <tbody>
                     <tr>
                         <td>Nombre</td>
@@ -171,6 +171,10 @@ $this->registerJs($back);
                             }
                             echo implode(', ', $output);
                             ?>
+
+                            <?php if ($quest) : ?>
+                                <?= Html::a('+', ['/listageneros/create', 'id' => $model->id], ['class' => 'btn btn-success ml-2']) ?>
+                            <?php endif ?>
                         </td>
                     </tr>
                 </tbody>

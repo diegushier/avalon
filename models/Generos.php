@@ -65,6 +65,10 @@ class Generos extends \yii\db\ActiveRecord
         return $this->hasMany(Listageneros::className(), ['genero_id' => 'id'])->inverseOf('genero');
     }
 
+    public static function findPorNombre($nombre) {
+        return static::findOne(['nombre' => $nombre]);
+    }
+
     public static function lista()
     {
         return static::find()->select('nombre')->orderBy('nombre')->indexBy('id')->column();

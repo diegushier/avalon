@@ -5,17 +5,17 @@ use yii\bootstrap4\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Listacapitulos */
 
-$this->title = 'Update Listacapitulos: ' . $model->id;
+$this->title = 'Create Listacapitulos';
 $this->params['breadcrumbs'][] = ['label' => 'Listacapitulos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="listacapitulos-update">
+<div class="listacapitulos-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
+        'id' => $id
     ]) ?>
 
 </div>
