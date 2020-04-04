@@ -2,7 +2,9 @@
 
 namespace app\controllers;
 
+use app\models\Generos;
 use app\models\GenerosForm;
+use app\models\Listageneros;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -35,18 +37,25 @@ class ListagenerosController extends Controller
      */
     public function actionCreate($id)
     {
-        $model = new GenerosForm();
+        $model = new Listageneros();
+        $generos = Generos::lista();
         
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->create($model)) {
-                return $this->redirect(['/shows/view', 'id' => $model->objetos_id]);
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['/shows/view', 'id' => $id]);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'generos' => $generos,
             'id' => $id
         ]);
+    }
+
+    public function actionDelete($id, $serie)
+    {
+        $model = $this->findModel($id);
+        $model->delete();
+        return $this->redirect(['/shows/view', 'id' => $serie]);
     }
 
     /**
@@ -56,9 +65,10 @@ class ListagenerosController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id, $serie)
     {
         $model = $this->findModel($id);
+        $generos = Generos::lista();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -66,40 +76,21 @@ class ListagenerosController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'generos' => $generos,
+            'id' => $serie,
         ]);
     }
 
     /**
-     * Deletes an existing Listacapitulos model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id, $serie)
-    {
-        $model = $this->findModel($id);
-        $capitulo = Capitulos::findOne($model->capitulo_id);
-        if ($model->delete()) {
-            $capitulo->delete();
-            Yii::$app->session->setFlash('success', 'El capitulo ha sido eliminado');
-        } else {
-            Yii::$app->session->setFlash('Error', 'No ha sido posible borrar el capítulo.');
-        }
-        
-        return $this->redirect(['/shows/view', 'id' => $serie]);
-    }
-
-    /**
-     * Finds the Listacapitulos model based on its primary key value.
+     * Finds the Capitulos model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Listacapitulos the loaded model
+     * @return Capitulos the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Listacapitulos::findOne($id)) !== null) {
+        if (($model = Listageneros::findOne($id)) !== null) {
             return $model;
         }
 

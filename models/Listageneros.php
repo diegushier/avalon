@@ -45,8 +45,8 @@ class Listageneros extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'objetos_id' => 'Objetos ID',
-            'genero_id' => 'Genero ID',
+            'objetos_id' => 'Show',
+            'genero_id' => 'Genero',
         ];
     }
 

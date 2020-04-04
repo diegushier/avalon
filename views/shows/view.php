@@ -17,11 +17,14 @@ $quest = !(Yii::$app->user->isGuest) && ($duenio === Yii::$app->user->id);
 
 
 $back = "$('body').css('background-image', 'url( " . Yii::getAlias('@imgBackLibrosUrl/' . $model->id . '.jpg') . ")')
-         $('#back').css('background-color', '#fff') ";
+         $('#back').css('background-color', '#fff')
+         $(function () {
+            $('[data-toggle=" . 'popover' . "]').popover()
+          })";
 
 
 if ($quest && isset($ids)) {
-    $js = "ids = " . Json::encode($ids) . "
+    $modal = "ids = " . Json::encode($ids) . "
             $.each(ids, (k, v) => {
                 $('#" . str_replace(' ', '_', $model->nombre) . "' + '-' +v['id']).click(() => {
                     var aux = $('#output').attr('href');
@@ -29,7 +32,8 @@ if ($quest && isset($ids)) {
                     $('#output').attr('href', aux);
                 });
             });
-    ";
+        ";
+    $this->registerJs($modal);
 }
 
 
@@ -142,6 +146,7 @@ $this->registerJs($back);
                 </div>
             <?php endif ?>
             <?php if ($quest) : ?>
+                <?= Html::a('Añadir genero', ['/listageneros/create', 'id' => $model->id], ['class' => 'btn btn-success mb-2 mr-1']) ?>
                 <?= Html::a('&#x2699', ['update', 'id' => $model->id], ['style' => 'font-size: 15px', 'class' => 'btn btn-success mb-2 mr-1']) ?>
                 <button type="button" id="delete" class="btn btn-danger mb-2 mr-1" style="font-size: 20px" data-toggle="modal" data-target="#borrarEmpresa">
                     &times
@@ -165,16 +170,24 @@ $this->registerJs($back);
                     <tr>
                         <td>Generos</td>
                         <td>
-                            <?php $output = [];
-                            foreach ($generos as $g) {
-                                $output[] = ucwords($g->nombre);
-                            }
-                            echo implode(', ', $output);
-                            ?>
+                            <?php $contador = 0;
+                            foreach ($generos as $g) : ?>
+                                <div class="btn-group dropright">
+                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="<?= $contador++ . '-' . $g->nombre ?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <?= $g->nombre ?>
+                                    </a>
 
-                            <?php if ($quest) : ?>
-                                <?= Html::a('+', ['/listageneros/create', 'id' => $model->id], ['class' => 'btn btn-success ml-2']) ?>
-                            <?php endif ?>
+                                    <div class="dropdown-menu p-0 ml-1" aria-labelledby="dropdownMenuLink">
+                                        <?= Html::a('Modificar', ['/listageneros/update', 'id' => $g->id, 'serie' => $model->id], ['class' => 'btn btn-orange']) ?>
+                                        <?= Html::a('Borrar', ['/listageneros/delete', 'id' => $g->id, 'serie' => $model->id], [
+                                            'class' => 'btn btn-danger',
+                                            'data' => [
+                                                'method' => 'post',
+                                            ],
+                                        ]) ?>
+                                    </div>
+                                </div>
+                            <?php endforeach ?>
                         </td>
                     </tr>
                 </tbody>
