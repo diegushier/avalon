@@ -79,14 +79,17 @@ class ShowsController extends Controller
     {
         $model = Shows::findOne($id);
         $productora = $model->getProductora()->one();
-        $pais = Paises::findOne($model->pais_id);
+        $generos = $model->getGeneros()->select('nombre')->all();
+        $pais = Paises::findOne($model->pais_id)->nombre;
         $duenio = $productora->entidad_id;
         $render = [
             'model' => $model,
             'productora' => $productora->nombre,
-            'pais' => $pais->nombre,
+            'pais' => $pais,
+            'generos' => $generos,
             'duenio' => $duenio,
         ];
+
 
         if ($model->tipo === 'serie') {
             $capitulos = $model->getCapitulos()->all();

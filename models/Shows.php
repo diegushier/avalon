@@ -94,6 +94,11 @@ class Shows extends \yii\db\ActiveRecord
         return $this->hasMany(Listageneros::className(), ['objetos_id' => 'id'])->inverseOf('objetos');
     }
 
+    public function getGeneros()
+    {
+        return $this->hasMany(Generos::className(), ['id' => 'genero_id'])->via('listageneros');
+    }
+
     /**
      * Gets query for [[Repartos]].
      *
