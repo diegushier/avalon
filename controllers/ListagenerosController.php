@@ -53,7 +53,7 @@ class ListagenerosController extends Controller
 
     public function actionDelete($id, $serie)
     {
-        $model = $this->findModel($id);
+        $model = Listageneros::find()->where('objetos_id = ' . $serie)->andWhere('genero_id = ' . $id)->one();
         $model->delete();
         return $this->redirect(['/shows/view', 'id' => $serie]);
     }
