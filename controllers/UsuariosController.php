@@ -7,8 +7,6 @@ use app\models\Paises;
 use app\models\Usuarios;
 use Yii;
 use yii\bootstrap4\ActiveForm;
-use yii\bootstrap4\Alert;
-use yii\db\Query;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
