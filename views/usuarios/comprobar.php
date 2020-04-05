@@ -16,9 +16,10 @@ $js = "$('body').css({
     ";
 
 $this->registerJs($js);
-$this->title = 'Login';
+$this->title = 'Recuperar';
 ?>
-<div class="site-login">
+<div class="usuarios-recuperar">
+
     <div class="container bg-white w-sm w-lg w-xl rounded shadow-sm">
         <div class="mb-3 p-1">
             <h1 class="titles text-center border-bottom-1 pt-3 mb-3"><?= Html::encode($this->title) ?></h1>
@@ -31,23 +32,17 @@ $this->title = 'Login';
                     'horizontalCssClasses' => ['wrapper' => 'col-sm-5'],
                 ],
             ]); ?>
-            <?= $form->field($model, 'username')->textInput(['placeholder' => 'Usuario', 'value' => '', 'class' => 'inputs mb-3'])->label(false) ?>
 
-            <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Contraseña', 'value' => '', 'class' => 'inputs'])->label(false) ?>
+            <?= $form->field($model, 'passwd')->passwordInput(['placeholder' => 'Nueva Contraseña', 'value' => '', 'class' => 'inputs col-12'])->label(false) ?>
+            <?= $form->field($model, 'passwd_repeat')->passwordInput(['placeholder' => 'Repita la contraseña', 'value' => '', 'class' => 'inputs col-12'])->label(false) ?>
 
-            <?= $form->field($model, 'rememberMe')->checkbox() ?>            
+            <p>Por favor, ingrese su correo para poder verificar que usted tiene cuenta.</p>
             <hr>
             <div class="form-group">
                 <div class="offset-sm-2">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-orange col-4', 'data-toggle' => 'modal', 'data-target' => '#loading', 'name' => 'login-button']) ?>
-
-                    <?= Html::a('Registrarse', ['usuarios/registrar'], ['class' => 'btn btn-orange col-6', 'name' => 'login-button']) ?>
+                    <?= Html::submitButton('Cambiar', ['class' => 'btn btn-orange col-12 mx-auto', 'data-toggle' => 'modal', 'data-target' => '#loading', 'name' => 'login-button']) ?>
                 </div>
             </div>
-
-
-            <?= Html::a('He olvidado mi contraseña', ['usuarios/recuperar'], ['class' => 'btn btn-orange col-12', 'name' => 'login-button']) ?>
-
 
             <div class="modal fade" id="loading" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">

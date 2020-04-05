@@ -4,9 +4,11 @@ namespace app\controllers;
 
 use app\models\Empresas;
 use app\models\Paises;
+use app\models\Recuperar;
 use app\models\Usuarios;
 use Yii;
 use yii\bootstrap4\ActiveForm;
+use yii\bootstrap4\Html;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -47,7 +49,8 @@ class UsuariosController extends Controller
         $model->setAttribute('clave', $clave);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $this->sendMail($model->correo, $clave);
+            $mensaje = 'Este correo ha sido generado para pruebas. Esta es su clave: ' . $clave;
+            $this->sendMail($model->correo, $mensaje);
             Yii::$app->session->setFlash('success', 'Se ha creado el usuario correctamente.');
             return $this->redirect(['site/login']);
         }
@@ -103,7 +106,7 @@ class UsuariosController extends Controller
                 return $this->goHome();
             }
         }
-        
+
         $model = Yii::$app->user->identity;
         $model->scenario = Usuarios::SCENARIO_UPDATE;
         $exists = $model->getEmpresas();
@@ -134,6 +137,44 @@ class UsuariosController extends Controller
         return $this->render('modificar', $render);
     }
 
+    public function actionRecuperar()
+    {
+        $model = new Recuperar();
+        $params = Yii::$app->request->post();
+        if ($params) {
+            $model->correo = $params['Recuperar']['correo'];
+            $mensaje = Html::a('Cambiar contraseña', ['usuarios/comprobar'], [
+                'class' => 'btn btn-danger',
+                'id' => 'liberar',
+                'data' => [
+                    'method' => 'post',
+                    'params' => ['email' => $model->correo]
+                ],
+            ]);
+            $this->sendMail($model->correo, $mensaje);
+        }
+
+        return $this->render('recuperar', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionComprobar($email)
+    {
+        $model = Usuarios::findPorMail($email);
+        $params = Yii::$app->request->post();
+
+        if ($model->load($params) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'El usuario se ha modificado.');
+            return $this->redirect(['/site/index']);
+        }
+
+
+        return $this->render('comprobar', [
+            'model' => $model,
+        ]);
+    }
+
     protected function updatearClave($model, $params)
     {
         if (isset($params['Usuarios']['clave'])) {
@@ -162,13 +203,13 @@ class UsuariosController extends Controller
         return $empresa;
     }
 
-    protected function sendMail($correo, $clave)
+    protected function sendMail($correo, $mensaje)
     {
         Yii::$app->mailer->compose()
             ->setFrom(Yii::$app->params['smtpUsername'])
             ->setTo($correo)
             ->setSubject('Avalon')
-            ->setTextBody('Este correo ha sido generado para pruebas. Esta es su clave: ' . $clave)
+            ->setHtmlBody($mensaje)
             ->send();
     }
 

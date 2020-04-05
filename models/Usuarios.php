@@ -176,6 +176,11 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return static::findOne(['username' => $username]);
     }
 
+    public static function findPorMail($mail)
+    {
+        return static::findOne(['correo' => $mail]);
+    }
+
     public function validatePassword($password)
     {
         return Yii::$app->security->validatePassword($password, $this->passwd);
