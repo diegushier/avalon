@@ -46,7 +46,7 @@ $this->title = 'Login';
             </div>
 
 
-            <?= Html::a('He olvidado mi contraseña', ['usuarios/recuperar'], ['class' => 'btn btn-orange col-12', 'name' => 'login-button']) ?>
+            <!-- <?php echo  Html::a('He olvidado mi contraseña', ['usuarios/recuperar'], ['class' => 'btn btn-orange col-12', 'name' => 'login-button']) ?> -->
 
 
             <div class="modal fade" id="loading" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
