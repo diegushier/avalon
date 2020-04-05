@@ -40,9 +40,22 @@ $this->title = 'Login';
             <hr>
             <div class="form-group">
                 <div class="offset-sm-2">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-orange col-4', 'name' => 'login-button']) ?>
+                    <?= Html::submitButton('Login', ['class' => 'btn btn-orange col-4', 'data-toggle' => 'modal', 'data-target' => '#loading', 'name' => 'login-button']) ?>
 
                     <?= Html::a('Registrarse', ['usuarios/registrar'], ['class' => 'btn btn-orange col-6', 'name' => 'login-button']) ?>
+                </div>
+            </div>
+
+            <div class="modal fade" id="loading" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-center" id="loadingModalLabel">Cargando....</h5>
+                        </div>
+                        <div class="modal-body row" style="margin: auto;">
+                            <div class="lds-dual-ring col-12"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
