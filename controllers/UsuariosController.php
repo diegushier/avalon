@@ -103,14 +103,12 @@ class UsuariosController extends Controller
             if (Yii::$app->user->isGuest) {
                 Yii::$app->session->setFlash('error', 'Debe estar logueado.');
                 return $this->goHome();
-            } else {
-                $model = Yii::$app->user->identity;
             }
-        } else {
-            $model = Usuarios::findOne($id);
         }
-
+        
+        $model = Yii::$app->user->identity;
         $model->scenario = Usuarios::SCENARIO_UPDATE;
+        $exists = $model->getEmpresas();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', 'Se ha modificado correctamente.');
@@ -124,9 +122,7 @@ class UsuariosController extends Controller
 
         $this->updatearClave($model, Yii::$app->request->post());
 
-        $exists = Usuarios::findOne(Yii::$app->user->id)->getEmpresas()->exists();
-        $get = (new Query())->from('empresas')->where('entidad_id = ' . Yii::$app->user->id)->all();
-        $empresa = $this->updatearEmpresa($exists, $get);
+        $empresa = $this->updatearEmpresa($exists, $exists->one());
         $paises = Paises::lista();
 
         $model->passwd = '';
@@ -134,28 +130,14 @@ class UsuariosController extends Controller
         $render = [
             'model' => $model,
             'paises' => ['' => ''] + $paises,
-            'get' => $get,
-            'exists' => $exists,
             'empresa' => $empresa,
         ];
 
-        return $this->render('modificar', $this->exists($exists, $render, $get));
-    }
-
-    protected function exists($exists, $render, $get)
-    {
-
-        if ($exists) {
-            $empresaModel = Empresas::findOne($get[0]['id']);
-            $render += ['empresaModel' => $empresaModel];
-        }
-
-        return $render;
+        return $this->render('modificar', $render);
     }
 
     protected function updatearClave($model, $params)
     {
-        $model = Usuarios::findOne($model->id);
         if (isset($params['Usuarios']['clave'])) {
             if ($params['Usuarios']['clave'] === $model->clave) {
                 $model->setAttribute('clave', null);
@@ -169,9 +151,11 @@ class UsuariosController extends Controller
         }
     }
 
-    protected function updatearEmpresa($exists, $get)
+    protected function updatearEmpresa($exists, $empresa)
     {
-        $exists ? $empresa =  Empresas::findOne($get[0]['id']) : $empresa = new Empresas();
+        if (!$exists) {
+            $empresa = new Empresas();
+        }
 
         if ($empresa->load(Yii::$app->request->post()) && $empresa->save()) {
             Yii::$app->session->setFlash('success', 'Se ha modificado la empresa.');

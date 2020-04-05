@@ -4,6 +4,7 @@
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model app\models\RegistrarForm */
 
+use app\models\Paises;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use yii\widgets\DetailView;
@@ -61,14 +62,9 @@ $this->title = 'Modificar perfil';
             <div class="form-group">
                 <div class="offset-sm-2">
                     <?= Html::submitButton('Modificar', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-
-
-                    <!-- Button trigger modal -->
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#borrarUsuario">
                         Eliminar
                     </button>
-
-                    <!-- Modal -->
                     <div class="modal fade" id="borrarUsuario" tabindex="-1" role="dialog" aria-labelledby="borrarUsuarioCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
@@ -83,8 +79,8 @@ $this->title = 'Modificar perfil';
                                     La acción será irreversible
                                 </div>
                                 <div class="modal-footer">
-                                    <?php if ($exists) : ?>
-                                        <?= Html::a('Eliminar', ['delete', 'id' => $model->id, 'entidad' => $get[0]['id']], [
+                                    <?php if ($empresa) : ?>
+                                        <?= Html::a('Eliminar', ['delete', 'id' => $model->id, 'entidad' => $empresa->id], [
                                             'class' => 'btn btn-danger',
                                             'data' => [
                                                 'method' => 'post',
@@ -128,15 +124,15 @@ $this->title = 'Modificar perfil';
                 </section>
             </div>
         <?php else : ?>
-            <?php if ($exists == false) : ?>
+            <?php if (!$empresa) : ?>
                 <div class="col-lg-12 px-md-5">
                     <section class="">
                         <h2 class="pl-3 pt-4">Empresa</h2>
                         <p>Para mostrar sus propios libros, peliculas o series deberá tener creada una entidad. Desde aqúi puede hacerlo.</p>
                         <?= $this->render('/empresas/create', [
                             'model' => $empresa,
-                            'pais' => Yii::$app->user->identity->pais_id,
-                            'entidad' => Yii::$app->user->identity->id,
+                            'pais' => $model->pais_id,
+                            'entidad' => $model->id,
                             'action' => 'crear'
                         ]) ?>
 
@@ -148,9 +144,8 @@ $this->title = 'Modificar perfil';
                         <div class="border rounded">
                             <?=
                                 $this->render('/empresas/view', [
-                                    'id' => $get[0]['id'],
-                                    'model' => $empresaModel,
-                                    'pais' => $paises[Yii::$app->user->identity->pais_id],
+                                    'model' => $empresa,
+                                    'pais' => $paises[$empresa->pais_id]
                                 ]);
                             ?>
                         </div>
@@ -158,7 +153,7 @@ $this->title = 'Modificar perfil';
                         <div class="collapse mt-2" id="mod">
                             <?= $this->render('/empresas/update', [
                                 'model' => $empresa,
-                                'pais' => Yii::$app->user->identity->pais_id,
+                                'paises' => $paises,
                                 'action' => 'modificar'
                             ]) ?>
                         </div>
@@ -180,7 +175,7 @@ $this->title = 'Modificar perfil';
                                         <br>
                                     </div>
                                     <div class="modal-footer">
-                                        <?= Html::a('Desvincular ' . $get[0]['nombre'], ['empresas/delete', 'id' => $get[0]['id']], [
+                                        <?= Html::a('Desvincular ' . $empresa->nombre, ['empresas/delete', 'id' => $empresa->id], [
                                             'class' => 'btn btn-danger',
                                             'id' => 'liberar',
                                             'data' => [
@@ -200,7 +195,7 @@ $this->title = 'Modificar perfil';
                             Modificar empresa
                         </button>
                         <button type="button" id="delete" class="btn btn-danger" data-toggle="modal" data-target="#borrarEmpresa">
-                            Eliminar <?= $get[0]['nombre'] ?>
+                            Eliminar <?= $empresa->nombre ?>
                         </button>
                     </section>
 

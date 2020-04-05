@@ -8,7 +8,7 @@ use yii\bootstrap4\Html;
 <div class="empresas-update">
     <?= $this->render('/empresas/_form', [
         'model' => $model,
-        'pais' => $pais,
+        'paises' => $paises,
         'action' => $action
     ]) ?>
 

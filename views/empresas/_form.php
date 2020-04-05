@@ -13,7 +13,7 @@ use yii\bootstrap4\ActiveForm;
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'pais_id')->hiddenInput(['value' =>  $pais])->label(false) ?>
+    <?= $form->field($model, 'pais_id')->dropdownList($paises) ?>
 
     <?= $form->field($model, 'entidad_id')->hiddenInput(['value' => ( $action == 'crear' ? $entidad : $model->entidad_id )])->label(false) ?>
 

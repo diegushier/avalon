@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Empresas;
 use app\models\EmpresasSearch;
+use app\models\Paises;
 use app\models\Usuarios;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -38,8 +39,11 @@ class EmpresasController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $pais = Paises::findOne($model->id);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'pais' => $pais,
         ]);
     }
 
