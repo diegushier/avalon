@@ -91,7 +91,7 @@ class Modificar extends \yii\db\ActiveRecord
     {
         if ($this->load($params)) {
             $usuarios = Usuarios::findOne(['id' => Yii::$app->user->id]);
-            $empresas = Empresas::findOne(['entidad_id' => $usuarios->id]);
+            $empresas = $usuarios->getEmpresas()->one();
 
             $usuarios->scenario = Usuarios::SCENARIO_UPDATE;
             $usuarios->setAttributes([
@@ -103,12 +103,17 @@ class Modificar extends \yii\db\ActiveRecord
                 'pais_id' => $this->pais_id,
             ]);
 
-            $empresas->setAttributes([
-                'nombre' => $this->nombre,
-                'empresa_pais_id' => $this->pais_id,
-            ]);
+            if ($empresas) {
+                $empresas->setAttributes([
+                    'nombre' => $this->nombre,
+                    'empresa_pais_id' => $this->pais_id,
+                ]);
+                if (!$empresas->save()) {
+                    return false;
+                }
+            }
 
-            if ($usuarios->save() && $empresas->save()) {
+            if ($usuarios->save()) {
                 return true;
             }
         }
