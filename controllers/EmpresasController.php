@@ -93,24 +93,30 @@ class EmpresasController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete()
     {
-        $model = Empresas::findOne(['entidad_id' => $id]);
-        $model->entidad_id = null;
 
-        if ($model->getObjetos()->exists()) {
-            if ($model->update()) {
-                Yii::$app->session->setFlash('success', 'Su usuario ha sido desvinculado.');
+        $params = Yii::$app->request->post();
+        Yii::debug($params);
+        if ($params) {
+            $model = Empresas::findOne(['entidad_id' => $params['id']]);
+            $model->entidad_id = null;
+
+            if ($model->getShows()->exists() || $model->getLibros()->exists()) {
+                if ($model->update()) {
+                    Yii::$app->session->setFlash('success', 'La empresa ha posteado, por lo que su usuario solo ha sido desvinculado.');
+                    return $this->redirect(['/site/index']);
+                } else {
+                    Yii::$app->session->setFlash('error', 'No ha sido posible desvincular su usuario.');
+                }
+            } elseif ($model->delete()) {
+                Yii::$app->session->setFlash('success', 'La empresa se ha borrado.');
                 return $this->redirect(['/site/index']);
             } else {
-                Yii::$app->session->setFlash('error', 'No ha sido posible desvincular su usuario.');
+                Yii::$app->session->setFlash('error', 'Ha ocurrido un error interno.');
             }
-        } elseif ($model->delete()) {
-            Yii::$app->session->setFlash('success', 'La empresa se ha borrado.');
-            return $this->redirect(['/site/index']);
-        } else {
-            Yii::$app->session->setFlash('error', 'Ha ocurrido un error interno.');
         }
+
 
         return $this->redirect(['index']);
     }

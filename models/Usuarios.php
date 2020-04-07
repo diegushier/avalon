@@ -202,9 +202,6 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
                     $this->passwd = $this->getOldAttribute('passwd');
                 } else {
                     $this->passwd = $security->generatePasswordHash($this->passwd);
-                    $fp = fopen(Yii::getAlias('@resumen/5.txt'), 'w');
-                    fwrite($fp, 'Hurra, he entrado al segundo if.');
-                    fclose($fp);
                 }
             }
         }

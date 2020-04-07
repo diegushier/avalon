@@ -4,18 +4,38 @@
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model app\models\RegistrarForm */
 
-use app\models\Paises;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
-use yii\widgets\DetailView;
 
 $js = "
-    var aux = true;
-    $('#mod-can').click(() => {
+var aux = true;
+var nombre = '" . Yii::$app->user->identity->username . "'
+var nombre = '" . $model->nombre . "'
+var hrefUser = $('#comfirmDeleteUser').attr('href');
+var hrefEmpresa = $('#comfirmDeleteEmpresa').attr('href');
+$('#comfirmDeleteUser').removeAttr('href');
+$('#comfirmDeleteEmpresa').removeAttr('href');
+    
+$('#mod-can').click(() => {
         aux = !aux
         aux ? $('#mod-can').html('MODIFICAR EMPRESA') : $('#mod-can').html('CANCELAR');
-        console.log('hola')
     })
+
+$('#deleteUser').change(()=> {
+        if ($('#deleteUser').val() ===  nombre) {
+            $('#comfirmDeleteUser').attr('href', hrefUser);
+        } else {
+            $('#comfirmDeleteUser').removeAttr('href');
+        }
+    })
+
+ $('#deleteEmpresa').change(() => {
+        if ($('#deleteEmpresa').val() ===  nombre) {
+            $('#comfirmDeleteEmpresa').attr('href', hrefEmpresa);
+        } else {
+            $('#comfirmDeleteEmpresa').removeAttr('href');
+        }
+    });
 ";
 
 $this->registerJs($js);
@@ -76,10 +96,15 @@ $this->title = 'Modificar perfil';
                                 </div>
                                 <div class="modal-body">
                                     ¿Esta usted seguro de eliminar este usuario?
-                                    La acción será irreversible
+                                    La acción será irreversible.
+
+                                    <div>
+                                        <input type="text" id='deleteUser' placeholder="Escriba su nombre para comfirmar" class="col-12 form-control mt-2">
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <?= Html::a('Eliminar', ['delete'], [
+                                        'id' => 'comfirmDeleteUser',
                                         'class' => 'btn btn-danger',
                                         'data' => [
                                             'method' => 'post',
@@ -178,13 +203,17 @@ $this->title = 'Modificar perfil';
                                         <br>
                                         Solo en caso de que no tenga ninguna relación con series libros o películas se borrará.
                                         <br>
+                                        <div>
+                                            <input type="text" id='deleteEmpresa' placeholder="Escriba el nombre de la empresa para comfirmar" class="col-12 form-control mt-2">
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <?= Html::a('Desvincular ' . $model->nombre, ['empresas/delete', 'id' => $model->entidad_id], [
+                                        <?= Html::a('Desvincular ' . $model->nombre, ['empresas/delete'], [
                                             'class' => 'btn btn-danger',
-                                            'id' => 'liberar',
+                                            'id' => 'comfirmDeleteEmpresa',
                                             'data' => [
                                                 'method' => 'post',
+                                                'params' => ['id' => $model->entidad_id]
                                             ],
                                         ]) ?>
 
