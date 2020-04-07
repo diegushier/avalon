@@ -153,7 +153,12 @@ class UsuariosController extends Controller
                 $model->clave = $this->generarClave();
                 if ($model->save(false)) {
                     Yii::$app->session->setFlash('success', 'El correo ha sido enviado.');
-                    $mensaje = "<a href='http://localhost:8080/index.php?r=usuarios/comprobar&token=" . $model->clave . "'>Click Here to Reset Password</a>";
+                    $mensaje = '<div style:"width:100%; background-color: #111;"></div><div style="width: 33%; height: 300px; border: 1px solid #FEB177; border-radius: 4px; text-align: center; background-color: #FEB177;">
+                        <h1 style="color:#fff;">Avalon</h1>
+                        <a href="http://localhost:8080/index.php?r=usuarios/comprobar&token=' . $model->clave .
+                        '" style="text-decoration: none; border: 1px solid #999; border-radius: 4px; color: #fff ; background-color: #999;">Recuperar Contraseña</a>
+                    </div></div>';
+                    // $mensaje = "<a href='http://localhost:8080/index.php?r=usuarios/comprobar&token=" . $model->clave . "'>Click Here to Reset Password</a>";
                     $this->sendMail($model->correo, $mensaje);
                 }
             } else {
