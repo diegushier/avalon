@@ -22,7 +22,7 @@ $this->registerJs($js);
 
 $this->title = 'Modificar perfil';
 ?>
-<div class="site-login">
+<div class="usuarios-modify">
     <h1 class='text-center'><?= Html::encode($this->title) ?></h1>
 
     <div class="row">
@@ -79,22 +79,12 @@ $this->title = 'Modificar perfil';
                                     La acción será irreversible
                                 </div>
                                 <div class="modal-footer">
-                                    <?php if ($empresa) : ?>
-                                        <?= Html::a('Eliminar', ['delete', 'id' => $model->id, 'entidad' => $empresa->id], [
-                                            'class' => 'btn btn-danger',
-                                            'data' => [
-                                                'method' => 'post',
-                                            ],
-                                        ]) ?>
-
-                                    <?php else : ?>
-                                        <?= Html::a('Eliminar', ['delete', 'id' => $model->id], [
-                                            'class' => 'btn btn-danger',
-                                            'data' => [
-                                                'method' => 'post',
-                                            ],
-                                        ]) ?>
-                                    <?php endif ?>
+                                    <?= Html::a('Eliminar', ['delete', 'id' => Yii::$app->user->id], [
+                                        'class' => 'btn btn-danger',
+                                        'data' => [
+                                            'method' => 'post',
+                                        ],
+                                    ]) ?>
 
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                 </div>
@@ -118,9 +108,23 @@ $this->title = 'Modificar perfil';
                     <p>Para tener acceso a la creación de una empresa, primero debe confirmar su cuenta mediante la clave que le fué enviada a su correo.</p>
                     <p>Esto no es más que una medida de seguridad.</p>
 
-                    <?= $this->render('confirmar', [
-                            'model' => $model,
-                    ]) ?>
+                    <?php $form = ActiveForm::begin([
+                        'id' => 'login-form',
+                        'layout' => 'horizontal',
+                        'fieldConfig' => [
+                            'horizontalCssClasses' => ['wrapper' => 'col-sm-5'],
+                        ],
+                    ]); ?>
+
+                    <?= $form->field($model, 'clave')->textInput(['autofocus' => true, 'value' => '']) ?>
+
+                    <div class="form-group">
+                        <div class="offset-sm-2">
+                            <?= Html::submitButton('Comfirmar', ['class' => 'btn btn-primary']) ?>
+                        </div>
+                    </div>
+
+                    <?php ActiveForm::end(); ?>
                 </section>
             </div>
         <?php else : ?>
@@ -131,8 +135,8 @@ $this->title = 'Modificar perfil';
                         <p>Para mostrar sus propios libros, peliculas o series deberá tener creada una entidad. Desde aqúi puede hacerlo.</p>
                         <?= $this->render('/empresas/create', [
                             'model' => $empresa,
-                            'pais' => $model->pais_id,
-                            'entidad' => $model->id,
+                            'paises' => $paises,
+                            'entidad_id' => $model->entidad_id,
                             'action' => 'crear'
                         ]) ?>
 
@@ -144,15 +148,15 @@ $this->title = 'Modificar perfil';
                         <div class="border rounded">
                             <?=
                                 $this->render('/empresas/view', [
-                                    'model' => $empresa,
-                                    'pais' => $paises[$empresa->pais_id]
+                                    'model' => $model,
+                                    'pais' => $paises[$model->empresa_pais_id]
                                 ]);
                             ?>
                         </div>
 
                         <div class="collapse mt-2" id="mod">
                             <?= $this->render('/empresas/update', [
-                                'model' => $empresa,
+                                'model' => $model,
                                 'paises' => $paises,
                                 'action' => 'modificar'
                             ]) ?>
@@ -175,7 +179,7 @@ $this->title = 'Modificar perfil';
                                         <br>
                                     </div>
                                     <div class="modal-footer">
-                                        <?= Html::a('Desvincular ' . $empresa->nombre, ['empresas/delete', 'id' => $empresa->id], [
+                                        <?= Html::a('Desvincular ' . $model->nombre, ['empresas/delete', 'id' => $model->entidad_id], [
                                             'class' => 'btn btn-danger',
                                             'id' => 'liberar',
                                             'data' => [
@@ -195,7 +199,7 @@ $this->title = 'Modificar perfil';
                             Modificar empresa
                         </button>
                         <button type="button" id="delete" class="btn btn-danger" data-toggle="modal" data-target="#borrarEmpresa">
-                            Eliminar <?= $empresa->nombre ?>
+                            Eliminar <?= $model->nombre ?>
                         </button>
                     </section>
 

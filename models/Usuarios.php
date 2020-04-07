@@ -64,7 +64,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             [
                 ['passwd_repeat'],
                 'required',
-                'on' => self::SCENARIO_CREAR
+                'on' => [self::SCENARIO_CREAR, self::SCENARIO_UPDATE],
             ],
             [
                 ['passwd_repeat'],
@@ -106,7 +106,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->hasOne(Empresas::className(), ['entidad_id' => 'id'])->inverseOf('entidad');
     }
-    
+
     /**
      * Gets query for [[Pais]].
      *
@@ -207,11 +207,12 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
                 }
             }
         }
-                
+
         return true;
     }
 
-    public static function obtainEmpresa() {
+    public static function obtainEmpresa()
+    {
         return Usuarios::findOne(Yii::$app->user->identity->id)->getEmpresas();
     }
 }

@@ -95,7 +95,7 @@ class EmpresasController extends Controller
      */
     public function actionDelete($id)
     {
-        $model = Empresas::findOne($id);
+        $model = Empresas::findOne(['entidad_id' => $id]);
         $model->entidad_id = null;
 
         if ($model->getObjetos()->exists()) {

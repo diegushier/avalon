@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Empresas;
+use app\models\Modificar;
 use app\models\Paises;
 use app\models\Recuperar;
 use app\models\Usuarios;
@@ -70,7 +71,7 @@ class UsuariosController extends Controller
         ]);
     }
 
-    public function actionDelete($id, $entidad = null)
+    public function actionDelete($id)
     {
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
@@ -80,8 +81,8 @@ class UsuariosController extends Controller
 
         if (Yii::$app->request->isPost) {
             $model = Usuarios::findOne($id);
-            if ($entidad !== null) {
-                $empresa = Empresas::findOne($entidad);
+            $empresa = $model->getEmpresas()->one();
+            if ($empresa) {
                 $empresa->entidad_id = null;
                 if ($empresa->update() === false) {
                     Yii::$app->session->setFlash('error', 'No se ha podido eliminar el usuario indicado.');
@@ -98,70 +99,78 @@ class UsuariosController extends Controller
         return $this->redirect(['/site/login']);
     }
 
-    public function actionModificar($id = null)
+    public function actionModify($id = null)
     {
-        if ($id === null) {
-            if (Yii::$app->user->isGuest) {
-                Yii::$app->session->setFlash('error', 'Debe estar logueado.');
-                return $this->goHome();
-            }
+        $params = Yii::$app->request->post();
+        $usuario = Usuarios::find()->where(['id' => Yii::$app->user->id])->one();
+        $empresa = $usuario->getEmpresas()->one();
+
+        $model = new Modificar();
+        $model->setAttributes([
+            'nickname' => $usuario->nickname,
+            'correo' => $usuario->correo,
+            'pais_id' => $usuario->pais_id,
+            'clave' => $usuario->clave,
+            'passwd' => $usuario->passwd,
+            'nombre' => $empresa->nombre,
+            'empresa_pais_id' => $empresa->pais_id,
+            'entidad_id' => $empresa->entidad_id,
+        ]);
+
+        $paises = Paises::lista();
+        $render = [
+            'model' => $model,
+            'paises' => ['' => ''] + $paises,
+        ];
+        
+        if ($empresa) {
+            $render += ['empresa' => $empresa];
         }
-
-        $model = Yii::$app->user->identity;
-        $model->scenario = Usuarios::SCENARIO_UPDATE;
-        $exists = $model->getEmpresas();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        
+        if ($model->create($params)) {
             Yii::$app->session->setFlash('success', 'Se ha modificado correctamente.');
             return $this->goHome();
         }
+        
 
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+        if (Yii::$app->request->isAjax && $usuario->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
         }
 
-        $this->updatearClave($model, Yii::$app->request->post());
-
-        $empresa = $this->updatearEmpresa($exists, $exists->one());
-        $paises = Paises::lista();
-
         $model->passwd = '';
         $model->passwd_repeat = '';
-        $render = [
-            'model' => $model,
-            'paises' => ['' => ''] + $paises,
-            'empresa' => $empresa,
-        ];
 
-        return $this->render('modificar', $render);
+        return $this->render('modify', $render);
     }
 
     public function actionRecuperar()
     {
-        $model = new Recuperar();
         $params = Yii::$app->request->post();
-        if ($params) {
-            $model->correo = $params['Recuperar']['correo'];
-            $mensaje = Html::a('Cambiar contraseña', ['usuarios/comprobar'], [
-                'class' => 'btn btn-danger',
-                'id' => 'liberar',
-                'data' => [
-                    'method' => 'post',
-                    'params' => ['email' => $model->correo]
-                ],
-            ]);
-            $this->sendMail($model->correo, $mensaje);
+        if (isset($params)) {
+            $model = Usuarios::find()->where(['correo' => $params['Usuarios']['correo']])->one();
+            $model->scenario = Usuarios::SCENARIO_UPDATE;
+            $model->clave = $this->generarClave();
+            Yii::debug($model);
+            if ($model->save(false)) {
+                Yii::$app->session->setFlash('success', 'El correo ha sido enviado.');
+                $mensaje = "<a href='http://localhost:8080/index.php?r=usuarios/comprobar&token=" . $model->clave . "'>Click Here to Reset Password</a>";
+                $this->sendMail($model->correo, $mensaje);
+            }
+        } else {
+            $model = new Usuarios();
         }
+
 
         return $this->render('recuperar', [
             'model' => $model,
         ]);
     }
 
-    public function actionComprobar($email)
+    public function actionComprobar($token)
     {
-        $model = Usuarios::findPorMail($email);
+        $model = Usuarios::find()->where(['clave' => $token])->one();
+        $model->scenario = Usuarios::SCENARIO_UPDATE;
         $params = Yii::$app->request->post();
 
         if ($model->load($params) && $model->save()) {
@@ -208,7 +217,7 @@ class UsuariosController extends Controller
         Yii::$app->mailer->compose()
             ->setFrom(Yii::$app->params['smtpUsername'])
             ->setTo($correo)
-            ->setSubject('Avalon')
+            ->setSubject('no@replay')
             ->setHtmlBody($mensaje)
             ->send();
     }
