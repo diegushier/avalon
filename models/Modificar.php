@@ -19,9 +19,6 @@ use yii\web\IdentityInterface;
  *
  * @property Empresas $empresas
  * @property Paises $pais
- * @property Usuariorol $rol
- * @property Usuarioseguimiento[] $usuarioseguimientos
- * @property Valoraciones[] $valoraciones
  */
 class Modificar extends \yii\db\ActiveRecord
 {
@@ -51,22 +48,12 @@ class Modificar extends \yii\db\ActiveRecord
             [['nickname', 'correo', 'auth_key'], 'string', 'max' => 255],
             [['passwd', 'passwd_repeat'], 'string', 'min' => 7],
             [['correo'], 'email'],
-            [
-                ['passwd'],
-                'required',
-                'on' => [self::SCENARIO_DEFAULT],
-            ],
             [['pais_id', 'empresa_pais_id', 'entidad_id'], 'default', 'value' => null],
             [['pais_id', 'empresa_pais_id', 'entidad_id'], 'integer'],
             [['clave'], 'string', 'max' => 6],
             [
                 ['passwd'],
                 'trim',
-                'on' => [self::SCENARIO_UPDATE],
-            ],
-            [
-                ['passwd_repeat'],
-                'required',
                 'on' => [self::SCENARIO_UPDATE],
             ],
             [

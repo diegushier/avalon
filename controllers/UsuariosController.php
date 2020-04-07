@@ -112,10 +112,9 @@ class UsuariosController extends Controller
             'pais_id' => $usuario->pais_id,
             'clave' => $usuario->clave,
             'passwd' => $usuario->passwd,
-            'nombre' => $empresa->nombre,
-            'empresa_pais_id' => $empresa->pais_id,
-            'entidad_id' => $empresa->entidad_id,
         ]);
+
+        
 
         $paises = Paises::lista();
         $render = [
@@ -124,6 +123,11 @@ class UsuariosController extends Controller
         ];
         
         if ($empresa) {
+            $model->setAttributes([
+                'nombre' => $empresa->nombre,
+                'empresa_pais_id' => $empresa->pais_id,
+                'entidad_id' => $empresa->entidad_id,
+            ]);
             $render += ['empresa' => $empresa];
         }
         

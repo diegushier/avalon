@@ -70,7 +70,7 @@ AppAsset::register($this);
             ]];
         } else {
             $menu[] = ['label' => Yii::$app->user->identity->nickname, 'items' => [
-                ['label' => 'Modificar', 'url' => ['/usuarios/modificar']],
+                ['label' => 'Modificar', 'url' => ['/usuarios/modify']],
                 Html::beginForm(['/site/logout'], 'post')
                     . Html::submitButton(
                         'Salir-Desconectar',
