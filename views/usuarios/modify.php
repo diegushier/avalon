@@ -79,10 +79,11 @@ $this->title = 'Modificar perfil';
                                     La acción será irreversible
                                 </div>
                                 <div class="modal-footer">
-                                    <?= Html::a('Eliminar', ['delete', 'id' => Yii::$app->user->id], [
+                                    <?= Html::a('Eliminar', ['delete'], [
                                         'class' => 'btn btn-danger',
                                         'data' => [
                                             'method' => 'post',
+                                            'params' => ['id' => Yii::$app->user->id],
                                         ],
                                     ]) ?>
 

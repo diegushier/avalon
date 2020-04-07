@@ -5,11 +5,9 @@ namespace app\controllers;
 use app\models\Empresas;
 use app\models\Modificar;
 use app\models\Paises;
-use app\models\Recuperar;
 use app\models\Usuarios;
 use Yii;
 use yii\bootstrap4\ActiveForm;
-use yii\bootstrap4\Html;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -71,16 +69,11 @@ class UsuariosController extends Controller
         ]);
     }
 
-    public function actionDelete($id)
+    public function actionDelete()
     {
-        if (isset($_GET['id'])) {
-            $id = $_GET['id'];
-        } else {
-            throw new HttpException(400, 'Usuario no encontrado.');
-        }
-
-        if (Yii::$app->request->isPost) {
-            $model = Usuarios::findOne($id);
+        $params = Yii::$app->request->post();
+        if ($params) {
+            $model = Usuarios::findOne($params['id']);
             $empresa = $model->getEmpresas()->one();
             if ($empresa) {
                 $empresa->entidad_id = null;
@@ -99,7 +92,7 @@ class UsuariosController extends Controller
         return $this->redirect(['/site/login']);
     }
 
-    public function actionModify($id = null)
+    public function actionModify()
     {
         $params = Yii::$app->request->post();
         $usuario = Usuarios::find()->where(['id' => Yii::$app->user->id])->one();
