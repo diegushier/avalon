@@ -123,6 +123,7 @@ class UsuariosController extends Controller
         }
 
         $this->updatearClave($usuario, $params);
+        Yii::debug($params);
 
         if ($model->create($params)) {
             Yii::$app->session->setFlash('success', 'Se ha modificado correctamente.');
@@ -178,6 +179,7 @@ class UsuariosController extends Controller
             Yii::$app->session->setFlash('success', 'El usuario se ha modificado.');
             return $this->redirect(['/site/index']);
         }
+
 
         return $this->render('comprobar', [
             'model' => $model,
