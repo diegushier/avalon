@@ -192,21 +192,19 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             return false;
         }
 
-        if ($insert) {
-            if ($this->scenario === self::SCENARIO_CREAR) {
-                $security = Yii::$app->security;
-                $this->auth_key = $security->generateRandomString();
-                $this->passwd = $security->generatePasswordHash($this->passwd);
-            } else {
-                if ($this->scenario === self::SCENARIO_UPDATE) {
-                    if ($this->passwd === '') {
-                        $this->passwd = $this->getOldAttribute('passwd');
-                    } else {
-                        $this->passwd = $security->generatePasswordHash($this->passwd);
-                        $fp = fopen(Yii::getAlias('@resumen/5.txt'), 'w');
-                        fwrite($fp, 'Hurra, he entrado al segundo if.');
-                        fclose($fp);
-                    }
+        $security = Yii::$app->security;
+        if ($this->scenario === self::SCENARIO_CREAR) {
+            $this->auth_key = $security->generateRandomString();
+            $this->passwd = $security->generatePasswordHash($this->passwd);
+        } else {
+            if ($this->scenario === self::SCENARIO_UPDATE) {
+                if ($this->passwd === '') {
+                    $this->passwd = $this->getOldAttribute('passwd');
+                } else {
+                    $this->passwd = $security->generatePasswordHash($this->passwd);
+                    $fp = fopen(Yii::getAlias('@resumen/5.txt'), 'w');
+                    fwrite($fp, 'Hurra, he entrado al segundo if.');
+                    fclose($fp);
                 }
             }
         }
