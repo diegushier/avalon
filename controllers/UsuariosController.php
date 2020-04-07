@@ -112,7 +112,7 @@ class UsuariosController extends Controller
             'model' => $model,
             'paises' => ['' => ''] + $paises,
         ];
-        
+
         if ($empresa) {
             $model->setAttributes([
                 'nombre' => $empresa->nombre,
@@ -123,13 +123,12 @@ class UsuariosController extends Controller
         }
 
         $this->updatearClave($usuario, $params);
-        Yii::debug($params);
 
         if ($model->create($params)) {
             Yii::$app->session->setFlash('success', 'Se ha modificado correctamente.');
             return $this->goHome();
         }
-        
+
 
         if (Yii::$app->request->isAjax && $usuario->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
@@ -145,15 +144,19 @@ class UsuariosController extends Controller
     public function actionRecuperar()
     {
         $params = Yii::$app->request->post();
-        if (isset($params)) {
+        Yii::debug($params);
+        if (isset($params['Usuarios'])) {
             $model = Usuarios::find()->where(['correo' => $params['Usuarios']['correo']])->one();
-            $model->scenario = Usuarios::SCENARIO_UPDATE;
-            $model->clave = $this->generarClave();
-            Yii::debug($model);
-            if ($model->save(false)) {
-                Yii::$app->session->setFlash('success', 'El correo ha sido enviado.');
-                $mensaje = "<a href='http://localhost:8080/index.php?r=usuarios/comprobar&token=" . $model->clave . "'>Click Here to Reset Password</a>";
-                $this->sendMail($model->correo, $mensaje);
+            if (isset($model)) {
+                $model->scenario = Usuarios::SCENARIO_UPDATE;
+                $model->clave = $this->generarClave();
+                if ($model->save(false)) {
+                    Yii::$app->session->setFlash('success', 'El correo ha sido enviado.');
+                    $mensaje = "<a href='http://localhost:8080/index.php?r=usuarios/comprobar&token=" . $model->clave . "'>Click Here to Reset Password</a>";
+                    $this->sendMail($model->correo, $mensaje);
+                }
+            } else {
+                $model = new Usuarios();
             }
         } else {
             $model = new Usuarios();
@@ -175,7 +178,6 @@ class UsuariosController extends Controller
             Yii::$app->session->setFlash('success', 'El usuario se ha modificado.');
             return $this->redirect(['/site/index']);
         }
-
 
         return $this->render('comprobar', [
             'model' => $model,
