@@ -107,8 +107,6 @@ class UsuariosController extends Controller
             'passwd' => $usuario->passwd,
         ]);
 
-        
-
         $paises = Paises::lista();
         $render = [
             'model' => $model,
@@ -123,7 +121,10 @@ class UsuariosController extends Controller
             ]);
             $render += ['empresa' => $empresa];
         }
-        
+
+        $this->updatearClave($usuario, $params);
+        Yii::debug($params);
+
         if ($model->create($params)) {
             Yii::$app->session->setFlash('success', 'Se ha modificado correctamente.');
             return $this->goHome();
@@ -183,8 +184,8 @@ class UsuariosController extends Controller
 
     protected function updatearClave($model, $params)
     {
-        if (isset($params['Usuarios']['clave'])) {
-            if ($params['Usuarios']['clave'] === $model->clave) {
+        if (isset($params['Modificar']['clave'])) {
+            if ($params['Modificar']['clave'] === $model->clave) {
                 $model->setAttribute('clave', null);
                 if ($model->update()) {
                     Yii::$app->session->setFlash('success', 'El usuario se ha comfirmado');
