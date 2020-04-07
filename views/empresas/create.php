@@ -9,7 +9,7 @@ use yii\bootstrap4\Html;
 <div class="empresas-create">
     <?= $this->render('/empresas/_form', [
         'model' => $model,
-        'pais' => $pais,
+        'paises' => $paises,
         'entidad' => $entidad,
         'action' => $action
     ]) ?>

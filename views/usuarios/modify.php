@@ -154,7 +154,7 @@ $this->title = 'Modificar perfil';
                 </section>
             </div>
         <?php else : ?>
-            <?php if (!$empresa) : ?>
+            <?php if (isset($empresa) && !$empresa) : ?>
                 <div class="col-lg-12 px-md-5">
                     <section class="">
                         <h2 class="pl-3 pt-4">Empresa</h2>
