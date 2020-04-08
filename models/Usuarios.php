@@ -54,7 +54,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             ],
             [['pais_id', 'rol_id'], 'default', 'value' => null],
             [['pais_id', 'rol_id'], 'integer'],
-            [['clave'], 'string', 'max' => 6],
+            [['clave', 'comfirm'], 'string', 'max' => 6],
             [
                 ['passwd'],
                 'trim',
@@ -85,10 +85,11 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'nickname' => 'Nickname',
-            'username' => 'Username',
+            'nickname' => 'Nombre de cuenta',
+            'username' => 'Nombre de usuario',
             'correo' => 'Correo',
             'clave' => 'Clave',
+            'comfirm' => 'Clave de comfirmación',
             'passwd' => 'Contraseña',
             'passwd_repeat' => 'Repetir contraseña',
             'auth_key' => 'Auth Key',

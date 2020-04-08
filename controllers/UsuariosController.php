@@ -148,7 +148,7 @@ class UsuariosController extends Controller
             $model = Usuarios::find()->where(['correo' => $params['Usuarios']['correo']])->one();
             if (isset($model)) {
                 $model->scenario = Usuarios::SCENARIO_UPDATE;
-                $model->clave = $this->generarClave();
+                $model->comfirm = $this->generarClave();
                 if ($model->save(false)) {
                     Yii::$app->session->setFlash('success', 'El correo ha sido enviado.');
                     $mensaje = '<div style:"width:100%; background-color: #111;">
@@ -157,7 +157,7 @@ class UsuariosController extends Controller
                                     <hr style="border: 1px solid #fff">
                                             <p style="color:#fff;">Si enviaste esta solicitud, pulsa en el siguiente botón, en caso contrario, deberías cambiar tu contraseña.</p>
                                             <br><br>
-                                            <a href="' . getenv('URL') . '/index.php?r=usuarios/comprobar&token=' . $model->clave .
+                                            <a href="' . getenv('URL') . '/index.php?r=usuarios/comprobar&token=' . $model->comfirm .
                         '" style="text-decoration: none; padding: 2%; border: 1px solid #ccc; border-radius: 4px; color: #111; background-color: #fff;">Recuperar Contraseña</a>
                                             <a href="' . getenv('URL') . '/index.php?r=site%2Flogin" style="margin-top: 2%; text-decoration: none; padding: 2%; border: 1px solid #ccc; color: #111; border-radius: 4px; background-color: #fff;">Login</a>
                                     </div>
@@ -179,10 +179,11 @@ class UsuariosController extends Controller
 
     public function actionComprobar($token)
     {
-        $model = Usuarios::find()->where(['clave' => $token])->one();
+        $model = Usuarios::find()->where(['comfirm' => $token])->one();
 
         if (isset($model)) {
             $model->scenario = Usuarios::SCENARIO_UPDATE;
+            $model->comfirm = null;
             $params = Yii::$app->request->post();
 
             if ($model->load($params) && $model->save()) {

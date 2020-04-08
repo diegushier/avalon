@@ -50,6 +50,7 @@ CREATE TABLE usuarios
     ,   pais_id     bigint          REFERENCES paises (id)
     ,   rol_id      bigint          REFERENCES usuarioRol (id)
     ,   clave       VARCHAR(6)      
+    ,   comfirm       VARCHAR(6)      
 );
 
 CREATE TABLE empresas
