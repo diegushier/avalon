@@ -123,7 +123,6 @@ class UsuariosController extends Controller
         }
 
         $this->updatearClave($usuario, $params);
-        Yii::debug($params);
 
         if ($model->create($params)) {
             Yii::$app->session->setFlash('success', 'Se ha modificado correctamente.');
@@ -145,7 +144,6 @@ class UsuariosController extends Controller
     public function actionRecuperar()
     {
         $params = Yii::$app->request->post();
-        Yii::debug($params);
         if (isset($params['Usuarios'])) {
             $model = Usuarios::find()->where(['correo' => $params['Usuarios']['correo']])->one();
             if (isset($model)) {
@@ -153,12 +151,17 @@ class UsuariosController extends Controller
                 $model->clave = $this->generarClave();
                 if ($model->save(false)) {
                     Yii::$app->session->setFlash('success', 'El correo ha sido enviado.');
-                    $mensaje = '<div style:"width:100%; background-color: #111;"></div><div style="width: 33%; height: 300px; border: 1px solid #FEB177; border-radius: 4px; text-align: center; background-color: #FEB177;">
-                        <h1 style="color:#fff;">Avalon</h1>
-                        <a href="http://localhost:8080/index.php?r=usuarios/comprobar&token=' . $model->clave .
-                        '" style="text-decoration: none; border: 1px solid #999; border-radius: 4px; color: #fff ; background-color: #999;">Recuperar Contraseña</a>
-                    </div></div>';
-                    // $mensaje = "<a href='http://localhost:8080/index.php?r=usuarios/comprobar&token=" . $model->clave . "'>Click Here to Reset Password</a>";
+                    $mensaje = '<div style:"width:100%; background-color: #111;">
+                                    <div style="width: 50%; margin: auto; height: 300px; border: 1px solid #FEB177; border-radius: 4px; text-align: center; background-color: #FEB177;">
+                                    <h1 style="color:#fff;">Avalon</h1>
+                                    <hr style="border: 1px solid #fff">
+                                            <p style="color:#fff;">Si enviaste esta solicitud, pulsa en el siguiente botón, en caso contrario, deberías cambiar tu contraseña.</p>
+                                            <br><br>
+                                            <a href="' . getenv('URL') . '/index.php?r=usuarios/comprobar&token=' . $model->clave .
+                        '" style="text-decoration: none; padding: 2%; border: 1px solid #ccc; border-radius: 4px; color: #111; background-color: #fff;">Recuperar Contraseña</a>
+                                            <a href="' . getenv('URL') . '/index.php?r=site%2Flogin" style="margin-top: 2%; text-decoration: none; padding: 2%; border: 1px solid #ccc; color: #111; border-radius: 4px; background-color: #fff;">Login</a>
+                                    </div>
+                                </div>';
                     $this->sendMail($model->correo, $mensaje);
                 }
             } else {
@@ -177,18 +180,23 @@ class UsuariosController extends Controller
     public function actionComprobar($token)
     {
         $model = Usuarios::find()->where(['clave' => $token])->one();
-        $model->scenario = Usuarios::SCENARIO_UPDATE;
-        $params = Yii::$app->request->post();
 
-        if ($model->load($params) && $model->save()) {
-            Yii::$app->session->setFlash('success', 'El usuario se ha modificado.');
-            return $this->redirect(['/site/index']);
+        if (isset($model)) {
+            $model->scenario = Usuarios::SCENARIO_UPDATE;
+            $params = Yii::$app->request->post();
+
+            if ($model->load($params) && $model->save()) {
+                Yii::$app->session->setFlash('success', 'El usuario se ha modificado.');
+                return $this->redirect(['/site/index']);
+            }
+
+
+            return $this->render('comprobar', [
+                'model' => $model,
+            ]);
         }
 
-
-        return $this->render('comprobar', [
-            'model' => $model,
-        ]);
+        return $this->render('/site/wrong');
     }
 
     protected function updatearClave($model, $params)
