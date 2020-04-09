@@ -15,6 +15,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use kartik\mpdf\Pdf;
+use yii\data\Sort;
 use yii\web\UploadedFile;
 
 /**
@@ -44,8 +45,8 @@ class LibrosController extends Controller
     public function actionIndex()
     {
         $searchModel = new LibrosSearch();
-        $libros = $searchModel->getObjetos(Yii::$app->request->queryParams);
-
+        $params = Yii::$app->request->queryParams;
+        $libros = $searchModel->getObjetos($params);
         return $this->render('index', [
             'libros' =>  $libros,
             'searchModel' => $searchModel,

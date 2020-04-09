@@ -5,6 +5,7 @@ namespace app\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Libros;
+use yii\data\Sort;
 use yii\db\Query;
 
 /**
@@ -77,16 +78,19 @@ class LibrosSearch extends Libros
     public function getObjetos($params)
     {
         $this->load($params);
-        return (new Query())->from('libros')->orderBy('id')
-        ->andFilterWhere([
+        $query = Libros::find();
+        $query->orderBy('id');
+        $query->andFilterWhere([
             'id' => $this->id,
             'editorial_id' => $this->editorial_id,
             'pais_id' => $this->pais_id,
             'fecha' => $this->fecha,
-        ])
-        ->andFilterWhere(['ilike', 'nombre', $this->nombre])
-        ->andFilterWhere(['ilike', 'sinopsis', $this->sinopsis])
-        ->all();
+        ]);
+
+        $query->andFilterWhere(['ilike', 'nombre', $this->nombre]);
+        $query->andFilterWhere(['ilike', 'sinopsis', $this->sinopsis]);
+
+        return $query->all();
     }
 
 }
