@@ -13,7 +13,7 @@ $this->title = 'Libros';
 
     <div class="row">
                 <?php echo $this->render('_search', ['model' => $searchModel]); ?>
-        <div class="col-sm-12 col-lg-2">
+        <div class="col-sm-12 col-lg-2 border-right">
             <p>
                 <button class="btn btn-orange w-100" type="button" data-toggle="collapse" data-target="#menuSearch" aria-expanded="false" aria-controls="collapseExample">
                     Menu
