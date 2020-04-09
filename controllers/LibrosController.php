@@ -46,9 +46,21 @@ class LibrosController extends Controller
     {
         $searchModel = new LibrosSearch();
         $params = Yii::$app->request->queryParams;
-        $libros = $searchModel->getObjetos($params);
+        $sort = new Sort([
+            'attributes' => [
+                'nombre',
+                'genero_id' => [
+                    'asc' => ['genero_id'  => SORT_ASC],
+                    'desc' => ['genero_id'  => SORT_DESC],
+                    'default' => SORT_ASC,
+                    'label' => 'Genero'
+                ]
+            ]
+        ]);
+        $libros = $searchModel->getObjetos($params, $sort);
         return $this->render('index', [
             'libros' =>  $libros,
+            'sort' => $sort,
             'searchModel' => $searchModel,
         ]);
     }

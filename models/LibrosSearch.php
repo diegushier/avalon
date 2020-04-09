@@ -75,11 +75,11 @@ class LibrosSearch extends Libros
         return $dataProvider;
     }
 
-    public function getObjetos($params)
+    public function getObjetos($params, $sort)
     {
         $this->load($params);
         $query = Libros::find();
-        $query->orderBy('id');
+        $query->orderBy($sort->orders);
         $query->andFilterWhere([
             'id' => $this->id,
             'editorial_id' => $this->editorial_id,
