@@ -8,7 +8,7 @@ use yii\bootstrap4\ActiveForm;
 /* @var $form yii\bootstrap4\ActiveForm */
 ?>
 
-<div class="shows-search">
+<div class="shows-search col-12">
 
     <?php $form = ActiveForm::begin([
         'action' => [$tipo],
@@ -20,8 +20,8 @@ use yii\bootstrap4\ActiveForm;
         </div>
 
 
-        <div class="form-group col-lg-1">
-            <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary']) ?>
+        <div class="form-group col-sm-12 col-lg-1">
+            <?= Html::submitButton('Buscar', ['class' => 'btn btn-orange w-100']) ?>
         </div>
 
     </div>

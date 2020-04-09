@@ -74,11 +74,11 @@ class ShowsSearch extends Shows
         return $dataProvider;
     }
 
-    public function getObjetos($tipo, $params)
+    public function getObjetos($tipo, $params, $sort = null)
     {
         $this->load($params);
         $query = Shows::find();
-        $query->orderBy('id');
+        $query->orderBy(isset($sort) ? 'id' : $sort->orders);
         $query->andFilterWhere([
             'id' => $this->id,
             'productora_id' => $this->productora_id,

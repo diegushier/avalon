@@ -8,13 +8,24 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Peliculas';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="shows-peliculas">
-
+<div class="shows-peliculas row">
     <?php echo $this->render('_search', ['model' => $searchModel, 'tipo' => 'peliculas']); ?>
-
-    <div class="container">
+    <div class="col-sm-12 col-lg-2 border-right">
+        <p>
+            <button class="btn btn-orange w-100" type="button" data-toggle="collapse" data-target="#menuSearch" aria-expanded="false" aria-controls="collapseExample">
+                Menu
+            </button>
+        </p>
+        <div class="collapse" id="menuSearch">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item text-center font-weight-bold">Ordenar por:</li>
+                <li class="list-group-item text-center"><?= $sort->link('nombre') ?></li>
+                <li class="list-group-item text-center"><?= $sort->link('fecha') ?></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-12 col-lg-9">
         <div class="row">
             <?php foreach ($peliculas as $peliculas) : ?>
                 <div class="col-lg-3 col-sm-5 d-flex justify-content-center">
@@ -35,6 +46,4 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php endforeach ?>
         </div>
     </div>
-
-
 </div>

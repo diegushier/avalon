@@ -8,6 +8,7 @@ use Yii;
 use app\models\Shows;
 use app\models\ShowsSearch;
 use app\models\Usuarios;
+use yii\data\Sort;
 use yii\web\UploadedFile;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -40,10 +41,22 @@ class ShowsController extends Controller
     public function actionPeliculas()
     {
         $searchModel = new ShowsSearch();
-        $peliculas = $searchModel->getObjetos(Shows::PELICULAS, Yii::$app->request->queryParams);
-
+        $params = Yii::$app->request->queryParams;
+        $sort = new Sort([
+            'attributes' => [
+                'nombre',
+                'fecha' => [
+                    'asc' => ['fecha'  => SORT_ASC],
+                    'desc' => ['fecha'  => SORT_DESC],
+                    'default' => SORT_ASC,
+                    'label' => 'Fecha'
+                ],
+            ]
+        ]);
+        $peliculas = $searchModel->getObjetos(Shows::PELICULAS, $params, $sort);
         return $this->render('peliculas', [
             'peliculas' =>  $peliculas,
+            'sort' => $sort,
             'searchModel' => $searchModel,
         ]);
     }
@@ -55,10 +68,23 @@ class ShowsController extends Controller
     public function actionSeries()
     {
         $searchModel = new ShowsSearch();
-        $series = $searchModel->getObjetos(Shows::SERIES, Yii::$app->request->queryParams);
+        $params = Yii::$app->request->queryParams;
+        $sort = new Sort([
+            'attributes' => [
+                'nombre',
+                'fecha' => [
+                    'asc' => ['fecha'  => SORT_ASC],
+                    'desc' => ['fecha'  => SORT_DESC],
+                    'default' => SORT_ASC,
+                    'label' => 'Genero'
+                ],
+            ]
+        ]);
+        $series = $searchModel->getObjetos(Shows::SERIES, $params, $sort);
 
         return $this->render('series', [
             'series' =>  $series,
+            'sort' => $sort,
             'searchModel' => $searchModel,
         ]);
     }
