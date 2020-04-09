@@ -76,7 +76,7 @@ class ShowsController extends Controller
                     'asc' => ['fecha'  => SORT_ASC],
                     'desc' => ['fecha'  => SORT_DESC],
                     'default' => SORT_ASC,
-                    'label' => 'Genero'
+                    'label' => 'Fecha'
                 ],
             ]
         ]);
