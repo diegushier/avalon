@@ -2,21 +2,16 @@
 
 namespace app\controllers;
 
-use app\models\Capitulos;
 use app\models\ImageForm;
-use app\models\Listacapitulos;
 use app\models\Paises;
 use Yii;
 use app\models\Shows;
 use app\models\ShowsSearch;
 use app\models\Usuarios;
-use yii\data\ActiveDataProvider;
-use yii\db\Query;
 use yii\web\UploadedFile;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\Response;
 
 /**
  * ShowsController implements the CRUD actions for Shows model.

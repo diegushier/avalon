@@ -11,13 +11,14 @@ use yii\bootstrap4\ActiveForm;
 <div class="libros-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['libros'],
+        'action' => ['index'],
         'method' => 'get',
     ]); ?>
     <div class="row">
         <div class="col-lg-10 col-sm-12">
-            <?= $form->field($model, 'nombre')->textInput(['class' =>  'form-control', 'value' => '', 'placeholder' => 'Escriba el nombre del libro....'])->label(false) ?>
+            <?= $form->field($model, 'nombre')->textInput(['class' =>  'form-control', 'value' => '', 'placeholder' => 'Escriba el nombre....'])->label(false) ?>
         </div>
+
 
         <div class="form-group col-lg-1">
             <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary']) ?>
