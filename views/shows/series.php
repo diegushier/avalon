@@ -19,12 +19,12 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php foreach ($series as $series) : ?>
                 <div class="col-lg-3 col-sm-5 d-flex justify-content-center">
                     <div class="card mt-2" style="width: 15rem;">
-                        <img class="card-img-top mw-100 mh-100" src="<?= Yii::getAlias('@imgCineUrl/' . $series['id'] . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'" alt="Card image cap">
+                        <img class="card-img-top mw-100 mh-100" src="<?= Yii::getAlias('@imgCineUrl/' . $series->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'" alt="Card image cap">
                         <div class="card-body d-flex flex-column mt-auto">
-                            <h5 class="card-title"><?= $series['nombre'] ?></h5>
+                            <h5 class="card-title"><?= $series->nombre ?></h5>
                             <?= Html::a(
                                 'Ver',
-                                ['shows/view', 'id' => $series['id']],
+                                ['shows/view', 'id' => $series->id],
                                 [
                                     'class' => 'btn btn-primary btn-block mt-auto',
                                 ]

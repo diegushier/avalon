@@ -5,6 +5,8 @@ namespace app\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Shows;
+use Imagine\Filter\Basic\Show;
+use yii\data\Sort;
 use yii\db\Query;
 
 /**
@@ -75,16 +77,17 @@ class ShowsSearch extends Shows
     public function getObjetos($tipo, $params)
     {
         $this->load($params);
-        return (new Query())->from('shows')->orderBy('id')
-        ->andFilterWhere([
+        $query = Shows::find();
+        $query->orderBy('id');
+        $query->andFilterWhere([
             'id' => $this->id,
             'productora_id' => $this->productora_id,
             'tipo' => $tipo,
             'pais_id' => $this->pais_id,
             'fecha' => $this->fecha,
-        ])
-        ->andFilterWhere(['ilike', 'nombre', $this->nombre])
-        ->andFilterWhere(['ilike', 'sinopsis', $this->sinopsis])
-        ->all();
+        ]);
+        $query->andFilterWhere(['ilike', 'nombre', $this->nombre]);
+        $query->andFilterWhere(['ilike', 'sinopsis', $this->sinopsis]);
+        return $query->all();
     }
 }
