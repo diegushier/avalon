@@ -33,7 +33,9 @@
         "kartik-v/yii2-widget-datepicker": "@dev",
         "yiisoft/yii2-jui": "~2.0.0",
         "kartik-v/yii2-mpdf": "dev-master",
-        "lesha724/yii2-youtube-widget": "*"
+        "lesha724/yii2-youtube-widget": "*",
+        "bitcko/yii2-bitcko-google-calendar-api": "dev-master",
+        "google/apiclient": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

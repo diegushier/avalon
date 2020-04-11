@@ -39,7 +39,7 @@ class Libros extends \yii\db\ActiveRecord
     {
         return [
             [['nombre'], 'required'],
-            [['fecha'], 'safe'],
+            [['fecha'], 'required'],
             [['sinopsis'], 'string'],
             [['nombre'], 'string', 'max' => 255],
             [['nombre'], 'unique'],

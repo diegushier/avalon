@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Calendar;
 use app\models\Generos;
 use app\models\ImageForm;
 use app\models\Integrantes;
@@ -120,7 +121,7 @@ class LibrosController extends Controller
     {
         $model = new Libros();
         $imagen = new ImageForm();
-
+        $calendar = new Calendar();
         $editorial = Usuarios::obtainEmpresa()->one()->id;
         $paises = Paises::lista();
         $autor = Integrantes::lista();
@@ -129,6 +130,9 @@ class LibrosController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if (Yii::$app->request->post()) {
+                $calendar->name = $model->nombre;
+                $calendar->date = $model->fecha;
+                $calendar->create();
                 $imagen->imagen = UploadedFile::getInstance($imagen, 'imagen');
                 $imagen->upload($model->id, $tipo);
             }
