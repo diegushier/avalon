@@ -90,6 +90,7 @@ CREATE TABLE libros
     ,   autor_id        bigserial       NOT NULL REFERENCES integrantes (id)
     ,   genero_id       bigserial       NOT NULL REFERENCES generos (id)
     ,   pais_id         bigserial       NOT NULL REFERENCES paises (id)
+    ,   evento_id       VARCHAR(255)   
     ,   fecha           date
     ,   sinopsis        text
 );
@@ -101,6 +102,7 @@ CREATE TABLE shows
     ,   productora_id   bigserial       NOT NULL REFERENCES empresas (id)
     ,   tipo            VARCHAR(10)     NOT NULL
     ,   pais_id         bigserial       NOT NULL REFERENCES paises (id)
+    ,   evento_id       VARCHAR(255)   
     ,   fecha           date
     ,   sinopsis        text 
 );

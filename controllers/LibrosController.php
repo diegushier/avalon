@@ -130,9 +130,12 @@ class LibrosController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if (Yii::$app->request->post()) {
-                $calendar->name = $model->nombre;
-                $calendar->date = $model->fecha;
-                $calendar->create();
+                if (isset($model->fecha)) {
+                    $calendar->name = $model->nombre;
+                    $calendar->date = $model->fecha;
+                    $calendar->create($model);
+                }
+
                 $imagen->imagen = UploadedFile::getInstance($imagen, 'imagen');
                 $imagen->upload($model->id, $tipo);
             }
@@ -198,7 +201,10 @@ class LibrosController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        
+        if (isset($model->evento_id)) {
+            $calendar = new Calendar();
+            $calendar->delete($model->evento_id);
+        }
         $model->delete();
 
         return $this->redirect(['index']);

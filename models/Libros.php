@@ -39,9 +39,9 @@ class Libros extends \yii\db\ActiveRecord
     {
         return [
             [['nombre'], 'required'],
-            [['fecha'], 'required'],
+            [['fecha'], 'safe'],
             [['sinopsis'], 'string'],
-            [['nombre'], 'string', 'max' => 255],
+            [['nombre', 'evento_id'], 'string', 'max' => 255],
             [['nombre'], 'unique'],
             [['editorial_id'], 'exist', 'skipOnError' => true, 'targetClass' => Empresas::className(), 'targetAttribute' => ['editorial_id' => 'id']],
             [['genero_id'], 'exist', 'skipOnError' => true, 'targetClass' => Generos::className(), 'targetAttribute' => ['genero_id' => 'id']],
@@ -62,6 +62,7 @@ class Libros extends \yii\db\ActiveRecord
             'editorial_id' => 'Editorial',
             'autor_id' => 'Autor',
             'genero_id' => 'Genero',
+            'event_id' => 'Genero',
             'pais_id' => 'Pais',
             'fecha' => 'Fecha',
             'sinopsis' => 'Sinopsis',

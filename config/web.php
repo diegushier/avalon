@@ -15,7 +15,7 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
 
         //resumenes
-        '@resumen'  => '@app/web/resumen',
+        '@resumen'  => '@app/web/pdf',
 
         //imagenes
         '@img'   => '@app/web/img',

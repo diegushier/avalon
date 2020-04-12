@@ -6,6 +6,7 @@ use Exception;
 use Google_Client;
 use Google_Service_Calendar;
 use Google_Service_Calendar_Event;
+use Yii;
 use yii\base\Model;
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -15,7 +16,7 @@ class Calendar extends Model
     public $name;
     public $date;
 
-    public function create()
+    public function create($model)
     {
         $client = $this->auth();
         $service = new Google_Service_Calendar($client);
@@ -34,14 +35,16 @@ class Calendar extends Model
 
         $calendarId = 'primary';
         $event = $service->events->insert($calendarId, $event);
-        printf('Event created: %s\n', $event->htmlLink);
+
+        $model->evento_id = $event->id;
+        $model->update();
     }
 
-    public function delete()
+    public function delete($id)
     {
         $client = $this->auth();
         $service = new Google_Service_Calendar($client);
-        $service->events->delete('primary', 'eventId');
+        $service->events->delete('primary', $id);
     }
 
     public function auth()
