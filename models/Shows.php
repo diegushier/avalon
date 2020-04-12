@@ -45,7 +45,7 @@ class Shows extends \yii\db\ActiveRecord
             [['nombre', 'tipo'], 'required'],
             [['fecha'], 'safe'],
             [['sinopsis'], 'string'],
-            [['nombre'], 'string', 'max' => 255],
+            [['nombre', 'evento_id'], 'string', 'max' => 255],
             [['tipo'], 'string', 'max' => 10],
             [['nombre'], 'unique'],
             [['productora_id'], 'exist', 'skipOnError' => true, 'targetClass' => Empresas::className(), 'targetAttribute' => ['productora_id' => 'id']],
@@ -65,6 +65,7 @@ class Shows extends \yii\db\ActiveRecord
             'tipo' => 'Tipo',
             'pais_id' => 'Pais',
             'fecha' => 'Fecha',
+            'evento_id' => 'Evento',
             'sinopsis' => 'Sinopsis',
         ];
     }

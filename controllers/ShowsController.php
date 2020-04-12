@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Calendar;
 use app\models\ImageForm;
 use app\models\Paises;
 use Yii;
@@ -138,11 +139,14 @@ class ShowsController extends Controller
         $empresa = Usuarios::findOne(Yii::$app->user->id)->getEmpresas()->one()->id;
         $paises = Paises::lista();
 
-        Yii::debug(Yii::$app->request->post());
-        Yii::debug($model->save());
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if (Yii::$app->request->post()) {
+                if (isset($model->fecha)) {
+                    $calendar = new Calendar();
+                    $calendar->name = $model->nombre;
+                    $calendar->date = $model->fecha;
+                    $calendar->create($model);
+                }
                 $imagen->imagen = UploadedFile::getInstance($imagen, 'imagen');
                 $imagen->upload($model->id, $tipo);
             }
@@ -204,7 +208,12 @@ class ShowsController extends Controller
             Yii::$app->session->setFlash('error', 'No es posible borrar esa serie porque contiene capítulos.');
             return $this->redirect(['view', 'id' => $model->id]);
         }
-        
+
+        if (isset($model->evento_id)) {
+            $calendar = new Calendar();
+            $calendar->delete($model->evento_id);
+        }
+
         $generos = $model->getListageneros()->all();
         foreach ($generos as $generos) {
             $generos->delete();
