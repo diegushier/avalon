@@ -6,6 +6,8 @@ use Exception;
 use Google_Client;
 use Google_Service_Calendar;
 use Google_Service_Calendar_Event;
+use Google_Service_Calendar_EventDateTime;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Yii;
 use yii\base\Model;
 
@@ -23,8 +25,6 @@ class Calendar extends Model
 
         $event = new Google_Service_Calendar_Event([
             'summary' => $this->name,
-            'location' => '800 Howard St., San Francisco, CA 94103',
-            'description' => 'A chance to hear more about Google\'s developer products.',
             'start' => [
                 'date' => $this->date,
             ],
@@ -38,6 +38,23 @@ class Calendar extends Model
 
         $model->evento_id = $event->id;
         $model->update();
+    }
+
+    public function update($model, $id = null)
+    {
+        if (isset($id)) {
+            $client = $this->auth();
+            $service = new Google_Service_Calendar($client);
+            $date = new Google_Service_Calendar_EventDateTime();
+            $dateString = $this->date;
+            $event = $service->events->get('primary', $id);
+            $event->setSummary($this->name);
+            $date->setDate($dateString);
+            $event->setStart($date);
+            $service->events->update('primary', $id, $event);
+        } else {
+            $this->create($model);
+        }
     }
 
     public function delete($id)

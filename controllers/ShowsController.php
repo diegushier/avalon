@@ -175,7 +175,8 @@ class ShowsController extends Controller
         $imagen = new ImageForm();
         $tipo = 'cine';
         $empresa = Usuarios::findOne(Yii::$app->user->id)->getEmpresas()->one()->id;
-
+        $fecha = $model->fecha();
+        $calendar = new Calendar();
 
         if (Yii::$app->request->post()) {
             $imagen->imagen = UploadedFile::getInstance($imagen, 'imagen');
@@ -183,6 +184,11 @@ class ShowsController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if ($model->fecha !== $fecha) {
+                $calendar->name = $model->nombre;
+                $calendar->date = $model->fecha;
+                $calendar->update($model, $model->evento_id);
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

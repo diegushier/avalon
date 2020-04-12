@@ -164,20 +164,22 @@ class LibrosController extends Controller
         $model = $this->findModel($id);
         $imagen = new ImageForm();
         $tipo = 'libro';
-
+        $calendar = new Calendar();
         $editorial = Usuarios::obtainEmpresa()->one()->id;
         $paises = Paises::lista();
         $autor = Integrantes::lista();
         $genero = Generos::lista();
-
-        if (Yii::$app->request->post()) {
-            $imagen->imagen = UploadedFile::getInstance($imagen, 'imagen');
-            if ($imagen->upload($id, $tipo)) {
-                return $this->redirect(['index']);
-            }
-        }
+        $fecha = $model->fecha;
+        $nombre = $model->nombre;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $imagen->imagen = UploadedFile::getInstance($imagen, 'imagen');
+            $imagen->upload($id, $tipo);
+            if ($model->fecha !== $fecha || $model->nombre !== $nombre) {
+                $calendar->name = $model->nombre;
+                $calendar->date = $model->fecha;
+                $calendar->update($model, $model->evento_id);
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
