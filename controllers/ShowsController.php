@@ -175,7 +175,8 @@ class ShowsController extends Controller
         $imagen = new ImageForm();
         $tipo = 'cine';
         $empresa = Usuarios::findOne(Yii::$app->user->id)->getEmpresas()->one()->id;
-        $fecha = $model->fecha();
+        $fecha = $model->fecha;
+        $nombre = $model->nombre;
         $calendar = new Calendar();
 
         if (Yii::$app->request->post()) {
@@ -184,7 +185,7 @@ class ShowsController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if ($model->fecha !== $fecha) {
+            if ($model->fecha !== $fecha || $model->nombre !== $nombre) {
                 $calendar->name = $model->nombre;
                 $calendar->date = $model->fecha;
                 $calendar->update($model, $model->evento_id);

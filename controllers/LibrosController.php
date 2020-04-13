@@ -86,7 +86,7 @@ class LibrosController extends Controller
             'autor' => $autor->nombre,
             'productora' => $productora->nombre,
             'pais' => $pais->nombre,
-            'genero' => $genero->nombre,
+            'genero' => $genero,
             'duenio' => $duenio
         ];
 
@@ -130,7 +130,7 @@ class LibrosController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if (Yii::$app->request->post()) {
-                if (isset($model->fecha)) {
+                if ($model->fecha !== '') {
                     $calendar->name = $model->nombre;
                     $calendar->date = $model->fecha;
                     $calendar->create($model);

@@ -163,6 +163,12 @@ $this->registerJs($back);
                         <td>Productora</td>
                         <td><?= $productora ?></td>
                     </tr>
+                    <?php if ($model->fecha !== '' && $model->fecha !== null) : ?>
+                        <tr>
+                            <td>Fecha de estreno</td>
+                            <td><?= date_format(date_create($model->fecha), 'j F Y') ?></td>
+                        </tr>
+                    <?php endif ?>
                     <tr>
                         <td>Pais</td>
                         <td><?= $pais ?></td>
@@ -172,7 +178,7 @@ $this->registerJs($back);
                         <td>
                             <?php $contador = 0;
                             foreach ($generos as $g) : ?>
-                                <div class="btn-group dropright">
+                                <div class="btn-group dropright mt-1">
                                     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="<?= $contador++ . '-' . $g->nombre ?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <?= $g->nombre ?>
                                     </a>

@@ -7,11 +7,7 @@ use Google_Client;
 use Google_Service_Calendar;
 use Google_Service_Calendar_Event;
 use Google_Service_Calendar_EventDateTime;
-use PhpOffice\PhpSpreadsheet\Shared\Date;
-use Yii;
 use yii\base\Model;
-
-require __DIR__ . '/../vendor/autoload.php';
 
 class Calendar extends Model
 {
