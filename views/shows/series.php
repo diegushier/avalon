@@ -12,9 +12,21 @@ $this->title = 'Series';
 <div class="shows-series row">
     <?php echo $this->render('_search', ['model' => $searchModel, 'tipo' => 'series']); ?>
     <div class="col-sm-12 col-lg-2 border-right">
-        <button class="btn btn-orange w-100" type="button" data-toggle="collapse" data-target="#menuSearch" aria-expanded="false" aria-controls="collapseExample">
-            Menu
-        </button>
+        <p>
+            <button class="btn btn-orange w-100" type="button" data-toggle="collapse" data-target="#menuSearch" aria-expanded="false" aria-controls="collapseExample">
+                Menu
+            </button>
+            <?php if (Yii::$app->user->identity->clave === null) : ?>
+                <?= Html::a(
+                    'Añade tu serie',
+                    ['create'],
+                    [
+                        'class' => 'btn btn-orange btn-block mt-1',
+                    ]
+                ) ?>
+            <?php endif ?>
+
+        </p>
         <div class="collapse" id="menuSearch">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item text-center font-weight-bold">Ordenar por:</li>

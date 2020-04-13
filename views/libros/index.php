@@ -16,8 +16,18 @@ $this->title = 'Libros';
             <button class="btn btn-orange w-100" type="button" data-toggle="collapse" data-target="#menuSearch" aria-expanded="false" aria-controls="collapseExample">
                 Menu
             </button>
+            <?php if (Yii::$app->user->identity->clave === null) : ?>
+                <?= Html::a(
+                    'Añade tu libro',
+                    ['create'],
+                    [
+                        'class' => 'btn btn-orange btn-block mt-1',
+                    ]
+                ) ?>
+            <?php endif ?>
         </p>
         <div class="collapse" id="menuSearch">
+
             <ul class="list-group list-group-flush">
                 <li class="list-group-item text-center font-weight-bold">Ordenar por:</li>
                 <li class="list-group-item text-center"><?= $sort->link('nombre') ?></li>

@@ -9,9 +9,6 @@ use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
 use yii\bootstrap4\Breadcrumbs;
 use app\assets\AppAsset;
-use app\controllers\SiteController;
-use app\models\Empresas;
-use app\models\Usuarios;
 
 AppAsset::register($this);
 ?>
@@ -54,19 +51,6 @@ AppAsset::register($this);
             $menu[] = ['label' => 'Usuarios', 'items' => [
                 ['label' => 'Login', 'url' => ['/site/login']],
                 ['label' => 'Regitrarse', 'url' => ['/usuarios/registrar']],
-            ]];
-        } elseif (Yii::$app->user->identity->clave === null) {
-            $menu[] = ['label' => Yii::$app->user->identity->nickname, 'items' => [
-                ['label' => 'Modificar', 'url' => ['/usuarios/modify']],
-                Html::beginForm(['/site/logout'], 'post')
-                    . Html::submitButton(
-                        'Salir-Desconectar',
-                        ['class' => 'dropdown-item'],
-                    )
-                    . Html::endForm(),
-                ['label' => 'Nuevo Libro', 'url' => ['/libros/create']],
-                ['label' => 'Nuevo Show', 'url' => ['/shows/create']],
-
             ]];
         } else {
             $menu[] = ['label' => Yii::$app->user->identity->nickname, 'items' => [
