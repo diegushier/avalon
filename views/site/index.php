@@ -2,6 +2,8 @@
 
 /* @var $this yii\web\View */
 
+use yii\bootstrap4\Html;
+
 $this->title = 'Avalon';
 $this->registerCss('
 
@@ -34,6 +36,20 @@ $js = "
 $this->registerJs($js);
 ?>
 
-<div class="site-index">
-    <div id="calendar"></div>
+<div class="site-index row">
+    <div class="col-sm-12 col-lg-2 border-right">
+        <p>
+            <?= Html::a(
+                'Modificar perfil',
+                ['/usuarios/modify'],
+                [
+                    'class' => 'btn btn-orange btn-block mt-1',
+                ]
+            ) ?>
+        </p>
+    </div>
+    <div class="col-sm-12 col-lg-9">
+        <h3>Nuevos Estrenos....</h3>
+        <div id="calendar"></div>
+    </div>
 </div>

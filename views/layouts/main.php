@@ -53,15 +53,7 @@ AppAsset::register($this);
                 ['label' => 'Regitrarse', 'url' => ['/usuarios/registrar']],
             ]];
         } else {
-            $menu[] = ['label' => Yii::$app->user->identity->nickname, 'items' => [
-                ['label' => 'Modificar', 'url' => ['/usuarios/modify']],
-                Html::beginForm(['/site/logout'], 'post')
-                    . Html::submitButton(
-                        'Salir-Desconectar',
-                        ['class' => 'dropdown-item'],
-                    )
-                    . Html::endForm(),
-            ]];
+            $menu[] = ['label' => 'Deconectar', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
         }
 
         echo Nav::widget([
