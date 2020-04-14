@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $quest = !(Yii::$app->user->isGuest) && ($duenio === Yii::$app->user->id);
 
 
-$back = "$('body').css('background-image', 'url( " . Yii::getAlias('@imgBackLibrosUrl/' . $model->id . '.jpg') . ")')
+$back = "$('body').css('background-image', 'url( " . Yii::getAlias('@imgBackCineUrl/' . $model->id . '.jpg') . ")')
          $('#back').css('background-color', '#fff')
          $(function () {
             $('[data-toggle=" . 'popover' . "]').popover()
