@@ -78,7 +78,6 @@ class ShowsSearch extends Shows
     {
         $this->load($params);
         $query = Shows::find();
-        $query->orderBy(isset($sort) ? 'id' : $sort->orders);
         $query->andFilterWhere([
             'id' => $this->id,
             'productora_id' => $this->productora_id,
@@ -88,6 +87,7 @@ class ShowsSearch extends Shows
         ]);
         $query->andFilterWhere(['ilike', 'nombre', $this->nombre]);
         $query->andFilterWhere(['ilike', 'sinopsis', $this->sinopsis]);
+        $query->orderBy(isset($sort) ? $sort->orders : 'id');
         return $query->all();
     }
 }
