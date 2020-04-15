@@ -175,7 +175,7 @@ class LibrosController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $imagen->imagen = UploadedFile::getInstance($imagen, 'imagen');
             $imagen->upload($id, $tipo);
-            if ($model->fecha !== $fecha || $model->nombre !== $nombre) {
+            if (($model->fecha !== $fecha && $model->fecha !== '') || $model->nombre !== $nombre) {
                 $calendar->name = $model->nombre;
                 $calendar->date = $model->fecha;
                 $calendar->update($model, $model->evento_id);

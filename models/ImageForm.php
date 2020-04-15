@@ -18,10 +18,8 @@ class ImageForm extends Model
 
     public function upload($id, $tipo)
     {
-
         if ($this->validate()) {
             $tipo === 'libro' ? $alias = '@imgLibros/' : $alias = '@imgCine/';
-
             $filename = $id . '.' . $this->imagen->extension;
             $origen = Yii::getAlias($alias . $filename);
             $destino = Yii::getAlias($alias . $filename);
@@ -30,6 +28,15 @@ class ImageForm extends Model
             return true;
         } else {
             return false;
+        }
+    }
+
+    public function delete($id, $tipo)
+    {
+        $tipo === 'libro' ? $alias = '@imgLibros/' : $alias = '@imgCine/';
+        $file = Yii::getAlias($tipo . $id);
+        if (file_exists($file)) {
+            unlink($file);
         }
     }
 }
