@@ -19,7 +19,7 @@ $this->title = 'Series';
             <?php if (Yii::$app->user->identity->clave === null) : ?>
                 <?= Html::a(
                     'Añade tu serie',
-                    ['create'],
+                    ['create', 'tipo' => 'cine'],
                     [
                         'class' => 'btn btn-orange btn-block mt-1',
                     ]

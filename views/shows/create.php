@@ -41,32 +41,36 @@ $this->registerJs($js);
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <div class="row">
+        <div class="col-lg-2  col-sm-12">
+            <span class="btn btn-default btn-file">
+                <img id="setImg" src="<?= Yii::getAlias('@imgUrl/plus.png') ?>" class="plus" alt="">
+                <?= $form->field($imagen, 'imagen')->fileInput(['class' => ''])->label(false) ?>
+            </span>
+        </div>
 
-    <?php if (isset($imagen)) : ?>
-        <span class="btn btn-default btn-file">
-            <img id="setImg" src="<?= Yii::getAlias('@imgUrl/plus.png') ?>" class="plus" alt="">
-            <?= $form->field($imagen, 'imagen')->fileInput(['class' => ''])->label(false) ?>
-        </span>
-    <?php endif ?>
+        <div class="col-lg-9  col-sm-12">
 
-    <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'productora_id')->hiddenInput(['value' => $empresa])->label(false) ?>
+            <?= $form->field($model, 'productora_id')->hiddenInput(['value' => $empresa])->label(false) ?>
 
-    <?= $form->field($model, 'tipo')->radioList(['cine', 'serie']) ?>
+            <?= $form->field($model, 'tipo')->hiddenInput(['value' => $tipo])->label(false) ?>
 
-    <?= $form->field($model, 'pais_id')->dropDownList($paises) ?>
+            <?= $form->field($model, 'pais_id')->dropDownList($paises) ?>
 
-    <?php echo $form->field($model, 'fecha')->widget(DateControl::class, [
-        'type' => DateControl::FORMAT_DATE,
-        'widgetOptions' => [
-            'pluginOptions' => [
-                'autoclose' => true,
-            ],
-        ],
-    ]) ?>
+            <?php echo $form->field($model, 'fecha')->widget(DateControl::class, [
+                'type' => DateControl::FORMAT_DATE,
+                'widgetOptions' => [
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                    ],
+                ],
+            ]) ?>
 
-    <?= $form->field($model, 'sinopsis')->textarea(['rows' => 6]) ?>
+            <?= $form->field($model, 'sinopsis')->textarea(['rows' => 6]) ?>
+        </div>
+    </div>
 
     <div class="form-group">
         <?= Html::submitButton('Crear', ['class' => 'btn btn-orange']) ?>

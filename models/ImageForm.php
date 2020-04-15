@@ -16,7 +16,7 @@ class ImageForm extends Model
         ];
     }
 
-    public function upload($id, $tipo)
+    public function upload($id, $tipo = null)
     {
         if ($this->validate()) {
             $tipo === 'libro' ? $alias = '@imgLibros/' : $alias = '@imgCine/';

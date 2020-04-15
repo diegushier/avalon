@@ -19,7 +19,7 @@ $this->title = 'Peliculas';
             <?php if (Yii::$app->user->identity->clave === null) : ?>
                 <?= Html::a(
                     'Añade tu pelicula',
-                    ['create'],
+                    ['create', 'tipo' => 'cine'],
                     [
                         'class' => 'btn btn-orange btn-block mt-1',
                     ]

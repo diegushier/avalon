@@ -131,11 +131,10 @@ class ShowsController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($tipo)
     {
         $model = new Shows();
         $imagen = new ImageForm();
-        $tipo = 'cine';
         $empresa = Usuarios::findOne(Yii::$app->user->id)->getEmpresas()->one()->id;
         $paises = Paises::lista();
 
@@ -148,7 +147,7 @@ class ShowsController extends Controller
                     $calendar->create($model);
                 }
                 $imagen->imagen = UploadedFile::getInstance($imagen, 'imagen');
-                $imagen->upload($model->id, $tipo);
+                $imagen->upload($model->id);
             }
 
             return $this->redirect(['view', 'id' => $model->id]);
@@ -159,6 +158,7 @@ class ShowsController extends Controller
             'imagen' => $imagen,
             'empresa' => $empresa,
             'paises' => $paises,
+            'tipo' => $tipo
         ]);
     }
 
