@@ -207,6 +207,9 @@ class LibrosController extends Controller
             $calendar = new Calendar();
             $calendar->delete($model->evento_id);
         }
+
+        $imagen = new ImageForm();
+        $imagen->delete($model->id, 'libro');
         $model->delete();
 
         return $this->redirect(['index']);

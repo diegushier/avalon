@@ -31,12 +31,16 @@ class ImageForm extends Model
         }
     }
 
-    public function delete($id, $tipo)
+    public function delete($id, $tipo = null)
     {
         $tipo === 'libro' ? $alias = '@imgLibros/' : $alias = '@imgCine/';
-        $file = Yii::getAlias($tipo . $id);
-        if (file_exists($file)) {
-            unlink($file);
+        $extensions = ['.jpg', '.png'];
+        foreach ($extensions as $k) {
+            $file = Yii::getAlias($alias . $id . $k);
+            if (file_exists($file)) {
+                unlink($file);
+                return;
+            }
         }
     }
 }

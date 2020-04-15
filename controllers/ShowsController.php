@@ -141,7 +141,7 @@ class ShowsController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if (Yii::$app->request->post()) {
-                if (isset($model->fecha)) {
+                if ($model->fecha !== '') {
                     $calendar = new Calendar();
                     $calendar->name = $model->nombre;
                     $calendar->date = $model->fecha;
@@ -210,11 +210,14 @@ class ShowsController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
+        $imagen = new ImageForm();
         $tipo = $model->tipo === 'serie';
         if ($model->getListacapitulos()->exists()) {
             Yii::$app->session->setFlash('error', 'No es posible borrar esa serie porque contiene capítulos.');
             return $this->redirect(['view', 'id' => $model->id]);
         }
+
+        $imagen->delete($model->id);
 
         if (isset($model->evento_id)) {
             $calendar = new Calendar();
