@@ -36,17 +36,28 @@ $js = "
 $this->registerJs($js);
 ?>
 
-<div class="site-index row">
+<div class="site-index row m-auto">
     <div class="col-sm-12 col-lg-2 border-right">
-        <p>
-            <?= Html::a(
-                'Modificar perfil',
-                ['/usuarios/modify'],
-                [
-                    'class' => 'btn btn-orange btn-block mt-1',
-                ]
-            ) ?>
-        </p>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <?= Html::a(
+                    'Calendario',
+                    ['/site/index'],
+                    [
+                        'class' => 'btn btn-orange w-100',
+                    ]
+                ) ?>
+            </li>
+            <li class="list-group-item text-center font-weight-bold">
+                <?= Html::a(
+                    'Perfil',
+                    ['/usuarios/view'],
+                    [
+                        'class' => 'btn btn-orange w-100',
+                    ]
+                ) ?>
+            </li>
+        </ul>
     </div>
     <div class="col-sm-12 col-lg-9">
         <h3>Nuevos Estrenos....</h3>

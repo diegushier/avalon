@@ -40,6 +40,16 @@ class UsuariosController extends Controller
         ];
     }
 
+    public function actionView()
+    {
+        $model = Yii::$app->user->identity;
+        $pais = Paises::findOne($model->pais_id)->nombre;
+        return $this->render('view', [
+            'model' => $model,
+            'pais' => $pais,
+        ]);
+    }
+
 
     public function actionRegistrar()
     {
