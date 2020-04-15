@@ -63,7 +63,7 @@ $this->title = $model->nickname;
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <?= Html::a('Eliminar', ['delete'], [
+                            <?= Html::a('Eliminar', ['/usuarios/delete'], [
                                 'id' => 'comfirmDeleteUser',
                                 'class' => 'btn btn-danger',
                                 'data' => [
