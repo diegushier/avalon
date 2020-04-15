@@ -43,10 +43,14 @@ class UsuariosController extends Controller
     public function actionView()
     {
         $model = Yii::$app->user->identity;
-        $pais = Paises::findOne($model->pais_id)->nombre;
+        $pais = Paises::lista()[$model->pais_id];
+        $empresa = $model->getEmpresas()->one();
+        $emp_pais = Paises::lista()[$empresa->pais_id];
         return $this->render('view', [
             'model' => $model,
+            'empresa' => $empresa,
             'pais' => $pais,
+            'emp_pais' => $emp_pais,
         ]);
     }
 

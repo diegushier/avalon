@@ -7,6 +7,7 @@
 use yii\bootstrap4\Html as Bootstrap4Html;
 use yii\helpers\Html;
 
+$clave = $model->clave === null;
 $this->title = $model->nickname;
 ?>
 <div class="site-view row m-auto">
@@ -81,6 +82,8 @@ $this->title = $model->nickname;
 
         <div class="col-lg-7 col-sm-12 mt-3">
             <table class="table">
+                <h4>Usuario:</h4>
+
                 <tbody>
                     <tr>
                         <td>Nickname</td>
@@ -96,9 +99,25 @@ $this->title = $model->nickname;
                     </tr>
                     <tr>
                         <td>Auntenticado</td>
-                        <th><?= $model->clave === null ? Html::label('Si', null, ['style' => 'color: green']) : Html::label('No', null, ['style' => 'color:red']) ?></th>
+                        <th><?= $clave ? Html::label('Si', null, ['style' => 'color: green']) : Html::label('No', null, ['style' => 'color:red']) ?></th>
                     </tr>
                 </tbody>
+
+                <?php if ($clave) : ?>
+                    <table class="table">
+                        <h4>Empresa:</h4>
+                        <tbody>
+                            <tr>
+                                <td>Nombre</td>
+                                <td><?= $empresa->nombre ?></td>
+                            </tr>
+                            <tr>
+                                <td>Pais</td>
+                                <td><?= $emp_pais ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <?php endif ?>
             </table>
         </div>
     </div>
