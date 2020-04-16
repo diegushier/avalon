@@ -12,28 +12,23 @@ $this->title = $model->nickname;
 ?>
 <div class="site-view row m-auto">
     <div class="col-sm-12 col-lg-2 border-right">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <?= Html::a(
-                    'Calendario',
-                    ['/site/index'],
-                    [
-                        'class' => 'btn btn-orange w-100',
-                    ]
-                ) ?>
-            </li>
-            <li class="list-group-item font-weight-bold">
-                <?= Html::a(
-                    'Perfil',
-                    ['/usuarios/view'],
-                    [
-                        'class' => 'btn btn-orange w-100',
-                    ]
-                ) ?>
-            </li>
-        </ul>
+        <?= Html::a(
+            'Calendario',
+            ['/site/index'],
+            [
+                'class' => 'btn btn-orange w-100',
+            ]
+        ) ?>
+        <?= Html::a(
+            'Perfil',
+            ['/usuarios/view'],
+            [
+                'class' => 'btn btn-orange w-100 mt-1',
+            ]
+        ) ?>
     </div>
     <div class="row col-lg-8 col-sm-12">
+
         <div class="col-lg-4 col-sm-12">
             <img src="" class="m-3 p-1 w-100 shadow" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'">
             <?= Html::a(

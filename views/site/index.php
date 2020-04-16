@@ -38,26 +38,20 @@ $this->registerJs($js);
 
 <div class="site-index row m-auto">
     <div class="col-sm-12 col-lg-2 border-right">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <?= Html::a(
-                    'Calendario',
-                    ['/site/index'],
-                    [
-                        'class' => 'btn btn-orange w-100',
-                    ]
-                ) ?>
-            </li>
-            <li class="list-group-item text-center font-weight-bold">
-                <?= Html::a(
-                    'Perfil',
-                    ['/usuarios/view'],
-                    [
-                        'class' => 'btn btn-orange w-100',
-                    ]
-                ) ?>
-            </li>
-        </ul>
+        <?= Html::a(
+            'Calendario',
+            ['/site/index'],
+            [
+                'class' => 'btn btn-orange w-100',
+            ]
+        ) ?>
+        <?= Html::a(
+            'Perfil',
+            ['/usuarios/view'],
+            [
+                'class' => 'btn btn-orange w-100 mt-1',
+            ]
+        ) ?>
     </div>
     <div class="col-sm-12 col-lg-9">
         <h3>Nuevos Estrenos....</h3>
