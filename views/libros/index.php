@@ -19,7 +19,7 @@ $this->title = 'Libros';
             <?php if (Yii::$app->user->identity->clave === null) : ?>
                 <?= Html::a(
                     'Añade tu libro',
-                    ['create'],
+                    ['create', 'scenario' => true],
                     [
                         'class' => 'btn btn-orange btn-block mt-1',
                     ]

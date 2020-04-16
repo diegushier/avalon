@@ -74,10 +74,14 @@ $this->registerJs($js);
 
     <div class="form-group">
         <?= Html::submitButton('Crear', ['class' => 'btn btn-orange']) ?>
+        <?= Html::a(
+            'Cancelar',
+            ['peliculas'],
+            [
+                'class' => 'btn btn-orange',
+            ]
+        ) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
-
-
-
 </div>

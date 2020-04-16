@@ -178,14 +178,18 @@ class ShowsController extends Controller
         $fecha = $model->fecha;
         $nombre = $model->nombre;
         $calendar = new Calendar();
+        $paises = Paises::lista();
 
         if (Yii::$app->request->post()) {
             $imagen->imagen = UploadedFile::getInstance($imagen, 'imagen');
-            $imagen->upload($id, $tipo);
+            if ($imagen->imagen !== null) {
+                $imagen->upload($id, $tipo);
+            }
         }
 
+        Yii::debug(Yii::$app->request->post());
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if (($model->fecha !== $fecha && $model->fecha !== '') || $model->nombre !== $nombre) {
+            if (($model->fecha !== '' && $model->fecha !== $fecha) || $model->nombre !== $nombre) {
                 $calendar->name = $model->nombre;
                 $calendar->date = $model->fecha;
                 $calendar->update($model, $model->evento_id);
@@ -197,6 +201,7 @@ class ShowsController extends Controller
             'model' => $model,
             'imagen' => $imagen,
             'empresa' => $empresa,
+            'paises' => $paises
         ]);
     }
 

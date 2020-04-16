@@ -12,7 +12,7 @@ class ImageForm extends Model
     public function rules()
     {
         return [
-            [['imagen'], 'image', 'skipOnEmpty' => false, 'extensions' => ['jpg', 'png']],
+            [['imagen'], 'image', 'skipOnEmpty' => true, 'extensions' => ['jpg', 'png']],
         ];
     }
 

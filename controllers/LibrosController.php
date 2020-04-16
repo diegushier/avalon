@@ -117,7 +117,7 @@ class LibrosController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($scenario)
     {
         $model = new Libros();
         $imagen = new ImageForm();
@@ -141,15 +141,17 @@ class LibrosController extends Controller
             }
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
-        return $this->render('create', [
+        $render = [
             'model' => $model,
             'imagen' => $imagen,
             'editorial' => $editorial,
             'paises' => $paises,
             'genero' => $genero,
             'autor' => $autor,
-        ]);
+            'scenario' => $scenario
+        ];
+
+        return $this->render('create', $render);
     }
 
     /**
