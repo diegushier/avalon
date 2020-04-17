@@ -30,7 +30,7 @@ $this->title = $model->nickname;
     <div class="row col-lg-8 col-sm-12">
 
         <div class="col-lg-4 col-sm-12">
-            <img src="" class="m-3 p-1 w-100 shadow" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'">
+            <img src="<?= Yii::getAlias('@imgUserUrl/' . $model->id . '.jpg') ?>" class="m-3 p-1 w-100 shadow" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'">
             <?= Html::a(
                 '&#x2699',
                 ['/usuarios/modify'],

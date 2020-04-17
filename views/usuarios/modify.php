@@ -106,6 +106,8 @@ $this->title = 'Modificar perfil';
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#borrarUsuario">
                         Eliminar
                     </button>
+                    <?= Html::a('Volver', ['view'], ['class' => 'btn btn-orange']) ?>
+
                     <div class="modal fade" id="borrarUsuario" tabindex="-1" role="dialog" aria-labelledby="borrarUsuarioCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
@@ -147,114 +149,122 @@ $this->title = 'Modificar perfil';
     <hr>
     <br><br><br>
 
+    <div class="row">
+        <div class="col-lg-2 col-sm-12">
 
-    <?php if ($model->clave !== null) : ?>
-        <div class="col-lg-12 px-md-5">
-            <section>
-                <h2>Confirmación de usuarios</h2>
-                <p>Para tener acceso a la creación de una empresa, primero debe confirmar su cuenta mediante la clave que le fué enviada a su correo.</p>
-                <p>Esto no es más que una medida de seguridad.</p>
-
-                <?php $form = ActiveForm::begin([
-                    'id' => 'login-form',
-                    'layout' => 'horizontal',
-                    'fieldConfig' => [
-                        'horizontalCssClasses' => ['wrapper' => 'col-sm-5'],
-                    ],
-                ]); ?>
-
-                <?= $form->field($model, 'clave')->textInput(['autofocus' => true, 'value' => '']) ?>
-
-                <div class="form-group">
-                    <div class="offset-sm-2">
-                        <?= Html::submitButton('Comfirmar', ['class' => 'btn btn-primary']) ?>
-                    </div>
-                </div>
-
-                <?php ActiveForm::end(); ?>
-            </section>
         </div>
-    <?php else : ?>
-        <?php if (isset($empresa) && !$empresa) : ?>
-            <div class="col-lg-12 px-md-5">
-                <section class="">
-                    <h2 class="pl-3 pt-4">Empresa</h2>
-                    <p>Para mostrar sus propios libros, peliculas o series deberá tener creada una entidad. Desde aqúi puede hacerlo.</p>
-                    <?= $this->render('/empresas/create', [
-                        'model' => $empresa,
-                        'paises' => $paises,
-                        'entidad_id' => $model->entidad_id,
-                        'action' => 'crear'
-                    ]) ?>
 
+        <?php if ($model->clave !== null) : ?>
+            <div class="col-sm-12 col-lg-8">
+                <section>
+                    <h2>Confirmación de usuarios</h2>
+                    <p>Para tener acceso a la creación de una empresa, primero debe confirmar su cuenta mediante la clave que le fué enviada a su correo.</p>
+                    <p>Esto no es más que una medida de seguridad.</p>
+
+                    <?php $form = ActiveForm::begin([
+                        'id' => 'login-form',
+                        'layout' => 'horizontal',
+                        'fieldConfig' => [
+                            'horizontalCssClasses' => ['wrapper' => 'col-sm-5'],
+                        ],
+                    ]); ?>
+
+                    <?= $form->field($model, 'clave')->textInput(['autofocus' => true, 'value' => '']) ?>
+
+                    <div class="form-group">
+                        <div class="offset-sm-2">
+                            <?= Html::submitButton('Comfirmar', ['class' => 'btn btn-primary']) ?>
+                        </div>
+                    </div>
+
+                    <?php ActiveForm::end(); ?>
                 </section>
             </div>
         <?php else : ?>
-            <div class="col-lg-12 px-md-5">
-                <section>
-                    <div class="border rounded">
-                        <?=
-                            $this->render('/empresas/view', [
-                                'model' => $model,
-                                'pais' => $paises[$model->empresa_pais_id]
-                            ]);
-                        ?>
-                    </div>
-
-                    <div class="collapse mt-2" id="mod">
-                        <?= $this->render('/empresas/update', [
-                            'model' => $model,
+            <?php if (isset($empresa) && !$empresa) : ?>
+                <div class="col-sm-12 col-lg-8">
+                    <section class="">
+                        <h2 class="pl-3 pt-4">Empresa</h2>
+                        <p>Para mostrar sus propios libros, peliculas o series deberá tener creada una entidad. Desde aqúi puede hacerlo.</p>
+                        <?= $this->render('/empresas/create', [
+                            'model' => $empresa,
                             'paises' => $paises,
-                            'action' => 'modificar'
+                            'entidad_id' => $model->entidad_id,
+                            'action' => 'crear'
                         ]) ?>
-                    </div>
 
-                    <div class="modal fade" id="borrarEmpresa" tabindex="-1" role="dialog" aria-labelledby="#borrarEmpresaCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="#borrarEmpresaLongTitle">Borrar // Desvincular empresa.</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    ¿Esta usted seguro de que desea desvicular esta empresa?
-                                    La acción será irreversible y no podrá volver a vincularse a ella.
-                                    <br>
-                                    Solo en caso de que no tenga ninguna relación con series libros o películas se borrará.
-                                    <br>
-                                    <div>
-                                        <input type="text" id='deleteEmpresa' placeholder="Escriba el nombre de la empresa para comfirmar" class="col-12 form-control mt-2">
+                    </section>
+                </div>
+            <?php else : ?>
+                <div class="col-sm-12 col-lg-8">
+                    <section>
+                        <div class="border rounded">
+                            <?=
+                                $this->render('/empresas/view', [
+                                    'model' => $model,
+                                    'pais' => $paises[$model->empresa_pais_id]
+                                ]);
+                            ?>
+                        </div>
+
+                        <div class="collapse mt-2" id="mod">
+                            <?= $this->render('/empresas/update', [
+                                'model' => $model,
+                                'paises' => $paises,
+                                'action' => 'modificar'
+                            ]) ?>
+                        </div>
+
+                        <div class="modal fade" id="borrarEmpresa" tabindex="-1" role="dialog" aria-labelledby="#borrarEmpresaCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="#borrarEmpresaLongTitle">Borrar // Desvincular empresa.</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <?= Html::a('Desvincular ' . $model->nombre, ['empresas/delete'], [
-                                        'class' => 'btn btn-danger',
-                                        'id' => 'comfirmDeleteEmpresa',
-                                        'data' => [
-                                            'method' => 'post',
-                                            'params' => ['id' => $model->entidad_id]
-                                        ],
-                                    ]) ?>
+                                    <div class="modal-body">
+                                        ¿Esta usted seguro de que desea desvicular esta empresa?
+                                        La acción será irreversible y no podrá volver a vincularse a ella.
+                                        <br>
+                                        Solo en caso de que no tenga ninguna relación con series libros o películas se borrará.
+                                        <br>
+                                        <div>
+                                            <input type="text" id='deleteEmpresa' placeholder="Escriba el nombre de la empresa para comfirmar" class="col-12 form-control mt-2">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <?= Html::a('Desvincular ' . $model->nombre, ['empresas/delete'], [
+                                            'class' => 'btn btn-danger',
+                                            'id' => 'comfirmDeleteEmpresa',
+                                            'data' => [
+                                                'method' => 'post',
+                                                'params' => ['id' => $model->entidad_id]
+                                            ],
+                                        ]) ?>
 
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
 
-                <section class="mt-3 offset-sm-2">
-                    <button class="btn btn-warning" type="button" id="mod-can" data-toggle="collapse" data-target="#mod" aria-expanded="false" aria-controls="collapseExample">
-                        Modificar empresa
-                    </button>
-                    <button type="button" id="delete" class="btn btn-danger" data-toggle="modal" data-target="#borrarEmpresa">
-                        Eliminar <?= $model->nombre ?>
-                    </button>
-                </section>
+                    <section class="mt-3 offset-sm-2">
+                        <button class="btn btn-warning" type="button" id="mod-can" data-toggle="collapse" data-target="#mod" aria-expanded="false" aria-controls="collapseExample">
+                            Modificar empresa
+                        </button>
+                        <button type="button" id="delete" class="btn btn-danger" data-toggle="modal" data-target="#borrarEmpresa">
+                            Eliminar <?= $model->nombre ?>
+                        </button>
+                        <?= Html::a('Volver', ['view'], ['class' => 'btn btn-orange']) ?>
+                    </section>
 
-            </div>
+                </div>
+            <?php endif ?>
         <?php endif ?>
-    <?php endif ?>
+    </div>
+
+
 </div>
