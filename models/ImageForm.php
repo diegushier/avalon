@@ -8,6 +8,12 @@ use yii\base\Model;
 class ImageForm extends Model
 {
     public $imagen;
+    public $alias = [
+        'libro' => '@imgLibros/',
+        'cine' => '@imgCine/',
+        'user' => '@imgUser/',
+
+    ];
 
     public function rules()
     {
@@ -16,13 +22,12 @@ class ImageForm extends Model
         ];
     }
 
-    public function upload($id, $tipo = null)
+    public function upload($id, $tipo)
     {
         if ($this->validate()) {
-            $tipo === 'libro' ? $alias = '@imgLibros/' : $alias = '@imgCine/';
             $filename = $id . '.' . $this->imagen->extension;
-            $origen = Yii::getAlias($alias . $filename);
-            $destino = Yii::getAlias($alias . $filename);
+            $origen = Yii::getAlias($this->alias[$tipo] . $filename);
+            $destino = Yii::getAlias($this->alias[$tipo] . $filename);
             $this->imagen->saveAs($origen);
             rename($origen, $destino);
             return true;
@@ -33,10 +38,9 @@ class ImageForm extends Model
 
     public function delete($id, $tipo = null)
     {
-        $tipo === 'libro' ? $alias = '@imgLibros/' : $alias = '@imgCine/';
         $extensions = ['.jpg', '.png'];
         foreach ($extensions as $k) {
-            $file = Yii::getAlias($alias . $id . $k);
+            $file = Yii::getAlias($this->alias[$tipo] . $id . $k);
             if (file_exists($file)) {
                 unlink($file);
                 return;

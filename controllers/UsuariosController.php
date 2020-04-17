@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Empresas;
+use app\models\ImageForm;
 use app\models\Modificar;
 use app\models\Paises;
 use app\models\Usuarios;
@@ -11,8 +12,8 @@ use yii\bootstrap4\ActiveForm;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
-use yii\web\HttpException;
 use yii\web\Response;
+use yii\web\UploadedFile;
 
 class UsuariosController extends Controller
 {
@@ -111,7 +112,6 @@ class UsuariosController extends Controller
         $params = Yii::$app->request->post();
         $usuario = Usuarios::find()->where(['id' => Yii::$app->user->id])->one();
         $empresa = $usuario->getEmpresas()->one();
-
         $model = new Modificar();
         $model->setAttributes([
             'nickname' => $usuario->nickname,
@@ -137,7 +137,8 @@ class UsuariosController extends Controller
         }
 
         $this->updatearClave($usuario, $params);
-
+        $model->imagen = UploadedFile::getInstance($model, 'imagen');
+        
         if ($model->create($params)) {
             Yii::$app->session->setFlash('success', 'Se ha modificado correctamente.');
             return $this->goHome();

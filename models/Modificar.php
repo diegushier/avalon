@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\web\IdentityInterface;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "usuarios".
@@ -29,11 +30,12 @@ class Modificar extends \yii\db\ActiveRecord
     public $correo;
     public $pais_id;
     public $clave;
-    
+
     public $nombre;
     public $empresa_pais_id;
     public $entidad_id;
 
+    public $imagen;
 
     const SCENARIO_UPDATE = 'update';
 
@@ -92,7 +94,7 @@ class Modificar extends \yii\db\ActiveRecord
         if ($this->load($params)) {
             $usuarios = Usuarios::findOne(['id' => Yii::$app->user->id]);
             $empresas = $usuarios->getEmpresas()->one();
-
+            $imagen = new ImageForm();
             $usuarios->scenario = Usuarios::SCENARIO_UPDATE;
             $usuarios->setAttributes([
                 'nickname' => $this->nickname,
@@ -113,11 +115,15 @@ class Modificar extends \yii\db\ActiveRecord
                 }
             }
 
+            $imagen->imagen = $this->imagen;
+            if ($imagen->imagen !== null) {
+                $imagen->upload($usuarios->id, 'user');
+            }
+
             if ($usuarios->save()) {
                 return true;
             }
         }
-
         return false;
     }
 }
