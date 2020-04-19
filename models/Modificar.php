@@ -7,19 +7,7 @@ use yii\web\IdentityInterface;
 use yii\web\UploadedFile;
 
 /**
- * This is the model class for table "usuarios".
- *
- * @property int $id
- * @property string $nickname
- * @property string $username
- * @property string $correo
- * @property string $passwd
- * @property string|null $auth_key
- * @property int|null $pais_id
- * @property int|null $rol_id
- *
- * @property Empresas $empresas
- * @property Paises $pais
+ * Clase creada para la manipulacíon de usuarios y empresas en una misma vista.
  */
 class Modificar extends \yii\db\ActiveRecord
 {
@@ -38,7 +26,6 @@ class Modificar extends \yii\db\ActiveRecord
     public $imagen;
 
     const SCENARIO_UPDATE = 'update';
-
 
     /**
      * {@inheritdoc}
@@ -89,6 +76,12 @@ class Modificar extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * Manipulación de usuarios y empresas, así como de la subida de una imagen.
+     *
+     * @param [POST] $params
+     * @return boolean
+     */
     public function create($params)
     {
         if ($this->load($params)) {

@@ -34,47 +34,12 @@ class LibrosSearch extends Libros
     }
 
     /**
-     * Creates data provider instance with search query applied
+     * Búsqueda de  un elemento según parámetros.
      *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
+     * @param [POST] $params
+     * @param [string] $sort
+     * @return void
      */
-    public function search($params)
-    {
-        $query = Libros::find();
-
-        // add conditions that should always apply here
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
-
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'isbn' => $this->isbn,
-            'editorial_id' => $this->editorial_id,
-            'autor_id' => $this->autor_id,
-            'genero_id' => $this->genero_id,
-            'pais_id' => $this->pais_id,
-            'fecha' => $this->fecha,
-        ]);
-
-        $query->andFilterWhere(['ilike', 'nombre', $this->nombre])
-            ->andFilterWhere(['ilike', 'sinopsis', $this->sinopsis]);
-
-        return $dataProvider;
-    }
-
     public function getObjetos($params, $sort)
     {
         $this->load($params);

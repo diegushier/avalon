@@ -5,6 +5,9 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 
+/**
+ * Clase generarda para la subida y asignación de imagenes a Objetos de tipo Libros, Shows o Usuarios.
+ */
 class ImageForm extends Model
 {
     public $imagen;
@@ -22,6 +25,13 @@ class ImageForm extends Model
         ];
     }
 
+    /**
+     * Carga y subida de una imagen.
+     *
+     * @param [int] $id
+     * @param [string] $tipo
+     * @return boolean
+     */
     public function upload($id, $tipo)
     {
         if ($this->validate()) {
@@ -36,6 +46,13 @@ class ImageForm extends Model
         }
     }
 
+    /**
+     * Eliminación de imagen en caso de que el Objeto asignado tambíen haya sido borrado.
+     *
+     * @param [int] $id
+     * @param [string] $tipo
+     * @return void
+     */
     public function delete($id, $tipo = null)
     {
         $extensions = ['.jpg', '.png'];

@@ -51,6 +51,12 @@ class ListagenerosController extends Controller
         ]);
     }
 
+    /**
+     * Borra un capítulo de una serie.
+     *
+     * @param [int] $id
+     * @param [string] $serie
+     */
     public function actionDelete($id, $serie)
     {
         $model = Listageneros::find()->where('objetos_id = ' . $serie)->andWhere('genero_id = ' . $id)->one();

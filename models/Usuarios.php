@@ -172,11 +172,23 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->auth_key === $authKey;
     }
 
+    /**
+     * Búsqueda de un ususario específico mediante el atributo nombre.
+     *
+     * @param [string] $username
+     * @return \yii\db\ActiveQuery
+     */
     public static function findPorNombre($username)
     {
         return static::findOne(['username' => $username]);
     }
 
+    /**
+     * Búsqueda de un ususario específico mediante el atributo mail.
+     *
+     * @param [string] $mail
+     * @return \yii\db\ActiveQuery
+     */
     public static function findPorMail($mail)
     {
         return static::findOne(['correo' => $mail]);

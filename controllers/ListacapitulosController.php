@@ -6,7 +6,6 @@ use app\models\Capitulos;
 use app\models\CapitulosForm;
 use Yii;
 use app\models\Listacapitulos;
-use app\models\ListacapitulosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

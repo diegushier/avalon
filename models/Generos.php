@@ -65,10 +65,21 @@ class Generos extends \yii\db\ActiveRecord
         return $this->hasMany(Listageneros::className(), ['genero_id' => 'id'])->inverseOf('genero');
     }
 
+    /**
+     * Obtiene la query de un genero donde nombre = $nombre
+     *
+     * @param [string] $nombre
+     * @return \yii\db\ActiveQuery
+     */
     public static function findPorNombre($nombre) {
         return static::findOne(['nombre' => $nombre]);
     }
-
+    
+    /**
+     * Obtiene una lista de de todos los generos.
+     *
+     * @return array
+     */
     public static function lista()
     {
         return static::find()->select('nombre')->orderBy('nombre')->indexBy('id')->column();

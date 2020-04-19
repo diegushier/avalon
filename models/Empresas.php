@@ -86,6 +86,11 @@ class Empresas extends \yii\db\ActiveRecord
         return $this->hasMany(Shows::className(), ['productora_id' => 'id'])->inverseOf('productora');
     }
 
+    /**
+     * Obtiene la query de libros asignados a esta empresa.
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getLibros()
     {
         return $this->hasMany(Libros::className(), ['editorial_id' => 'id'])->inverseOf('editorial');

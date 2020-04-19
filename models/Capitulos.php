@@ -7,9 +7,9 @@ use Yii;
 /**
  * This is the model class for table "capitulos".
  *
- * @property int $id
- * @property string $nombre
- * @property string $sinopsis
+ * @property int $id identificaddor del objeto.
+ * @property string $nombre nombre del objeto.
+ * @property string $sinopsis resumen del objeto.
  *
  * @property Listacapitulos[] $listacapitulos
  */

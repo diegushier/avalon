@@ -4,6 +4,9 @@ namespace app\models;
 
 use Yii;
 
+/**
+ * Creación deun capítulo y asignación de este a un Objeto Show de tipo 'serie'.
+ */
 class CapitulosForm extends \yii\db\ActiveRecord
 {
     public $objetos_id;
@@ -35,6 +38,12 @@ class CapitulosForm extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * Generación de un capítulo de una serie.
+     *
+     * @param [POST] $params
+     * @return boolean
+     */
     public function create($params)
     {
         $capitulo = new Capitulos();

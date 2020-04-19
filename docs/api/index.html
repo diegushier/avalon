@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="language" content="en" />
+        
+<link href="./assets/c8e5443c/css/bootstrap.css" rel="stylesheet">
+<link href="./assets/a1642cf7/solarized_light.css" rel="stylesheet">
+<link href="./assets/f678d896/style.css" rel="stylesheet">
+<script src="./assets/c8aa53a9/jquery.js"></script>
+<script src="./assets/c8e5443c/js/bootstrap.js"></script>
+<script src="./assets/557e062/jssearch.js"></script>    <title>API del proyecto</title>
+</head>
+<body>
+
+<div class="wrap">
+    <nav id="w17329" class="navbar-inverse navbar-fixed-top navbar"><div class="navbar-header"><button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#w17329-collapse"><span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span></button><a class="navbar-brand" href="./index.html">API del proyecto</a></div><div id="w17329-collapse" class="collapse navbar-collapse"><ul id="w17330" class="navbar-nav nav"><li><a href="./index.html">Class reference</a></li>
+<li><a href="../README.html">Guide</a></li></ul><div class="navbar-form navbar-left" role="search">
+  <div class="form-group">
+    <input id="searchbox" type="text" class="form-control" placeholder="Search">
+  </div>
+</div>
+</div></nav>
+    <div id="search-resultbox" style="display: none;" class="modal-content">
+        <ul id="search-results">
+        </ul>
+    </div>
+
+    
+<div class="row">
+    <div class="col-md-3">
+                <div id="navigation" class="list-group"><a class="list-group-item" href="#navigation-17322" data-toggle="collapse" data-parent="#navigation">Not namespaced classes <b class="caret"></b></a><div id="navigation-17322" class="submenu panel-collapse collapse"><a class="list-group-item" href="./yii.html">Yii</a>
+<a class="list-group-item" href="./yiirequirementchecker.html">YiiRequirementChecker</a></div>
+<a class="list-group-item" href="#navigation-17323" data-toggle="collapse" data-parent="#navigation">app\assets <b class="caret"></b></a><div id="navigation-17323" class="submenu panel-collapse collapse"><a class="list-group-item" href="./app-assets-appasset.html">AppAsset</a></div>
+<a class="list-group-item" href="#navigation-17324" data-toggle="collapse" data-parent="#navigation">app\commands <b class="caret"></b></a><div id="navigation-17324" class="submenu panel-collapse collapse"><a class="list-group-item" href="./app-commands-hellocontroller.html">HelloController</a></div>
+<a class="list-group-item" href="#navigation-17325" data-toggle="collapse" data-parent="#navigation">app\components <b class="caret"></b></a><div id="navigation-17325" class="submenu panel-collapse collapse"><a class="list-group-item" href="./app-components-herokutarget.html">HerokuTarget</a></div>
+<a class="list-group-item" href="#navigation-17326" data-toggle="collapse" data-parent="#navigation">app\controllers <b class="caret"></b></a><div id="navigation-17326" class="submenu panel-collapse collapse"><a class="list-group-item" href="./app-controllers-capituloscontroller.html">CapitulosController</a>
+<a class="list-group-item" href="./app-controllers-empresascontroller.html">EmpresasController</a>
+<a class="list-group-item" href="./app-controllers-libroscontroller.html">LibrosController</a>
+<a class="list-group-item" href="./app-controllers-listacapituloscontroller.html">ListacapitulosController</a>
+<a class="list-group-item" href="./app-controllers-listageneroscontroller.html">ListagenerosController</a>
+<a class="list-group-item" href="./app-controllers-showscontroller.html">ShowsController</a>
+<a class="list-group-item" href="./app-controllers-sitecontroller.html">SiteController</a>
+<a class="list-group-item" href="./app-controllers-usuarioscontroller.html">UsuariosController</a></div>
+<a class="list-group-item" href="#navigation-17327" data-toggle="collapse" data-parent="#navigation">app\models <b class="caret"></b></a><div id="navigation-17327" class="submenu panel-collapse collapse"><a class="list-group-item" href="./app-models-calendar.html">Calendar</a>
+<a class="list-group-item" href="./app-models-capitulos.html">Capitulos</a>
+<a class="list-group-item" href="./app-models-capitulosform.html">CapitulosForm</a>
+<a class="list-group-item" href="./app-models-capitulossearch.html">CapitulosSearch</a>
+<a class="list-group-item" href="./app-models-contactform.html">ContactForm</a>
+<a class="list-group-item" href="./app-models-empresas.html">Empresas</a>
+<a class="list-group-item" href="./app-models-empresassearch.html">EmpresasSearch</a>
+<a class="list-group-item" href="./app-models-generos.html">Generos</a>
+<a class="list-group-item" href="./app-models-generosform.html">GenerosForm</a>
+<a class="list-group-item" href="./app-models-imageform.html">ImageForm</a>
+<a class="list-group-item" href="./app-models-integrantes.html">Integrantes</a>
+<a class="list-group-item" href="./app-models-libros.html">Libros</a>
+<a class="list-group-item" href="./app-models-librossearch.html">LibrosSearch</a>
+<a class="list-group-item" href="./app-models-listacapitulos.html">Listacapitulos</a>
+<a class="list-group-item" href="./app-models-listacapitulossearch.html">ListacapitulosSearch</a>
+<a class="list-group-item" href="./app-models-listageneros.html">Listageneros</a>
+<a class="list-group-item" href="./app-models-loginform.html">LoginForm</a>
+<a class="list-group-item" href="./app-models-modificar.html">Modificar</a>
+<a class="list-group-item" href="./app-models-paises.html">Paises</a>
+<a class="list-group-item" href="./app-models-reparto.html">Reparto</a>
+<a class="list-group-item" href="./app-models-roles.html">Roles</a>
+<a class="list-group-item" href="./app-models-shows.html">Shows</a>
+<a class="list-group-item" href="./app-models-showssearch.html">ShowsSearch</a>
+<a class="list-group-item" href="./app-models-user.html">User</a>
+<a class="list-group-item" href="./app-models-usuariorol.html">Usuariorol</a>
+<a class="list-group-item" href="./app-models-usuarios.html">Usuarios</a></div>
+<a class="list-group-item" href="#navigation-17328" data-toggle="collapse" data-parent="#navigation">app\widgets <b class="caret"></b></a><div id="navigation-17328" class="submenu panel-collapse collapse"><a class="list-group-item" href="./app-widgets-alert.html">Alert</a>
+<a class="list-group-item" href="./app-widgets-datacolumn.html">DataColumn</a></div></div>    </div>
+    <div class="col-md-9 api-content" role="main">
+        <h1>Class Reference</h1>
+
+<table class="summaryTable docIndex table table-bordered table-striped table-hover">
+    <colgroup>
+        <col class="col-package" />
+        <col class="col-class" />
+        <col class="col-description" />
+    </colgroup>
+    <tr>
+        <th>Class</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><a href="yii.html">Yii</a></td>
+        <td>Yii is a helper class serving common framework functionalities.</td>
+    </tr>
+    <tr>
+        <td><a href="yiirequirementchecker.html">YiiRequirementChecker</a></td>
+        <td>YiiRequirementChecker allows checking, if current system meets the requirements for running the Yii application.</td>
+    </tr>
+    <tr>
+        <td><a href="app-assets-appasset.html">app\assets\AppAsset</a></td>
+        <td>Main application asset bundle.</td>
+    </tr>
+    <tr>
+        <td><a href="app-commands-hellocontroller.html">app\commands\HelloController</a></td>
+        <td>This command echoes the first argument that you have entered.</td>
+    </tr>
+    <tr>
+        <td><a href="app-components-herokutarget.html">app\components\HerokuTarget</a></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="app-controllers-capituloscontroller.html">app\controllers\CapitulosController</a></td>
+        <td>CapitulosController implements the CRUD actions for Capitulos model.</td>
+    </tr>
+    <tr>
+        <td><a href="app-controllers-empresascontroller.html">app\controllers\EmpresasController</a></td>
+        <td>EmpresasController implements the CRUD actions for Empresas model.</td>
+    </tr>
+    <tr>
+        <td><a href="app-controllers-libroscontroller.html">app\controllers\LibrosController</a></td>
+        <td>LibrosController implements the CRUD actions for Libros model.</td>
+    </tr>
+    <tr>
+        <td><a href="app-controllers-listacapituloscontroller.html">app\controllers\ListacapitulosController</a></td>
+        <td>ListacapitulosController implements the CRUD actions for Listacapitulos model.</td>
+    </tr>
+    <tr>
+        <td><a href="app-controllers-listageneroscontroller.html">app\controllers\ListagenerosController</a></td>
+        <td>ListacapitulosController implements the CRUD actions for Listacapitulos model.</td>
+    </tr>
+    <tr>
+        <td><a href="app-controllers-showscontroller.html">app\controllers\ShowsController</a></td>
+        <td>ShowsController implements the CRUD actions for Shows model.</td>
+    </tr>
+    <tr>
+        <td><a href="app-controllers-sitecontroller.html">app\controllers\SiteController</a></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="app-controllers-usuarioscontroller.html">app\controllers\UsuariosController</a></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="app-models-calendar.html">app\models\Calendar</a></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="app-models-capitulos.html">app\models\Capitulos</a></td>
+        <td>This is the model class for table "capitulos".</td>
+    </tr>
+    <tr>
+        <td><a href="app-models-capitulosform.html">app\models\CapitulosForm</a></td>
+        <td>Creación deun capítulo y asignación de este a un Objeto Show de tipo 'serie'.</td>
+    </tr>
+    <tr>
+        <td><a href="app-models-capitulossearch.html">app\models\CapitulosSearch</a></td>
+        <td>CapitulosSearch represents the model behind the search form of <code>app\models\Capitulos</code>.</td>
+    </tr>
+    <tr>
+        <td><a href="app-models-contactform.html">app\models\ContactForm</a></td>
+        <td>ContactForm is the model behind the contact form.</td>
+    </tr>
+    <tr>
+        <td><a href="app-models-empresas.html">app\models\Empresas</a></td>
+        <td>This is the model class for table "empresas".</td>
+    </tr>
+    <tr>
+        <td><a href="app-models-empresassearch.html">app\models\EmpresasSearch</a></td>
+        <td>EmpresasSearch represents the model behind the search form of <code>app\models\Empresas</code>.</td>
+    </tr>
+    <tr>
+        <td><a href="app-models-generos.html">app\models\Generos</a></td>
+        <td>This is the model class for table "generos".</td>
+    </tr>
+    <tr>
+        <td><a href="app-models-generosform.html">app\models\GenerosForm</a></td>
+        <td>Clase desarrollada para la creación y asignación de un género a un Objeto Show.</td>
+    </tr>
+    <tr>
+        <td><a href="app-models-imageform.html">app\models\ImageForm</a></td>
+        <td>Clase generarda para la subida y asignación de imagenes a Objetos de tipo Libros, Shows o Usuarios.</td>
+    </tr>
+    <tr>
+        <td><a href="app-models-integrantes.html">app\models\Integrantes</a></td>
+        <td>This is the model class for table "integrantes".</td>
+    </tr>
+    <tr>
+        <td><a href="app-models-libros.html">app\models\Libros</a></td>
+        <td>This is the model class for table "libros".</td>
+    </tr>
+    <tr>
+        <td><a href="app-models-librossearch.html">app\models\LibrosSearch</a></td>
+        <td>LibrosSearch represents the model behind the search form of <code>app\models\Libros</code>.</td>
+    </tr>
+    <tr>
+        <td><a href="app-models-listacapitulos.html">app\models\Listacapitulos</a></td>
+        <td>This is the model class for table "listacapitulos".</td>
+    </tr>
+    <tr>
+        <td><a href="app-models-listacapitulossearch.html">app\models\ListacapitulosSearch</a></td>
+        <td>ListacapitulosSearch represents the model behind the search form of <code>app\models\Listacapitulos</code>.</td>
+    </tr>
+    <tr>
+        <td><a href="app-models-listageneros.html">app\models\Listageneros</a></td>
+        <td>This is the model class for table "listageneros".</td>
+    </tr>
+    <tr>
+        <td><a href="app-models-loginform.html">app\models\LoginForm</a></td>
+        <td>LoginForm is the model behind the login form.</td>
+    </tr>
+    <tr>
+        <td><a href="app-models-modificar.html">app\models\Modificar</a></td>
+        <td>Clase creada para la manipulacíon de usuarios y empresas en una misma vista.</td>
+    </tr>
+    <tr>
+        <td><a href="app-models-paises.html">app\models\Paises</a></td>
+        <td>This is the model class for table "paises".</td>
+    </tr>
+    <tr>
+        <td><a href="app-models-reparto.html">app\models\Reparto</a></td>
+        <td>This is the model class for table "reparto".</td>
+    </tr>
+    <tr>
+        <td><a href="app-models-roles.html">app\models\Roles</a></td>
+        <td>This is the model class for table "roles".</td>
+    </tr>
+    <tr>
+        <td><a href="app-models-shows.html">app\models\Shows</a></td>
+        <td>This is the model class for table "shows".</td>
+    </tr>
+    <tr>
+        <td><a href="app-models-showssearch.html">app\models\ShowsSearch</a></td>
+        <td>ShowsSearch represents the model behind the search form of <code>app\models\Shows</code>.</td>
+    </tr>
+    <tr>
+        <td><a href="app-models-user.html">app\models\User</a></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="app-models-usuariorol.html">app\models\Usuariorol</a></td>
+        <td>This is the model class for table "usuariorol".</td>
+    </tr>
+    <tr>
+        <td><a href="app-models-usuarios.html">app\models\Usuarios</a></td>
+        <td>This is the model class for table "usuarios".</td>
+    </tr>
+    <tr>
+        <td><a href="app-widgets-alert.html">app\widgets\Alert</a></td>
+        <td>Alert widget renders a message from session flash. All flash messages are displayed
+in the sequence they were assigned using setFlash. You can set message as following:</td>
+    </tr>
+    <tr>
+        <td><a href="app-widgets-datacolumn.html">app\widgets\DataColumn</a></td>
+        <td></td>
+    </tr>
+</table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    /*<![CDATA[*/
+    $("a.toggle").on('click', function () {
+        var $this = $(this);
+        if ($this.hasClass('properties-hidden')) {
+            $this.text($this.text().replace(/Show/,'Hide'));
+            $this.parents(".summary").find(".inherited").show();
+            $this.removeClass('properties-hidden');
+        } else {
+            $this.text($this.text().replace(/Hide/,'Show'));
+            $this.parents(".summary").find(".inherited").hide();
+            $this.addClass('properties-hidden');
+        }
+
+        return false;
+    });
+    /*
+     $(".sourceCode a.show").toggle(function () {
+     $(this).text($(this).text().replace(/show/,'hide'));
+     $(this).parents(".sourceCode").find("div.code").show();
+     },function () {
+     $(this).text($(this).text().replace(/hide/,'show'));
+     $(this).parents(".sourceCode").find("div.code").hide();
+     });
+     $("a.sourceLink").click(function () {
+     $(this).attr('target','_blank');
+     });
+     */
+    /*]]>*/
+</script>
+
+
+</div>
+
+<footer class="footer">
+        <p class="pull-right"><small>Page generated on Sun, 19 Apr 2020 17:33:10 +0000</small></p>
+    Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a></footer>
+
+<script>jQuery(function ($) {
+    var shiftWindow = function () { scrollBy(0, -50) };
+    if (location.hash) setTimeout(shiftWindow, 1);
+    window.addEventListener("hashchange", shiftWindow);
+var element = document.createElement("script");
+element.src = "./jssearch.index.js";
+document.body.appendChild(element);
+
+var searchBox = $('#searchbox');
+
+// search when typing in search field
+searchBox.on("keyup", function(event) {
+    var query = $(this).val();
+
+    if (query == '' || event.which == 27) {
+        $('#search-resultbox').hide();
+        return;
+    } else if (event.which == 13) {
+        var selectedLink = $('#search-resultbox a.selected');
+        if (selectedLink.length != 0) {
+            document.location = selectedLink.attr('href');
+            return;
+        }
+    } else if (event.which == 38 || event.which == 40) {
+        $('#search-resultbox').show();
+
+        var selected = $('#search-resultbox a.selected');
+        if (selected.length == 0) {
+            $('#search-results').find('a').first().addClass('selected');
+        } else {
+            var next;
+            if (event.which == 40) {
+                next = selected.parent().next().find('a').first();
+            } else {
+                next = selected.parent().prev().find('a').first();
+            }
+            if (next.length != 0) {
+                var resultbox = $('#search-results');
+                var position = next.position();
+
+//              TODO scrolling is buggy and jumps around
+//                resultbox.scrollTop(Math.floor(position.top));
+//                console.log(position.top);
+
+                selected.removeClass('selected');
+                next.addClass('selected');
+            }
+        }
+
+        return;
+    }
+    $('#search-resultbox').show();
+    $('#search-results').html('<li><span class="no-results">No results</span></li>');
+
+    var result = jssearch.search(query);
+
+    if (result.length > 0) {
+        var i = 0;
+        var resHtml = '';
+
+        for (var key in result) {
+            if (i++ > 20) {
+                break;
+            }
+            resHtml = resHtml +
+            '<li><a href="' + result[key].file.u.substr(3) +'"><span class="title">' + result[key].file.t + '</span>' +
+            '<span class="description">' + result[key].file.d + '</span></a></li>';
+        }
+        $('#search-results').html(resHtml);
+    }
+});
+
+// hide the search results on ESC
+$(document).on("keyup", function(event) { if (event.which == 27) { $('#search-resultbox').hide(); } });
+// hide search results on click to document
+$(document).bind('click', function (e) { $('#search-resultbox').hide(); });
+// except the following:
+searchBox.bind('click', function(e) { e.stopPropagation(); });
+$('#search-resultbox').bind('click', function(e) { e.stopPropagation(); });
+
+});</script></body>
+</html>

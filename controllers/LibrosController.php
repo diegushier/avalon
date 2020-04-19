@@ -93,16 +93,20 @@ class LibrosController extends Controller
         return $this->render('view', $render);
     }
 
+    /**
+     * Abre una nueva pestaña en el navegador para la vista del resumen de un Objeto libro.
+     *
+     * @param [int] $id
+     */
     public function actionResumen($id)
     {
         $model = Libros::findOne($id);
         $content = file_get_contents(Yii::getAlias('@resumen/' . $id . '.txt'));
         $pdf = new Pdf([
-            'mode' => Pdf::MODE_CORE, // leaner size using standard fonts
+            'mode' => Pdf::MODE_CORE, 
             'destination' => Pdf::DEST_BROWSER,
             'content' => $content,
             'options' => [
-                // any mpdf options you wish to set
             ],
             'methods' => [
                 'SetTitle' => $model->nombre,

@@ -2,8 +2,9 @@
 
 namespace app\models;
 
-use Yii;
-
+/**
+ * Clase desarrollada para la creación y asignación de un género a un Objeto Show.
+ */
 class GenerosForm extends \yii\db\ActiveRecord
 {
     public $nombre;

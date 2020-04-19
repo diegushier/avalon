@@ -41,6 +41,9 @@ class UsuariosController extends Controller
         ];
     }
 
+    /**
+     * Vista del usuario Logueado.
+     */
     public function actionView()
     {
         $model = Yii::$app->user->identity;
@@ -55,7 +58,9 @@ class UsuariosController extends Controller
         ]);
     }
 
-
+    /**
+     * Registro de un nuevo usuario.
+     */
     public function actionRegistrar()
     {
         $model = new Usuarios(['scenario' => Usuarios::SCENARIO_CREAR]);
@@ -84,6 +89,9 @@ class UsuariosController extends Controller
         ]);
     }
 
+    /**
+     * Eliminación o desvinculación de un usuario dependiendo de la situación.
+     */
     public function actionDelete()
     {
         $params = Yii::$app->request->post();
@@ -107,6 +115,11 @@ class UsuariosController extends Controller
         return $this->redirect(['/site/login']);
     }
 
+    /**
+     * Modificación de un usuario o su empresa.
+     *
+     * @return void
+     */
     public function actionModify()
     {
         $params = Yii::$app->request->post();
@@ -156,6 +169,9 @@ class UsuariosController extends Controller
         return $this->render('modify', $render);
     }
 
+    /**
+     * Recuperación de la cuenta de un usuario mediante su correo.
+     */
     public function actionRecuperar()
     {
         $params = Yii::$app->request->post();
@@ -192,6 +208,11 @@ class UsuariosController extends Controller
         ]);
     }
 
+    /**
+     * Comprobación de la existencia de un usuario en caso de requerir recuperar la cuenta.
+     *
+     * @param [string] $token
+     */
     public function actionComprobar($token)
     {
         $model = Usuarios::find()->where(['comfirm' => $token])->one();
@@ -215,6 +236,12 @@ class UsuariosController extends Controller
         return $this->render('/site/wrong');
     }
 
+    /**
+     * Generación de una nueva clave de comfirmación para el usuario solicitante.
+     *
+     * @param [Usuario] $model
+     * @param [POST] $params
+     */
     protected function updatearClave($model, $params)
     {
         if (isset($params['Modificar']['clave'])) {
@@ -230,6 +257,13 @@ class UsuariosController extends Controller
         }
     }
 
+    /**
+     * Modificación de una empresa en caso de existir. En caso contrario genera un nuevo modelo.
+     *
+     * @param [boolean] $exists
+     * @param [Empresa] $empresa
+     * @return void
+     */
     protected function updatearEmpresa($exists, $empresa)
     {
         if (!$exists) {
@@ -243,6 +277,13 @@ class UsuariosController extends Controller
         return $empresa;
     }
 
+    /**
+     * Envio de un email al correo solicitante.
+     *
+     * @param [string] $correo
+     * @param [string] $mensaje
+     * @return void
+     */
     protected function sendMail($correo, $mensaje)
     {
         Yii::$app->mailer->compose()
@@ -253,6 +294,9 @@ class UsuariosController extends Controller
             ->send();
     }
 
+    /**
+     * Generación de una clave aleatória asignable a una cuenta.
+     */
     protected function generarClave()
     {
         $matches = ['1', 'a', '2', 'b', '3', 'c', '4', 'd', '5', 'e', '6', 'f', '7', 'g', '8', 'h', '9', 'i'];

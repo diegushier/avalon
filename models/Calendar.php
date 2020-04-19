@@ -14,6 +14,11 @@ class Calendar extends Model
     public $name;
     public $date;
 
+    /**
+     * Crea un nuevo evento para google Calendar
+     *
+     * @param [Show, Libro] $model 
+     */
     public function create($model)
     {
         $client = $this->auth();
@@ -36,6 +41,12 @@ class Calendar extends Model
         $model->update();
     }
 
+    /**
+     * Modifica el nombre o lafecha de un evento registrado en Google Calendar
+     *
+     * @param [Show, Libro] $model
+     * @param [string] $id
+     */
     public function update($model, $id = null)
     {
         if (isset($id)) {
@@ -53,6 +64,12 @@ class Calendar extends Model
         }
     }
 
+    /**
+     * Elimina un evento registrado en Google Calendar
+     *
+     * @param [string] $id
+     */
+
     public function delete($id)
     {
         $client = $this->auth();
@@ -60,6 +77,11 @@ class Calendar extends Model
         $service->events->delete('primary', $id);
     }
 
+    /**
+     * Generación de entidad requierida para el  empleo del Google Calendar.
+     *
+     * @return Google_Client
+     */
     public function auth()
     {
         $client = new Google_Client();
