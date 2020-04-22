@@ -104,7 +104,18 @@ class ShowsController extends Controller
         $generos = $model->getGeneros()->select('nombre, id')->all();
         $pais = Paises::findOne($model->pais_id)->nombre;
         $duenio = $productora->entidad_id;
-        $criticas = $model->getCriticasWithUsers();
+        $sort = new Sort([
+            'attributes' => [
+                'fecha' => [
+                    'asc' => ['fecha'  => SORT_ASC],
+                    'desc' => ['fecha'  => SORT_DESC],
+                    'default' => SORT_ASC,
+                    'label' => 'Fecha'
+                ],
+            ]
+        ]);
+
+        $criticas = $model->getCriticasWithUsers($sort);
 
         $render = [
             'model' => $model,
@@ -113,6 +124,7 @@ class ShowsController extends Controller
             'generos' => $generos,
             'duenio' => $duenio,
             'criticas' => $criticas,
+            'sort' => $sort,
         ];
 
 

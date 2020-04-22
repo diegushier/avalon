@@ -110,6 +110,15 @@ $this->registerCssFile('@web/css/comentario.css');
         <?php if ($criticas) : ?>
             <div class="col-12 m-2 ">
                 <h5 class="font-weight-bold m-3">Comentarios</h5>
+                <div class="btn-group dropright mt-1">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Ordenar por:
+                    </a>
+
+                    <div class="dropdown-menu p-0 ml-1 border-0" aria-labelledby="dropdownMenuLink">
+                        <?= $sort->link('fecha', ['class' => 'btn btn-orange']) ?>
+                    </div>
+                </div>
                 <div class="row m-3">
                     <ul id="comments-list" class="comments-list">
                         <?php foreach ($criticas as $k) : ?>

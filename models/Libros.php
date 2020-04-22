@@ -121,8 +121,8 @@ class Libros extends \yii\db\ActiveRecord
         return $this->hasOne(Paises::className(), ['id' => 'pais_id'])->inverseOf('libros');
     }
 
-    public function getCriticasWithUsers()
+    public function getCriticasWithUsers($sort = null)
     {
-        return $this->getCriticas()->select('u.*, *')->joinWith('usuario u')->all();
+        return $this->getCriticas()->select('u.*, *')->joinWith('usuario u')->orderBy(isset($sort) ? $sort->orders : 'id')->all();
     }
 }

@@ -82,8 +82,19 @@ class LibrosController extends Controller
         $pais = Paises::findOne($model->pais_id);
         $genero = $model->getGenero()->one();
         $duenio = $productora->entidad_id;
+        $sort = new Sort([
+            'attributes' => [
+                'fecha' => [
+                    'asc' => ['fecha'  => SORT_ASC],
+                    'desc' => ['fecha'  => SORT_DESC],
+                    'default' => SORT_ASC,
+                    'label' => 'Fecha'
+                ],
+            ]
+        ]);
 
-        $criticas = $model->getCriticasWithUsers();
+
+        $criticas = $model->getCriticasWithUsers($sort);
         $this->newComment(Yii::$app->request->post());
         $render = [
             'model' => $model,
@@ -93,6 +104,7 @@ class LibrosController extends Controller
             'genero' => $genero,
             'duenio' => $duenio,
             'criticas' => $criticas,
+            'sort' => $sort,
         ];
 
         return $this->render('view', $render);

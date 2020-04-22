@@ -150,8 +150,8 @@ class Shows extends \yii\db\ActiveRecord
         return $this->hasMany(Valoraciones::className(), ['objetos_id' => 'id'])->inverseOf('objetos');
     }
 
-    public function getCriticasWithUsers()
+    public function getCriticasWithUsers($sort = null)
     {
-        return $this->getValoraciones()->select('u.*, *')->joinWith('usuario u')->all();
+        return $this->getValoraciones()->select('u.*, *')->joinWith('usuario u')->orderBy(isset($sort) ? $sort->orders : 'id')->all();
     }
 }
