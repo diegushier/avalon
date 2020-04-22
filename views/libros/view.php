@@ -111,8 +111,8 @@ $this->registerCssFile('@web/css/comentario.css');
             <div class="col-12 m-2 ">
                 <h5 class="font-weight-bold m-3">Comentarios</h5>
                 <div class="row m-3">
-                        <ul id="comments-list" class="comments-list">
-                    <?php foreach ($criticas as $k) : ?>
+                    <ul id="comments-list" class="comments-list">
+                        <?php foreach ($criticas as $k) : ?>
                             <li>
                                 <div class="comment-main-level">
                                     <!-- Avatar -->
@@ -121,7 +121,15 @@ $this->registerCssFile('@web/css/comentario.css');
                                     <div class="comment-box">
                                         <div class="comment-head">
                                             <h6 class="comment-name"><?= $k->usuario->nickname ?></h6>
-                                            <!-- <span></span> -->
+                                            <span>
+                                                <?php $now = date_format(date_create($k->fecha), 'H:i');
+                                                $date = date_format(date_create($k->fecha), 'Y/m/d');
+                                                if (date_format(new DateTime(), 'Y/m/d') === $date) : ?>
+                                                    <?= $now ?>
+                                                <?php else : ?>
+                                                    <?= $date ?>
+                                                <?php endif ?>
+                                            </span>
                                         </div>
                                         <div class="comment-content">
                                             <?= $k->comentario ?>
@@ -129,8 +137,8 @@ $this->registerCssFile('@web/css/comentario.css');
                                     </div>
                                 </div>
                             </li>
-                    <?php endforeach ?>
-                        </ul>
+                        <?php endforeach ?>
+                    </ul>
                 </div>
             </div>
         <?php endif ?>

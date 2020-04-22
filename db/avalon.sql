@@ -146,6 +146,7 @@ CREATE TABLE valoraciones
     ,   usuario_id      bigint          NOT NULL REFERENCES usuarios (id)
     ,   valoracion      integer         NOT NULL
     ,   comentario      text
+    ,   fecha           timestamp(0)    NOT NULL DEFAULT current_timestamp
 );
 
 CREATE TABLE criticas
@@ -155,15 +156,15 @@ CREATE TABLE criticas
     ,   usuario_id      bigint          NOT NULL REFERENCES usuarios (id)
     ,   valoracion      integer         NOT NULL
     ,   comentario      text
+    ,   fecha           timestamp(0)    NOT NULL DEFAULT current_timestamp
 );
 
 CREATE TABLE usuarioSeguimiento
 (
         id              bigserial       PRIMARY KEY
     ,   objetos_id      bigint          NOT NULL REFERENCES shows(id)
-    ,   usuario_id         bigint          NOT NULL REFERENCES usuarios (id)
+    ,   usuario_id      bigint          NOT NULL REFERENCES usuarios (id)
     ,   seguimiento_id  bigint          NOT NULL REFERENCES seguimiento (id)
-
 );
 
 INSERT INTO usuarioRol (nombre)

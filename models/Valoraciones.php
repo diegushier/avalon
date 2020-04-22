@@ -12,6 +12,7 @@ use Yii;
  * @property int $usuario_id
  * @property int $valoracion
  * @property string|null $comentario
+ * @property string $fecha
  *
  * @property Shows $objetos
  * @property Usuarios $usuario
@@ -36,6 +37,7 @@ class Valoraciones extends \yii\db\ActiveRecord
             [['objetos_id', 'usuario_id', 'valoracion'], 'default', 'value' => null],
             [['objetos_id', 'usuario_id', 'valoracion'], 'integer'],
             [['comentario'], 'string'],
+            [['fecha'], 'safe'],
             [['objetos_id'], 'exist', 'skipOnError' => true, 'targetClass' => Shows::className(), 'targetAttribute' => ['objetos_id' => 'id']],
             [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['usuario_id' => 'id']],
         ];
@@ -49,9 +51,10 @@ class Valoraciones extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'objetos_id' => 'Objetos ID',
-            'usuario_id' => 'usuario ID',
+            'usuario_id' => 'Usuario ID',
             'valoracion' => 'Valoracion',
             'comentario' => 'Comentario',
+            'fecha' => 'Fecha',
         ];
     }
 
@@ -66,7 +69,7 @@ class Valoraciones extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[usuario]].
+     * Gets query for [[Usuario]].
      *
      * @return \yii\db\ActiveQuery
      */
