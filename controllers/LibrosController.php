@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Calendar;
+use app\models\Criticas;
 use app\models\Generos;
 use app\models\ImageForm;
 use app\models\Integrantes;
@@ -12,6 +13,7 @@ use app\models\LibrosSearch;
 use app\models\Paises;
 use app\models\Shows;
 use app\models\Usuarios;
+use app\models\Valoraciones;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -81,16 +83,26 @@ class LibrosController extends Controller
         $genero = $model->getGenero()->one();
         $duenio = $productora->entidad_id;
 
+        $criticas = $model->getCriticasWithUsers();
+        $this->newComment(Yii::$app->request->post());
         $render = [
             'model' => $model,
             'autor' => $autor->nombre,
             'productora' => $productora->nombre,
             'pais' => $pais->nombre,
             'genero' => $genero,
-            'duenio' => $duenio
+            'duenio' => $duenio,
+            'criticas' => $criticas,
         ];
 
         return $this->render('view', $render);
+    }
+
+    protected function newComment($params)
+    {
+        $model = new Criticas();
+        $model->load($params);
+        $model->save();
     }
 
     /**

@@ -18,8 +18,9 @@ DROP TABLE IF EXISTS generos CASCADE;                           -- B C I
 DROP TABLE IF EXISTS roles CASCADE;                             -- B C I
 DROP TABLE IF EXISTS usuarioRol CASCADE;                        -- B C I
 DROP TABLE IF EXISTS valoraciones CASCADE;                      -- B C I
-DROP TABLE IF EXISTS usuarioSeguimiento;                        -- B C I
-DROP TABLE IF EXISTS seguimiento;                               -- B C I
+DROP TABLE IF EXISTS criticas CASCADE;                          -- B C I
+DROP TABLE IF EXISTS usuarioSeguimiento CASCADE;                -- B C I
+DROP TABLE IF EXISTS seguimiento CASCADE;                       -- B C I
 
 CREATE TABLE usuarioRol
 (
@@ -132,7 +133,7 @@ CREATE TABLE listaGeneros
 
 CREATE TABLE reparto
 (
-        id              bigserial          PRIMARY KEY
+        id              bigserial       PRIMARY KEY
     ,   objetos_id      bigserial       NOT NULL REFERENCES shows (id)
     ,   integrante_id   bigserial       NOT NULL REFERENCES integrantes (id)
     ,   rol_id          bigserial       NOT NULL REFERENCES roles (id)
@@ -142,7 +143,16 @@ CREATE TABLE valoraciones
 (
         id              bigserial       PRIMARY KEY
     ,   objetos_id      bigint          NOT NULL REFERENCES shows(id)
-    ,   user_id         bigint          NOT NULL REFERENCES usuarios (id)
+    ,   usuario_id      bigint          NOT NULL REFERENCES usuarios (id)
+    ,   valoracion      integer         NOT NULL
+    ,   comentario      text
+);
+
+CREATE TABLE criticas
+(
+        id              bigserial       PRIMARY KEY
+    ,   libro_id        bigint          NOT NULL REFERENCES libros(id)
+    ,   usuario_id      bigint          NOT NULL REFERENCES usuarios (id)
     ,   valoracion      integer         NOT NULL
     ,   comentario      text
 );
@@ -151,7 +161,7 @@ CREATE TABLE usuarioSeguimiento
 (
         id              bigserial       PRIMARY KEY
     ,   objetos_id      bigint          NOT NULL REFERENCES shows(id)
-    ,   user_id         bigint          NOT NULL REFERENCES usuarios (id)
+    ,   usuario_id         bigint          NOT NULL REFERENCES usuarios (id)
     ,   seguimiento_id  bigint          NOT NULL REFERENCES seguimiento (id)
 
 );
@@ -823,6 +833,9 @@ VALUES  ('Los asesinos del emperador', 9788408118329, 6, (select id from integra
     ,   ('Circo Máximo', 9788408141778, 6,  (select id from integrantes where nombre = 'Santiago Posteguillo'), (select id from generos where nombre = 'novela histórica') ,208)
     ,   ('Historia torcida de la Filosofía', 9788416223572, 8, (select id from integrantes where nombre = 'Luis Soravilla'), (select id from generos where nombre = 'historia de la filosofía'), 208)
     ,   ('Un día de cólera', 9788466323079, 7, (select id from integrantes where nombre = 'Arturo Pérez-Reverte'), (select id from generos where nombre = 'literatura'), 208);
+
+INSERT INTO criticas (libro_id, usuario_id, valoracion, comentario)
+VALUES  (1, 1, 5, 'Es un pedazo de libro');
 
 INSERT INTO libros (nombre, isbn, editorial_id, autor_id, genero_id, pais_id, sinopsis)
 VALUES  ('La Legión Perdida', 9788408176374, 6, (select id from integrantes where nombre = 'Santiago Posteguillo'),(select id from generos where nombre = 'novela histórica'), 208, 'En el año 53 a.C., el cónsul Craso cruzó el Éufrates para conquistar Oriente, pero su ejercito

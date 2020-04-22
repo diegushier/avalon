@@ -135,7 +135,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getUsuarioseguimientos()
     {
-        return $this->hasMany(Usuarioseguimiento::className(), ['user_id' => 'id'])->inverseOf('user');
+        return $this->hasMany(Usuarioseguimiento::className(), ['usuario_id' => 'id'])->inverseOf('usuario');
     }
 
     /**
@@ -145,7 +145,12 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getValoraciones()
     {
-        return $this->hasMany(Valoraciones::className(), ['user_id' => 'id'])->inverseOf('user');
+        return $this->hasMany(Valoraciones::className(), ['usuario_id' => 'id'])->inverseOf('usuario');
+    }
+
+    public function getCriticas()
+    {
+        return $this->hasMany(Criticas::className(), ['usuario_id' => 'id'])->inverseOf('usuario');
     }
 
     public static function findIdentity($id)
@@ -225,5 +230,15 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     public static function obtainEmpresa()
     {
         return Usuarios::findOne(Yii::$app->user->identity->id)->getEmpresas();
+    }
+
+    /**
+     * Obtiene una lista de de todos los generos.
+     *
+     * @return array
+     */
+    public static function lista()
+    {
+        return static::find()->select('nombre')->orderBy('nombre')->indexBy('id')->column();
     }
 }

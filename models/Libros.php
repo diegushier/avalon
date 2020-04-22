@@ -14,9 +14,11 @@ use Yii;
  * @property int $autor_id
  * @property int $genero_id
  * @property int $pais_id
+ * @property string|null $evento_id
  * @property string|null $fecha
  * @property string|null $sinopsis
  *
+ * @property Criticas[] $criticas
  * @property Empresas $editorial
  * @property Generos $genero
  * @property Integrantes $autor
@@ -58,15 +60,25 @@ class Libros extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nombre' => 'Nombre',
-            'isbn' => 'ISBN',
-            'editorial_id' => 'Editorial',
-            'autor_id' => 'Autor',
-            'genero_id' => 'Genero',
-            'event_id' => 'Genero',
-            'pais_id' => 'Pais',
+            'isbn' => 'Isbn',
+            'editorial_id' => 'Editorial ID',
+            'autor_id' => 'Autor ID',
+            'genero_id' => 'Genero ID',
+            'pais_id' => 'Pais ID',
+            'evento_id' => 'Evento ID',
             'fecha' => 'Fecha',
             'sinopsis' => 'Sinopsis',
         ];
+    }
+
+    /**
+     * Gets query for [[Criticas]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCriticas()
+    {
+        return $this->hasMany(Criticas::className(), ['libro_id' => 'id'])->inverseOf('libro');
     }
 
     /**
@@ -107,5 +119,10 @@ class Libros extends \yii\db\ActiveRecord
     public function getPais()
     {
         return $this->hasOne(Paises::className(), ['id' => 'pais_id'])->inverseOf('libros');
+    }
+
+    public function getCriticasWithUsers()
+    {
+        return $this->getCriticas()->select('u.*, *')->joinWith('usuario u')->all();
     }
 }

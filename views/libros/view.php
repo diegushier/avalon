@@ -22,6 +22,7 @@ $back = "$('body').css('background-image', 'url( " . Yii::getAlias('@imgBackLibr
 
 
 $this->registerJs($back);
+$this->registerCssFile('@web/css/comentario.css');
 ?>
 <div class="shows-view">
     <div class="row">
@@ -83,29 +84,56 @@ $this->registerJs($back);
                     <tr>
                         <td>Generos</td>
                         <td>
-                                <div class="btn-group dropright">
-                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="<?= $genero->nombre ?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <?= $genero->nombre ?>
-                                    </a>
+                            <div class="btn-group dropright">
+                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="<?= $genero->nombre ?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <?= $genero->nombre ?>
+                                </a>
 
-                                    <div class="dropdown-menu p-0 ml-1" aria-labelledby="dropdownMenuLink">
-                                        <?= Html::a('Modificar', ['/listageneros/update', 'id' => $genero->id, 'serie' => $model->id], ['class' => 'btn btn-orange']) ?>
-                                        <?= Html::a('Borrar', ['/listageneros/delete', 'id' => $genero->id, 'serie' => $model->id], [
-                                            'class' => 'btn btn-danger',
-                                            'data' => [
-                                                'method' => 'post',
-                                            ],
-                                        ]) ?>
-                                    </div>
+                                <div class="dropdown-menu p-0 ml-1" aria-labelledby="dropdownMenuLink">
+                                    <?= Html::a('Modificar', ['/listageneros/update', 'id' => $genero->id, 'serie' => $model->id], ['class' => 'btn btn-orange']) ?>
+                                    <?= Html::a('Borrar', ['/listageneros/delete', 'id' => $genero->id, 'serie' => $model->id], [
+                                        'class' => 'btn btn-danger',
+                                        'data' => [
+                                            'method' => 'post',
+                                        ],
+                                    ]) ?>
                                 </div>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
-
+            <hr>
             <h5>Sinopsis</h5>
             <p><?= $model->sinopsis ?></p>
         </div>
+        <?php if ($criticas) : ?>
+            <div class="col-12 m-2 ">
+                <h5 class="font-weight-bold m-3">Comentarios</h5>
+                <div class="row m-3">
+                        <ul id="comments-list" class="comments-list">
+                    <?php foreach ($criticas as $k) : ?>
+                            <li>
+                                <div class="comment-main-level">
+                                    <!-- Avatar -->
+                                    <div class="comment-avatar"><img src="<?= Yii::getAlias('@imgUserUrl/' . $k->usuario->id . '.jpg') ?>" alt=""></div>
+                                    <!-- Contenedor del Comentario -->
+                                    <div class="comment-box">
+                                        <div class="comment-head">
+                                            <h6 class="comment-name"><?= $k->usuario->nickname ?></h6>
+                                            <!-- <span></span> -->
+                                        </div>
+                                        <div class="comment-content">
+                                            <?= $k->comentario ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                    <?php endforeach ?>
+                        </ul>
+                </div>
+            </div>
+        <?php endif ?>
     </div>
 
     <?php if ($quest) : ?>
