@@ -38,6 +38,8 @@ if ($quest && isset($ids)) {
 
 
 $this->registerJs($back);
+$this->registerCssFile('@web/css/comentario.css');
+
 ?>
 <div class="shows-view">
     <div class="row">
@@ -202,6 +204,33 @@ $this->registerJs($back);
             <h5>Sinopsis</h5>
             <p><?= $model->sinopsis ?></p>
         </div>
+        <?php if ($criticas) : ?>
+            <div class="col-12 m-2 ">
+                <h5 class="font-weight-bold m-3">Comentarios</h5>
+                <div class="row m-3">
+                    <ul id="comments-list" class="comments-list">
+                        <?php foreach ($criticas as $k) : ?>
+                            <li>
+                                <div class="comment-main-level">
+                                    <!-- Avatar -->
+                                    <div class="comment-avatar"><img src="<?= Yii::getAlias('@imgUserUrl/' . $k->usuario->id . '.jpg') ?>" alt=""></div>
+                                    <!-- Contenedor del Comentario -->
+                                    <div class="comment-box">
+                                        <div class="comment-head">
+                                            <h6 class="comment-name"><?= $k->usuario->nickname ?></h6>
+                                            <!-- <span></span> -->
+                                        </div>
+                                        <div class="comment-content">
+                                            <?= $k->comentario ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        <?php endforeach ?>
+                    </ul>
+                </div>
+            </div>
+        <?php endif ?>
     </div>
 
     <?php if ($quest) : ?>

@@ -70,7 +70,7 @@ class Valoraciones extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getUsuario()
     {
         return $this->hasOne(Usuarios::className(), ['id' => 'usuario_id'])->inverseOf('valoraciones');
     }

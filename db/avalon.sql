@@ -837,6 +837,9 @@ VALUES  ('Los asesinos del emperador', 9788408118329, 6, (select id from integra
 INSERT INTO criticas (libro_id, usuario_id, valoracion, comentario)
 VALUES  (1, 1, 5, 'Es un pedazo de libro');
 
+INSERT INTO valoraciones (objetos_id, usuario_id, valoracion, comentario)
+VALUES  (1, 1, 5, 'Es una pedazo de película');
+
 INSERT INTO libros (nombre, isbn, editorial_id, autor_id, genero_id, pais_id, sinopsis)
 VALUES  ('La Legión Perdida', 9788408176374, 6, (select id from integrantes where nombre = 'Santiago Posteguillo'),(select id from generos where nombre = 'novela histórica'), 208, 'En el año 53 a.C., el cónsul Craso cruzó el Éufrates para conquistar Oriente, pero su ejercito
         fue destrozado en Carrhae. Una legión entera cayó prisionera de los partos. Nadie sabe a ciencia cierta que pasó con aquella legión perdida.

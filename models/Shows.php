@@ -149,4 +149,9 @@ class Shows extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Valoraciones::className(), ['objetos_id' => 'id'])->inverseOf('objetos');
     }
+
+    public function getCriticasWithUsers()
+    {
+        return $this->getValoraciones()->select('u.*, *')->joinWith('usuario u')->all();
+    }
 }

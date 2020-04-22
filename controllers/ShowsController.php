@@ -104,12 +104,15 @@ class ShowsController extends Controller
         $generos = $model->getGeneros()->select('nombre, id')->all();
         $pais = Paises::findOne($model->pais_id)->nombre;
         $duenio = $productora->entidad_id;
+        $criticas = $model->getCriticasWithUsers();
+
         $render = [
             'model' => $model,
             'productora' => $productora->nombre,
             'pais' => $pais,
             'generos' => $generos,
             'duenio' => $duenio,
+            'criticas' => $criticas,
         ];
 
 
