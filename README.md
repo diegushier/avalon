@@ -12,4 +12,7 @@ Se le da a un usuario, la oportunidad de crear su propia empresa para la creaci�
 Se pone a disposición del usuario un calendario en el que se muestran los pŕoximos eventos de **estreno**.
 
 **DOCS**:
-<a href="https://diegohilderink.github.io/avalon/">Avalon Docs 
+<a href="https://diegohilderink.github.io/avalon/">Avalon Docs</a> 
+
+**WEB**:
+<a href="http://avlon.herokuapp.com/">Avalon</a> 
