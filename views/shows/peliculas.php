@@ -16,7 +16,7 @@ $this->title = 'Peliculas';
             <button class="btn btn-orange w-100" type="button" data-toggle="collapse" data-target="#menuSearch" aria-expanded="false" aria-controls="collapseExample">
                 Menu
             </button>
-            <?php if (Yii::$app->user->identity->clave === null) : ?>
+            <?php if (isset(Yii::$app->user->identity) && Yii::$app->user->identity->clave === null) : ?>
                 <?= Html::a(
                     'Añade tu pelicula',
                     ['create', 'tipo' => 'cine'],

@@ -75,10 +75,12 @@ $this->registerCssFile('@web/css/comentario.css');
                         <td>Pais</td>
                         <td><?= $pais ?></td>
                     </tr>
-                    <tr>
-                        <td>Puntuación</td>
-                        <td><?= $media->total / $media->suma ?></td>
-                    </tr>
+                    <?php if ($media->suma !== 0) : ?>
+                        <tr>
+                            <td>Puntuación</td>
+                            <td><?= $media->total / $media->suma ?></td>
+                        </tr>
+                    <?php endif ?>
                     <?php if ($model->fecha !== '' && $model->fecha !== null) : ?>
                         <tr>
                             <td>Fecha de estreno</td>
@@ -156,15 +158,18 @@ $this->registerCssFile('@web/css/comentario.css');
 
                     </ul>
                 </div>
-                <div>
-                    <?= $this->render(
-                        '/criticas/create',
-                        [
-                            'model' => $val,
-                            'objeto' => $model->id
-                        ]
-                    ) ?>
-                </div>
+
+                <?php if (isset(Yii::$app->user->identity)) : ?>
+                    <div>
+                        <?= $this->render(
+                            '/criticas/create',
+                            [
+                                'model' => $val,
+                                'objeto' => $model->id
+                            ]
+                        ) ?>
+                    </div>
+                <?php endif ?>
             </div>
         <?php endif ?>
     </div>
