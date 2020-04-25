@@ -134,15 +134,17 @@ $this->registerCssFile('@web/css/comentario.css');
                                     <div class="comment-box">
                                         <div class="comment-head">
                                             <h6 class="comment-name"><?= $k->usuario->nickname ?></h6>
-                                            <span>
-                                                <?php $now = date_format(date_create($k->fecha), 'H:i');
-                                                $date = date_format(date_create($k->fecha), 'Y/m/d');
-                                                if (date_format(new DateTime(), 'Y/m/d') === $date) : ?>
-                                                    <?= $now ?>
-                                                <?php else : ?>
-                                                    <?= $date ?>
-                                                <?php endif ?>
-                                            </span>
+                                            <div class="d-flex flex-row-reverse">
+                                                <span>
+                                                    <?php $now = date_format(date_create($k->fecha), 'H:i');
+                                                    $date = date_format(date_create($k->fecha), 'd/m/Y');
+                                                    if (date_format(new DateTime(), 'd/m/Y') === $date) : ?>
+                                                        <?= $now ?>
+                                                    <?php else : ?>
+                                                        <?= $date ?>
+                                                    <?php endif ?>
+                                                </span>
+                                            </div>
                                         </div>
                                         <div class="comment-content">
                                             <?= $k->comentario ?>
