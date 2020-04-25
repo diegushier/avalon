@@ -244,15 +244,17 @@ $this->registerCssFile('@web/css/comentario.css');
                                                     <?php endif ?>
                                                 </span>
                                             </div>
-                                            <i>
-                                                <?= Html::a(
-                                                    '',
-                                                    ['/valoraciones/delete', 'id' => $k->id, 'objeto' => $model->id],
-                                                    ['class' => 'fa fa-times text-danger',  'data' => [
-                                                        'method' => 'post',
-                                                    ],]
-                                                ) ?>
-                                            </i>
+                                            <?php if (Yii::$app->user->id === $k->usuario_id) : ?>
+                                                <i>
+                                                    <?= Html::a(
+                                                        '',
+                                                        ['/valoraciones/delete', 'id' => $k->id, 'objeto' => $model->id],
+                                                        ['class' => 'fa fa-times text-danger',  'data' => [
+                                                            'method' => 'post',
+                                                        ],]
+                                                    ) ?>
+                                                </i>
+                                            <?php endif ?>
                                         </div>
                                         <div class="comment-content">
                                             <?= $k->comentario ?>
