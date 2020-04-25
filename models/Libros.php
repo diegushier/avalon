@@ -123,7 +123,7 @@ class Libros extends \yii\db\ActiveRecord
 
     public function getCriticasWithUsers($sort = null)
     {
-        return $this->getCriticas()->select('u.*, *')->joinWith('usuario u')->orderBy(isset($sort) ? $sort->orders : 'id')->all();
+        return $this->getCriticas()->joinWith('usuario u')->orderBy(isset($sort) ? $sort->orders : 'id')->all();
     }
 
     public function getMedia($libro_id)

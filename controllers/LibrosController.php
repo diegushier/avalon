@@ -83,6 +83,13 @@ class LibrosController extends Controller
         $genero = $model->getGenero()->one();
         $duenio = $productora->entidad_id;
         $media = $model->getMedia($model->id);
+
+        $params = Yii::$app->request->post();
+        $val = new Criticas();
+        if ($val->load($params)) {
+            $val->save();
+        }
+
         $sort = new Sort([
             'attributes' => [
                 'fecha' => [
@@ -105,6 +112,7 @@ class LibrosController extends Controller
             'genero' => $genero,
             'duenio' => $duenio,
             'criticas' => $criticas,
+            'val' => $val,
             'sort' => $sort,
         ];
 

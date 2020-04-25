@@ -153,8 +153,17 @@ $this->registerCssFile('@web/css/comentario.css');
                                 </div>
                             </li>
                         <?php endforeach ?>
-                        
+
                     </ul>
+                </div>
+                <div>
+                    <?= $this->render(
+                        '/criticas/create',
+                        [
+                            'model' => $val,
+                            'objeto' => $model->id
+                        ]
+                    ) ?>
                 </div>
             </div>
         <?php endif ?>

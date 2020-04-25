@@ -5,16 +5,15 @@ use yii\bootstrap4\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Criticas */
 
-$this->title = 'Create Criticas';
-$this->params['breadcrumbs'][] = ['label' => 'Criticas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="criticas-create">
+<div class="criticas-create container">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h5 class="font-weight-bold">Deja tu comentario.</h5>
 
     <?= $this->render('_form', [
         'model' => $model,
+        'objeto' => $objeto,
+
     ]) ?>
 
 </div>

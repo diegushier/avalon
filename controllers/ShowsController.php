@@ -112,7 +112,6 @@ class ShowsController extends Controller
             $val->save();
         }
 
-        Yii::debug($params);
 
         $sort = new Sort([
             'attributes' => [
