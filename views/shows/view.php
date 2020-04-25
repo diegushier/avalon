@@ -165,6 +165,10 @@ $this->registerCssFile('@web/css/comentario.css');
                         <td>Productora</td>
                         <td><?= $productora ?></td>
                     </tr>
+                    <tr>
+                        <td>Puntuación</td>
+                        <td><?= $media->total / $media->suma ?></td>
+                    </tr>
                     <?php if ($model->fecha !== '' && $model->fecha !== null) : ?>
                         <tr>
                             <td>Fecha de estreno</td>

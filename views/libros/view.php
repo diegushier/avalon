@@ -75,6 +75,10 @@ $this->registerCssFile('@web/css/comentario.css');
                         <td>Pais</td>
                         <td><?= $pais ?></td>
                     </tr>
+                    <tr>
+                        <td>Puntuación</td>
+                        <td><?= $media->total / $media->suma ?></td>
+                    </tr>
                     <?php if ($model->fecha !== '' && $model->fecha !== null) : ?>
                         <tr>
                             <td>Fecha de estreno</td>

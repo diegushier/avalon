@@ -82,6 +82,7 @@ class LibrosController extends Controller
         $pais = Paises::findOne($model->pais_id);
         $genero = $model->getGenero()->one();
         $duenio = $productora->entidad_id;
+        $media = $model->getMedia($model->id);
         $sort = new Sort([
             'attributes' => [
                 'fecha' => [
@@ -106,6 +107,12 @@ class LibrosController extends Controller
             'criticas' => $criticas,
             'sort' => $sort,
         ];
+
+        if ($media) {
+            $render += [
+                'media' => $media,
+            ];
+        }
 
         return $this->render('view', $render);
     }

@@ -19,6 +19,8 @@ use Yii;
  */
 class Valoraciones extends \yii\db\ActiveRecord
 {
+    public $total;
+    public $suma;
     /**
      * {@inheritdoc}
      */

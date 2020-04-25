@@ -28,6 +28,8 @@ class Shows extends \yii\db\ActiveRecord
     const PELICULAS = 'cine';
     const SERIES = 'serie';
 
+    public $total;
+
     /**
      * {@inheritdoc}
      */
@@ -153,5 +155,10 @@ class Shows extends \yii\db\ActiveRecord
     public function getCriticasWithUsers($sort = null)
     {
         return $this->getValoraciones()->select('u.*, *')->joinWith('usuario u')->orderBy(isset($sort) ? $sort->orders : 'id')->all();
+    }
+
+    public function getMedia($show_id)
+    {
+        return $this->getValoraciones()->select('COUNT (valoracion) AS suma, SUM (valoracion) AS total')->where('objetos_id = ' . $show_id)->one();
     }
 }

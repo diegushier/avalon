@@ -19,6 +19,9 @@ use Yii;
  */
 class Criticas extends \yii\db\ActiveRecord
 {
+    public $total;
+    public $suma;
+    
     /**
      * {@inheritdoc}
      */

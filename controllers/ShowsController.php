@@ -104,6 +104,7 @@ class ShowsController extends Controller
         $generos = $model->getGeneros()->select('nombre, id')->all();
         $pais = Paises::findOne($model->pais_id)->nombre;
         $duenio = $productora->entidad_id;
+        $media = $model->getMedia($model->id);
         $sort = new Sort([
             'attributes' => [
                 'fecha' => [
@@ -127,6 +128,11 @@ class ShowsController extends Controller
             'sort' => $sort,
         ];
 
+        if ($media) {
+            $render += [
+                'media' => $media,
+            ];
+        }
 
         if ($model->tipo === 'serie') {
             $capitulos = $model->getCapitulos()->all();

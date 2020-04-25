@@ -125,4 +125,9 @@ class Libros extends \yii\db\ActiveRecord
     {
         return $this->getCriticas()->select('u.*, *')->joinWith('usuario u')->orderBy(isset($sort) ? $sort->orders : 'id')->all();
     }
+
+    public function getMedia($libro_id)
+    {
+        return $this->getCriticas()->select('COUNT (valoracion) AS suma, SUM (valoracion) AS total')->where('libro_id = ' . $libro_id)->one();
+    }
 }
