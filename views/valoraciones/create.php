@@ -5,16 +5,15 @@ use yii\bootstrap4\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Valoraciones */
 
-$this->title = 'Create Valoraciones';
-$this->params['breadcrumbs'][] = ['label' => 'Valoraciones', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="valoraciones-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+<hr>
+<div class="valoraciones-create container">
+    <h5 class="font-weight-bold">Deja tu comentario.</h5>
 
     <?= $this->render('_form', [
         'model' => $model,
+        'objeto' => $objeto,
+
     ]) ?>
 
 </div>

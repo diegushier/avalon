@@ -154,7 +154,7 @@ class Shows extends \yii\db\ActiveRecord
 
     public function getCriticasWithUsers($sort = null)
     {
-        return $this->getValoraciones()->select('u.*, *')->joinWith('usuario u')->orderBy(isset($sort) ? $sort->orders : 'id')->all();
+        return $this->getValoraciones()->joinWith('usuario u')->orderBy(isset($sort) ? $sort->orders : 'id')->all();
     }
 
     public function getMedia($show_id)

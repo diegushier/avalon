@@ -9,6 +9,7 @@ use Yii;
 use app\models\Shows;
 use app\models\ShowsSearch;
 use app\models\Usuarios;
+use app\models\Valoraciones;
 use yii\data\Sort;
 use yii\web\UploadedFile;
 use yii\web\Controller;
@@ -105,6 +106,14 @@ class ShowsController extends Controller
         $pais = Paises::findOne($model->pais_id)->nombre;
         $duenio = $productora->entidad_id;
         $media = $model->getMedia($model->id);
+        $params = Yii::$app->request->post();
+        $val = new Valoraciones();
+        if ($val->load($params)) {
+            $val->save();
+        }
+
+        Yii::debug($params);
+
         $sort = new Sort([
             'attributes' => [
                 'fecha' => [
@@ -115,6 +124,7 @@ class ShowsController extends Controller
                 ],
             ]
         ]);
+        
 
         $criticas = $model->getCriticasWithUsers($sort);
 
@@ -125,6 +135,7 @@ class ShowsController extends Controller
             'generos' => $generos,
             'duenio' => $duenio,
             'criticas' => $criticas,
+            'val' => $val,
             'sort' => $sort,
         ];
 
@@ -168,7 +179,7 @@ class ShowsController extends Controller
                     $calendar->create($model);
                 }
                 $imagen->imagen = UploadedFile::getInstance($imagen, 'imagen');
-                $imagen->upload($model->id);
+                $imagen->upload($model->id, 'cine');
             }
 
             return $this->redirect(['view', 'id' => $model->id]);

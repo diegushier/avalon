@@ -12,15 +12,15 @@ use yii\bootstrap4\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'objetos_id')->textInput() ?>
+    <?= $form->field($model, 'objetos_id')->hiddenInput(['value' => $objeto])->label(false) ?>
+    
+    <?= $form->field($model, 'usuario_id')->hiddenInput(['value' => Yii::$app->user->id])->label(false) ?>
 
-    <?= $form->field($model, 'usuario_id')->textInput() ?>
-
-    <?= $form->field($model, 'valoracion')->textInput() ?>
+    <?= $form->field($model, 'valoracion')->textInput([
+        'type' => 'number'
+    ]) ?>
 
     <?= $form->field($model, 'comentario')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'fecha')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

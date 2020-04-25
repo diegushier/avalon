@@ -37,7 +37,8 @@ class Valoraciones extends \yii\db\ActiveRecord
         return [
             [['objetos_id', 'usuario_id', 'valoracion'], 'required'],
             [['objetos_id', 'usuario_id', 'valoracion'], 'default', 'value' => null],
-            [['objetos_id', 'usuario_id', 'valoracion'], 'integer'],
+            [['objetos_id', 'usuario_id'], 'integer'],
+            [['valoracion'],'integer', 'max' => 5, 'min' => 1],
             [['comentario'], 'string'],
             [['fecha'], 'safe'],
             [['objetos_id'], 'exist', 'skipOnError' => true, 'targetClass' => Shows::className(), 'targetAttribute' => ['objetos_id' => 'id']],
