@@ -136,6 +136,7 @@ $this->registerCssFile('@web/css/comentario.css');
                                     <div class="comment-box">
                                         <div class="comment-head">
                                             <h6 class="comment-name"><?= $k->usuario->nickname ?></h6>
+                                            <h6 class="comment-name"><?= $k->usuario_id ?></h6>
                                             <div class="d-flex flex-row-reverse">
                                                 <span>
                                                     <?php $now = date_format(date_create($k->fecha), 'H:i');
@@ -147,6 +148,17 @@ $this->registerCssFile('@web/css/comentario.css');
                                                     <?php endif ?>
                                                 </span>
                                             </div>
+                                            <?php if (Yii::$app->user->id === $k->usuario_id) : ?>
+                                                <i>
+                                                    <?= Html::a(
+                                                        '',
+                                                        ['/criticas/delete', 'id' => $k->id, 'objeto' => $model->id],
+                                                        ['class' => 'fa fa-times text-danger',  'data' => [
+                                                            'method' => 'post',
+                                                        ],]
+                                                    ) ?>
+                                                </i>
+                                            <?php endif ?>
                                         </div>
                                         <div class="comment-content">
                                             <?= $k->comentario ?>
