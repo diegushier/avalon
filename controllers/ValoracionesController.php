@@ -102,11 +102,11 @@ class ValoracionesController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($id, $objeto)
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/shows/view', 'id' => $objeto]);
     }
 
     /**
