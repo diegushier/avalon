@@ -95,9 +95,9 @@ $this->registerCssFile('@web/css/comentario.css');
                                     <?= $genero->nombre ?>
                                 </a>
 
-                                <div class="dropdown-menu p-0 ml-1" aria-labelledby="dropdownMenuLink">
-                                    <?= Html::a('Modificar', ['/listageneros/update', 'id' => $genero->id, 'serie' => $model->id], ['class' => 'btn btn-orange']) ?>
-                                    <?= Html::a('Borrar', ['/listageneros/delete', 'id' => $genero->id, 'serie' => $model->id], [
+                                <div class="dropdown-menu p-0 ml-1 border-0" aria-labelledby="dropdownMenuLink">
+                                    <?= Html::a('&#x2699', ['/listageneros/update', 'id' => $genero->id, 'serie' => $model->id], ['class' => 'btn btn-orange']) ?>
+                                    <?= Html::a('X', ['/listageneros/delete', 'id' => $genero->id, 'serie' => $model->id], [
                                         'class' => 'btn btn-danger',
                                         'data' => [
                                             'method' => 'post',
@@ -130,9 +130,7 @@ $this->registerCssFile('@web/css/comentario.css');
                         <?php foreach ($criticas as $k) : ?>
                             <li>
                                 <div class="comment-main-level">
-                                    <!-- Avatar -->
                                     <div class="comment-avatar"><img src="<?= Yii::getAlias('@imgUserUrl/' . $k->usuario->id . '.jpg') ?>" alt=""></div>
-                                    <!-- Contenedor del Comentario -->
                                     <div class="comment-box">
                                         <div class="comment-head">
                                             <h6 class="comment-name"><?= $k->usuario->nickname ?></h6>
@@ -171,18 +169,16 @@ $this->registerCssFile('@web/css/comentario.css');
                     </ul>
                 </div>
 
-                <?php if (isset(Yii::$app->user->identity)) : ?>
-                    <div>
-                        <?= $this->render(
-                            '/criticas/create',
-                            [
-                                'model' => $val,
-                                'objeto' => $model->id
-                            ]
-                        ) ?>
-                    </div>
-                <?php endif ?>
             </div>
+        <?php endif ?>
+        <?php if (isset(Yii::$app->user->identity)) : ?>
+                <?= $this->render(
+                    '/criticas/create',
+                    [
+                        'model' => $val,
+                        'objeto' => $model->id
+                    ]
+                ) ?>
         <?php endif ?>
     </div>
 

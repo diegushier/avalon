@@ -60,12 +60,12 @@ class Libros extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nombre' => 'Nombre',
-            'isbn' => 'Isbn',
-            'editorial_id' => 'Editorial ID',
-            'autor_id' => 'Autor ID',
-            'genero_id' => 'Genero ID',
-            'pais_id' => 'Pais ID',
-            'evento_id' => 'Evento ID',
+            'isbn' => 'ISBN',
+            'editorial_id' => 'Editorial',
+            'autor_id' => 'Nombre del Autor',
+            'genero_id' => 'Genero',
+            'pais_id' => 'Pais',
+            'evento_id' => 'Fecha de estreno',
             'fecha' => 'Fecha',
             'sinopsis' => 'Sinopsis',
         ];

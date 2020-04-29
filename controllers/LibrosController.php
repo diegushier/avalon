@@ -142,11 +142,10 @@ class LibrosController extends Controller
         $model = Libros::findOne($id);
         $content = file_get_contents(Yii::getAlias('@resumen/' . $id . '.txt'));
         $pdf = new Pdf([
-            'mode' => Pdf::MODE_CORE, 
+            'mode' => Pdf::MODE_CORE,
             'destination' => Pdf::DEST_BROWSER,
             'content' => $content,
-            'options' => [
-            ],
+            'options' => [],
             'methods' => [
                 'SetTitle' => $model->nombre,
                 'SetAuthor' => $model->getAutor()->one()->nombre,
@@ -170,9 +169,11 @@ class LibrosController extends Controller
         $autor = Integrantes::lista();
         $genero = Generos::lista();
         $tipo = 'libro';
+        $params = Yii::$app->request->post();
+        Yii::debug($params);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if (Yii::$app->request->post()) {
+        if ($model->load($params) && $model->save()) {
+            if ($params) {
                 if ($model->fecha !== '') {
                     $calendar->name = $model->nombre;
                     $calendar->date = $model->fecha;

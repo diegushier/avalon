@@ -35,12 +35,14 @@ class ImageForm extends Model
     public function upload($id, $tipo)
     {
         if ($this->validate()) {
-            $filename = $id . '.' . $this->imagen->extension;
-            $origen = Yii::getAlias($this->alias[$tipo] . $filename);
-            $destino = Yii::getAlias($this->alias[$tipo] . $filename);
-            $this->imagen->saveAs($origen);
-            rename($origen, $destino);
-            return true;
+            if ($this->imagen) {
+                $filename = $id . '.' . $this->imagen->extension;
+                $origen = Yii::getAlias($this->alias[$tipo] . $filename);
+                $destino = Yii::getAlias($this->alias[$tipo] . $filename);
+                $this->imagen->saveAs($origen);
+                rename($origen, $destino);
+                return true;
+            }
         } else {
             return false;
         }

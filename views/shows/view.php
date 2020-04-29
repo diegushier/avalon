@@ -191,9 +191,9 @@ $this->registerCssFile('@web/css/comentario.css');
                                         <?= $g->nombre ?>
                                     </a>
 
-                                    <div class="dropdown-menu p-0 ml-1" aria-labelledby="dropdownMenuLink">
-                                        <?= Html::a('Modificar', ['/listageneros/update', 'id' => $g->id, 'serie' => $model->id], ['class' => 'btn btn-orange']) ?>
-                                        <?= Html::a('Borrar', ['/listageneros/delete', 'id' => $g->id, 'serie' => $model->id], [
+                                    <div class="dropdown-menu p-0 ml-1 border-0" aria-labelledby="dropdownMenuLink">
+                                        <?= Html::a('&#x2699', ['/listageneros/update', 'id' => $g->id, 'serie' => $model->id], ['class' => 'btn btn-orange']) ?>
+                                        <?= Html::a('X', ['/listageneros/delete', 'id' => $g->id, 'serie' => $model->id], [
                                             'class' => 'btn btn-danger',
                                             'data' => [
                                                 'method' => 'post',
@@ -268,18 +268,16 @@ $this->registerCssFile('@web/css/comentario.css');
                     </ul>
                 </div>
 
-                <?php if (isset(Yii::$app->user->identity)) : ?>
-                    <div>
-                        <?= $this->render(
-                            '/valoraciones/create',
-                            [
-                                'model' => $val,
-                                'objeto' => $model->id
-                            ]
-                        ) ?>
-                    </div>
-                <?php endif ?>
             </div>
+        <?php endif ?>
+        <?php if (isset(Yii::$app->user->identity)) : ?>
+            <?= $this->render(
+                '/valoraciones/create',
+                [
+                    'model' => $val,
+                    'objeto' => $model->id
+                ]
+            ) ?>
         <?php endif ?>
     </div>
 
