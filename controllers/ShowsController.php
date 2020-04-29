@@ -108,6 +108,7 @@ class ShowsController extends Controller
         $media = $model->getMedia($model->id);
         $params = Yii::$app->request->post();
         $val = new Valoraciones();
+
         if ($val->load($params)) {
             $val->save();
         }
@@ -123,9 +124,10 @@ class ShowsController extends Controller
                 ],
             ]
         ]);
-        
+
 
         $criticas = $model->getCriticasWithUsers($sort);
+        $comented = Valoraciones::find()->where('usuario_id = ' . Yii::$app->user->id . 'and id = ' . $model->id)->one();
 
         $render = [
             'model' => $model,
@@ -136,6 +138,7 @@ class ShowsController extends Controller
             'criticas' => $criticas,
             'val' => $val,
             'sort' => $sort,
+            'comented' => $comented
         ];
 
         if ($media) {

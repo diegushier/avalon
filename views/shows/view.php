@@ -228,7 +228,7 @@ $this->registerCssFile('@web/css/comentario.css');
                             <li>
                                 <div class="comment-main-level">
                                     <!-- Avatar -->
-                                    <div class="comment-avatar"><img src="<?= Yii::getAlias('@imgUserUrl/' . $k->usuario->id . '.jpg') ?>" alt=""></div>
+                                    <div class="comment-avatar"><img src="<?= Yii::getAlias('@imgUserUrl/' . $k->usuario->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/no-user.jpg') ?>'"></div>
                                     <!-- Contenedor del Comentario -->
                                     <div class="comment-box">
                                         <div class="comment-head">
@@ -270,14 +270,16 @@ $this->registerCssFile('@web/css/comentario.css');
 
             </div>
         <?php endif ?>
-        <?php if (isset(Yii::$app->user->identity)) : ?>
-            <?= $this->render(
-                '/valoraciones/create',
-                [
-                    'model' => $val,
-                    'objeto' => $model->id
-                ]
-            ) ?>
+        <?php if (isset(Yii::$app->user->identity) && !$comented) : ?>
+            <div class="container">
+                <?= $this->render(
+                    '/valoraciones/create',
+                    [
+                        'model' => $val,
+                        'objeto' => $model->id
+                    ]
+                ) ?>
+            </div>
         <?php endif ?>
     </div>
 
