@@ -78,7 +78,7 @@ $this->registerCssFile('@web/css/comentario.css');
                     <?php if ($media->suma !== 0) : ?>
                         <tr>
                             <td>Puntuación</td>
-                            <td><?= $media->total / $media->suma ?></td>
+                            <td><?= $media->total / $media->suma ?> de 5</td>
                         </tr>
                     <?php endif ?>
                     <?php if ($model->fecha !== '' && $model->fecha !== null) : ?>
@@ -130,11 +130,10 @@ $this->registerCssFile('@web/css/comentario.css');
                         <?php foreach ($criticas as $k) : ?>
                             <li>
                                 <div class="comment-main-level">
-                                    <div class="comment-avatar"><img src="<?= Yii::getAlias('@imgUserUrl/' . $k->usuario->id . '.jpg') ?>" alt=""></div>
+                                    <div class="comment-avatar"><img src="<?= Yii::getAlias('@imgUserUrl/' . $k->usuario->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/no-user.jpg') ?>'"></div>
                                     <div class="comment-box">
                                         <div class="comment-head">
                                             <h6 class="comment-name"><?= $k->usuario->nickname ?></h6>
-                                            <h6 class="comment-name"><?= $k->usuario_id ?></h6>
                                             <div class="d-flex flex-row-reverse">
                                                 <span>
                                                     <?php $now = date_format(date_create($k->fecha), 'H:i');
@@ -171,7 +170,9 @@ $this->registerCssFile('@web/css/comentario.css');
 
             </div>
         <?php endif ?>
-        <?php if (isset(Yii::$app->user->identity)) : ?>
+        <?php if (isset(Yii::$app->user->identity) && !$comented) : ?>
+            <div class="container">
+
                 <?= $this->render(
                     '/criticas/create',
                     [
@@ -179,6 +180,7 @@ $this->registerCssFile('@web/css/comentario.css');
                         'objeto' => $model->id
                     ]
                 ) ?>
+            </div>
         <?php endif ?>
     </div>
 
@@ -212,7 +214,4 @@ $this->registerCssFile('@web/css/comentario.css');
             </div>
         </div>
     <?php endif ?>
-
-</div>
-
 </div>

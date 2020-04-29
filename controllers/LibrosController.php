@@ -103,6 +103,9 @@ class LibrosController extends Controller
 
 
         $criticas = $model->getCriticasWithUsers($sort);
+        if ($criticas) {
+            $comented = Criticas::find()->where('usuario_id =' . Yii::$app->user->id)->one();
+        }
         $this->newComment(Yii::$app->request->post());
         $render = [
             'model' => $model,
@@ -114,6 +117,7 @@ class LibrosController extends Controller
             'criticas' => $criticas,
             'val' => $val,
             'sort' => $sort,
+            'comented' => $comented
         ];
 
         if ($media) {
@@ -170,7 +174,6 @@ class LibrosController extends Controller
         $genero = Generos::lista();
         $tipo = 'libro';
         $params = Yii::$app->request->post();
-        Yii::debug($params);
 
         if ($model->load($params) && $model->save()) {
             if ($params) {
