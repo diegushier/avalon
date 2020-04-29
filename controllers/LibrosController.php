@@ -103,7 +103,7 @@ class LibrosController extends Controller
 
 
         $criticas = $model->getCriticasWithUsers($sort);
-        $comented = Criticas::find()->where('usuario_id =' . Yii::$app->user->id)->one();
+        $comented = Criticas::find()->where('usuario_id =' . Yii::$app->user->id . 'and id = ' . $model->id)->one();
 
         $this->newComment(Yii::$app->request->post());
         $render = [
