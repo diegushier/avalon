@@ -6,6 +6,7 @@ use yii\bootstrap4\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\Valoraciones */
 /* @var $form yii\bootstrap4\ActiveForm */
+$value = [1, 2, 3, 4, 5]
 ?>
 
 <div class="valoraciones-form">
@@ -16,9 +17,7 @@ use yii\bootstrap4\ActiveForm;
     
     <?= $form->field($model, 'usuario_id')->hiddenInput(['value' => Yii::$app->user->id])->label(false) ?>
 
-    <?= $form->field($model, 'valoracion')->textInput([
-        'type' => 'number'
-    ]) ?>
+    <?= $form->field($model, 'valoracion')->dropDownList($value)?>
 
     <?= $form->field($model, 'comentario')->textarea(['rows' => 6]) ?>
 
