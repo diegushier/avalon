@@ -2,6 +2,7 @@
 
 use yii\bootstrap4\Html;
 use yii\helpers\Json;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -13,11 +14,32 @@ $this->params['breadcrumbs'][] = $this->title;
 $quest = !(Yii::$app->user->isGuest) && ($duenio === Yii::$app->user->id);
 \yii\web\YiiAsset::register($this);
 
-
+$url = Url::to(['libros/seg']);
 $back = "$('body').css('background-image', 'url( " . Yii::getAlias('@imgBackLibrosUrl/' . $model->id . '.jpg') . ")')
          $('#back').css('background-color', '#fff')
          $(function () {
             $('[data-toggle=" . 'popover' . "]').popover()
+          })
+          
+          opc = ['#siguiendo', '#vista', '#pendiente'];
+          pos = ['angle-double-right', 'eye-slash', 'check']
+          opc.forEach(k => {
+            $(k).click(() =>{
+                $.ajax({
+                    method: 'GET',
+                    url: '" . $url . "',
+                    data: {
+                        id: '' + " . $model->id . ",
+                        seguimiento_id: $(k).attr('pos')
+                    },
+                    success:function() {
+                        console.log('conectado');
+                    },
+                    error: () => {
+                        console.log($(k).attr('pos'))
+                    }
+                })
+            })
           })";
 
 
@@ -33,6 +55,7 @@ $this->registerCssFile('@web/css/comentario.css');
             <button type="button" id="trailer" class="btn btn-orange mb-2 mr-1" data-toggle="modal" data-target="#vertrailer">
                 Ver muestra
             </button>
+
             <div class="modal fade" id="vertrailer" tabindex="-1" role="dialog" aria-labelledby="#vertrailerCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content" style="width: 840px; height :500px;">
@@ -50,6 +73,19 @@ $this->registerCssFile('@web/css/comentario.css');
                     </div>
                 </div>
             </div>
+
+            <div class="btn-group dropdown mb-2">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="seg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Segimiento
+                </a>
+
+                <div class="dropdown-menu p-0 ml-1 border-0" aria-labelledby="dropdownMenuLink">
+                    <button class="btn btn-dark" pos='1' id="siguiendo"><i class="fas fa-angle-double-right"></i></button>
+                    <button class="btn btn-dark" pos='2' id="pendiente"><i class="fas fa-eye-slash"></i></button>
+                    <button class="btn btn-dark" pos='3' id="vista"><i class="fas fa-check"></i></button>
+                </div>
+            </div>
+
             <?php if ($quest) : ?>
                 <?= Html::a('&#x2699', ['update', 'id' => $model->id], ['style' => 'font-size: 15px', 'class' => 'btn btn-success mb-2 mr-1']) ?>
                 <button type="button" id="delete" class="btn btn-danger mb-2 mr-1" style="font-size: 20px" data-toggle="modal" data-target="#borrarEmpresa">

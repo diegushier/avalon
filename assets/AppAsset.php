@@ -25,7 +25,7 @@ class AppAsset extends AssetBundle
         'https://use.fontawesome.com/releases/v5.3.1/css/all.css',
         'css/login.css',
         'css/input.css',
-
+        'css/all.css',
     ];
     public $js = [
     ];
