@@ -9,6 +9,7 @@ use Yii;
 use app\models\Shows;
 use app\models\ShowsSearch;
 use app\models\Usuarios;
+use app\models\Usuarioseguimiento;
 use app\models\Valoraciones;
 use yii\data\Sort;
 use yii\web\UploadedFile;
@@ -194,6 +195,28 @@ class ShowsController extends Controller
             'paises' => $paises,
             'tipo' => $tipo
         ]);
+    }
+
+    public function actionSeg($id, $seguimiento_id = null)
+    {
+        $model = Usuarioseguimiento::find()->where([
+            'objetos_id' => $id, 'usuario_id' => Yii::$app->user->id
+        ])->one();
+
+        if ($model) {
+            if ($seguimiento_id !== null) {
+                $model->seguimiento_id = $seguimiento_id;
+                $model->update();
+            } else {
+                $model->delete();
+            }
+        } else {
+            $model = new Usuarioseguimiento();
+            $model->objetos_id = $id;
+            $model->usuario_id = Yii::$app->user->id;
+            $model->seguimiento_id = $seguimiento_id;
+            $model->save();
+        }
     }
 
     /**

@@ -14,13 +14,32 @@ $this->params['breadcrumbs'][] = ['label' =>  'shows', 'url' => [$model->tipo . 
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 $quest = !(Yii::$app->user->isGuest) && ($duenio === Yii::$app->user->id);
+$url = Url::to(['shows/seg']);
 
 
 $back = "$('body').css('background-image', 'url( " . Yii::getAlias('@imgBackCineUrl/' . $model->id . '.jpg') . ")')
          $('#back').css('background-color', '#fff')
          $(function () {
             $('[data-toggle=" . 'popover' . "]').popover()
-          })";
+          })
+        opc = ['#siguiendo', '#vista', '#pendiente'];
+        pos = ['angle-double-right', 'eye-slash', 'check']
+        opc.forEach(k => {
+          $(k).click(() =>{
+              $.ajax({
+                  method: 'GET',
+                  url: '" . $url . "',
+                  data: {
+                      id: '' + " . $model->id . ",
+                      seguimiento_id: $(k).attr('pos')
+                  },
+                  success:function() {
+                  },
+                  error: () => {
+                  }
+              })
+          })
+        })";
 
 
 if ($quest && isset($ids)) {
@@ -147,6 +166,19 @@ $this->registerCssFile('@web/css/comentario.css');
                     </div>
                 </div>
             <?php endif ?>
+            <div class="btn-group dropdown mb-2">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="seg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Segimiento
+                </a>
+
+                <div class="dropdown-menu p-0 ml-1 border-0" aria-labelledby="dropdownMenuLink">
+                    <?php if ($model->tipo === 'serie') : ?>
+                        <button class="btn btn-dark" pos='1' id="pendiente"><i class="fas fa-eye-slash"></i></button>
+                    <?php endif ?>
+                    <button class="btn btn-dark" pos='2' id="pendiente"><i class="fas fa-eye-slash"></i></button>
+                    <button class="btn btn-dark" pos='3' id="vista"><i class="fas fa-check"></i></button>
+                </div>
+            </div>
             <?php if ($quest) : ?>
                 <?= Html::a('Añadir genero', ['/listageneros/create', 'id' => $model->id], ['class' => 'btn btn-success mb-2 mr-1']) ?>
                 <?= Html::a('&#x2699', ['update', 'id' => $model->id], ['style' => 'font-size: 15px', 'class' => 'btn btn-success mb-2 mr-1']) ?>
