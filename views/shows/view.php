@@ -177,6 +177,7 @@ $this->registerCssFile('@web/css/comentario.css');
                     <?php endif ?>
                     <button class="btn btn-dark" pos='2' id="pendiente"><i class="fas fa-eye-slash"></i></button>
                     <button class="btn btn-dark" pos='3' id="vista"><i class="fas fa-check"></i></button>
+                    <button class="btn btn-dark" pos='null' id="no-vista"><i class="fas fa-times"></i></button>
                 </div>
             </div>
             <?php if ($quest) : ?>
