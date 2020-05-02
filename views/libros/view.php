@@ -21,8 +21,7 @@ $back = "$('body').css('background-image', 'url( " . Yii::getAlias('@imgBackLibr
             $('[data-toggle=" . 'popover' . "]').popover()
           })
           
-          opc = ['#siguiendo', '#vista', '#pendiente'];
-          pos = ['angle-double-right', 'eye-slash', 'check']
+          opc = ['#siguiendo', '#vista', '#pendiente', '#no-vista'];
           opc.forEach(k => {
             $(k).click(() =>{
                 $.ajax({
@@ -81,6 +80,7 @@ $this->registerCssFile('@web/css/comentario.css');
                     <button class="btn btn-dark" pos='1' id="siguiendo"><i class="fas fa-angle-double-right"></i></button>
                     <button class="btn btn-dark" pos='2' id="pendiente"><i class="fas fa-eye-slash"></i></button>
                     <button class="btn btn-dark" pos='3' id="vista"><i class="fas fa-check"></i></button>
+                    <button class="btn btn-dark" pos=null id="no-vista"><i class="fas fa-times"></i></button>
                 </div>
             </div>
 
