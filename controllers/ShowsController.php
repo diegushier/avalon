@@ -197,14 +197,14 @@ class ShowsController extends Controller
         ]);
     }
 
-    public function actionSeg($id, $seguimiento_id = null)
+    public function actionSeg($id, $tipo, $seguimiento_id)
     {
         $model = Usuarioseguimiento::find()->where([
             'objetos_id' => $id, 'usuario_id' => Yii::$app->user->id
         ])->one();
 
         if ($model) {
-            if ($seguimiento_id !== null) {
+            if ($seguimiento_id !== 'null') {
                 $model->seguimiento_id = $seguimiento_id;
                 $model->update();
             } else {
@@ -215,6 +215,7 @@ class ShowsController extends Controller
             $model->objetos_id = $id;
             $model->usuario_id = Yii::$app->user->id;
             $model->seguimiento_id = $seguimiento_id;
+            $model->tipo = $tipo;
             $model->save();
         }
     }

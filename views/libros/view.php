@@ -29,6 +29,7 @@ $back = "$('body').css('background-image', 'url( " . Yii::getAlias('@imgBackLibr
                     url: '" . $url . "',
                     data: {
                         id: '' + " . $model->id . ",
+                        tipo: 'libro',
                         seguimiento_id: $(k).attr('pos')
                     },
                     success:function() {
@@ -77,10 +78,9 @@ $this->registerCssFile('@web/css/comentario.css');
                 </a>
 
                 <div class="dropdown-menu p-0 ml-1 border-0" aria-labelledby="dropdownMenuLink">
-                    <button class="btn btn-dark" pos='1' id="siguiendo"><i class="fas fa-angle-double-right"></i></button>
                     <button class="btn btn-dark" pos='2' id="pendiente"><i class="fas fa-eye-slash"></i></button>
                     <button class="btn btn-dark" pos='3' id="vista"><i class="fas fa-check"></i></button>
-                    <button class="btn btn-dark" pos=null id="no-vista"><i class="fas fa-times"></i></button>
+                    <button class="btn btn-dark" pos='null' id="no-vista"><i class="fas fa-times"></i></button>
                 </div>
             </div>
 

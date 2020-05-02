@@ -137,14 +137,15 @@ class LibrosController extends Controller
         $model->save();
     }
 
-    public function actionSeg($id, $seguimiento_id = null)
+    public function actionSeg($id, $tipo, $seguimiento_id)
     {
-        $model = Usuarioseguimiento::find()->where([
-            'objetos_id' => $id, 'usuario_id' => Yii::$app->user->id
-        ])->one();
+        $model = Usuarioseguimiento::find()
+            ->where(['objetos_id' => $id])
+            ->andWhere(['usuario_id' => Yii::$app->user->id])
+            ->andWhere(['tipo' => $tipo])->one();
 
         if ($model) {
-            if ($seguimiento_id !== null) {
+            if ($seguimiento_id !== 'null') {
                 $model->seguimiento_id = $seguimiento_id;
                 $model->update();
             } else {
@@ -155,6 +156,7 @@ class LibrosController extends Controller
             $model->objetos_id = $id;
             $model->usuario_id = Yii::$app->user->id;
             $model->seguimiento_id = $seguimiento_id;
+            $model->tipo = $tipo;
             $model->save();
         }
     }

@@ -11,6 +11,7 @@ use Yii;
  * @property int $objetos_id
  * @property int $usuario_id
  * @property int $seguimiento_id
+ * @property string $tipo
  *
  * @property Seguimiento $seguimiento
  * @property Shows $objetos
@@ -32,9 +33,10 @@ class Usuarioseguimiento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['objetos_id', 'usuario_id', 'seguimiento_id'], 'required'],
+            [['objetos_id', 'usuario_id', 'seguimiento_id', 'tipo'], 'required'],
             [['objetos_id', 'usuario_id', 'seguimiento_id'], 'default', 'value' => null],
             [['objetos_id', 'usuario_id', 'seguimiento_id'], 'integer'],
+            [['tipo'], 'string', 'max' => 10],
             [['seguimiento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Seguimiento::className(), 'targetAttribute' => ['seguimiento_id' => 'id']],
             [['objetos_id'], 'exist', 'skipOnError' => true, 'targetClass' => Shows::className(), 'targetAttribute' => ['objetos_id' => 'id']],
             [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['usuario_id' => 'id']],
@@ -51,6 +53,7 @@ class Usuarioseguimiento extends \yii\db\ActiveRecord
             'objetos_id' => 'Objetos ID',
             'usuario_id' => 'Usuario ID',
             'seguimiento_id' => 'Seguimiento ID',
+            'tipo' => 'Tipo',
         ];
     }
 

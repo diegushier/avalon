@@ -22,15 +22,15 @@ $back = "$('body').css('background-image', 'url( " . Yii::getAlias('@imgBackCine
          $(function () {
             $('[data-toggle=" . 'popover' . "]').popover()
           })
-        opc = ['#siguiendo', '#vista', '#pendiente'];
-        pos = ['angle-double-right', 'eye-slash', 'check']
+        opc = ['#siguiendo', '#vista', '#pendiente', '#no-vista'];
         opc.forEach(k => {
           $(k).click(() =>{
               $.ajax({
                   method: 'GET',
                   url: '" . $url . "',
                   data: {
-                      id: '' + " . $model->id . ",
+                      id: '" . $model->id . "',
+                      tipo: '" . $model->tipo . "',
                       seguimiento_id: $(k).attr('pos')
                   },
                   success:function() {

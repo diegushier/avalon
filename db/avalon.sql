@@ -165,6 +165,7 @@ CREATE TABLE usuarioSeguimiento
     ,   objetos_id      bigint          NOT NULL REFERENCES shows(id)
     ,   usuario_id      bigint          NOT NULL REFERENCES usuarios (id)
     ,   seguimiento_id  bigint          NOT NULL REFERENCES seguimiento (id)
+    ,   tipo            VARCHAR(10)     NOT NULL
 );
 
 INSERT INTO usuarioRol (nombre)
