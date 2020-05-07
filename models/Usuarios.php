@@ -138,6 +138,11 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->hasMany(Usuarioshows::className(), ['usuario_id' => 'id'])->inverseOf('usuario');
     }
 
+    public function getShows()
+    {
+        return $this->hasMany(Shows::className(), ['id' => 'objetos_id'])->via('usuarioshows');
+    }
+
     /**
      * Gets query for [[Usuariolibros]].
      *
@@ -146,6 +151,11 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     public function getUsuariolibros()
     {
         return $this->hasMany(Usuariolibros::className(), ['usuario_id' => 'id'])->inverseOf('usuario');
+    }
+
+    public function getLibros()
+    {
+        return $this->hasMany(Libros::className(), ['id' => 'libro_id'])->via('usuariolibros');
     }
 
     /**

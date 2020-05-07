@@ -5,6 +5,9 @@
 use yii\bootstrap4\Html;
 
 $this->title = 'Mi lista';
+$a = true;
+$b = true;
+$c = true;
 
 ?>
 
@@ -26,26 +29,127 @@ $this->title = 'Mi lista';
         ) ?>
     </div>
 
-    <?php Yii::debug($data) ?>
-    <div class="col-sm-12 col-lg-9">
-        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-            <?php foreach ($data as $k) : ?>
-                <div class="carousel-inner mt-2">
-                    <?php foreach ($k as $v) : ?>
-                        <div class="carousel-item">
-                            
-                            <img src="<?= Yii::getAlias('@imgCineUrl/' . $v->id . '.jpg') ?>" class="d-block w-100" alt="Un ejemplo">
-                        </div>
-                    <?php endforeach ?>
+    <div class="col-sm-12 col-lg-9 ">
+        <?php if (isset($libros)) : ?>
+            <div>
+                <h4>Tus libros......</h4>
+                <div id="carouselExampleControls" class="carousel slide w-100" style="height: 150px" data-ride="carousel">
+                    <div class="carousel-inner bg-dark">
+                        <?php foreach ($libros as $k) : ?>
+                            <?php if ($a) : ?>
+                                <div class="carousel-item active">
+                                    <?php $a = false ?>
+                                <?php else : ?>
+                                    <div class="carousel-item ">
+                                    <?php endif ?>
+                                    <?= Html::a(
+                                        '<img style="height: 150px" src="' . Yii::getAlias('@imgLibrosUrl/' . $k->id . '.jpg') . '" onerror="this.src = ' . Yii::getAlias('@imgUrl/notfound.png') . '" alt="Card image cap">',
+                                        ['/libros/view', 'id' => $k->id],
+                                    ) ?>
+                                    <?= Html::a(
+                                        '<img style="height: 150px" src="' . Yii::getAlias('@imgLibrosUrl/' . $k->id . '.jpg') . '" onerror="this.src = ' . Yii::getAlias('@imgUrl/notfound.png') . '" alt="Card image cap">',
+                                        ['/libros/view', 'id' => $k->id],
+                                    ) ?>
+                                    <?= Html::a(
+                                        '<img style="height: 150px" src="' . Yii::getAlias('@imgLibrosUrl/' . $k->id . '.jpg') . '" onerror="this.src = ' . Yii::getAlias('@imgUrl/notfound.png') . '" alt="Card image cap">',
+                                        ['/libros/view', 'id' => $k->id],
+                                    ) ?>
+                                    <?= Html::a(
+                                        '<img style="height: 150px" src="' . Yii::getAlias('@imgLibrosUrl/' . $k->id . '.jpg') . '" onerror="this.src = ' . Yii::getAlias('@imgUrl/notfound.png') . '" alt="Card image cap">',
+                                        ['/libros/view', 'id' => $k->id],
+                                    ) ?>
+                                    <?= Html::a(
+                                        '<img style="height: 150px" src="' . Yii::getAlias('@imgLibrosUrl/' . $k->id . '.jpg') . '" onerror="this.src = ' . Yii::getAlias('@imgUrl/notfound.png') . '" alt="Card image cap">',
+                                        ['/libros/view', 'id' => $k->id],
+                                    ) ?>
+                                    <?= Html::a(
+                                        '<img style="height: 150px" src="' . Yii::getAlias('@imgLibrosUrl/' . $k->id . '.jpg') . '" onerror="this.src = ' . Yii::getAlias('@imgUrl/notfound.png') . '" alt="Card image cap">',
+                                        ['/libros/view', 'id' => $k->id],
+                                    ) ?>
+                                    <?= Html::a(
+                                        '<img style="height: 150px" src="' . Yii::getAlias('@imgLibrosUrl/' . $k->id . '.jpg') . '" onerror="this.src = ' . Yii::getAlias('@imgUrl/notfound.png') . '" alt="Card image cap">',
+                                        ['/libros/view', 'id' => $k->id],
+                                    ) ?>
+
+                                    </div>
+                                <?php endforeach ?>
+                                </div>
+                    </div>
+                    <a class="carousel-control-prev text-black-50" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
-                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            <?php endforeach ?>
-        </div>
-    </div>
+            <?php endif ?>
+
+            <?php if (isset($cine)) : ?>
+                <div class="mt-2">
+
+                    <h4>Tus pelis......</h4>
+                    <div id="carouselExampleControls" class="carousel slide w-100" style="height: 150px" data-ride="carousel">
+                        <div class="carousel-inner bg-dark">
+                            <?php foreach ($cine as $k) : ?>
+                                <?php if ($b) : ?>
+                                    <div class="carousel-item active">
+                                        <?php $b = false ?>
+                                    <?php else : ?>
+                                        <div class="carousel-item ">
+                                        <?php endif ?>
+                                        <?= Html::a(
+                                            '<img style="height: 150px" src="' . Yii::getAlias('@imgCineUrl/' . $k->id . '.jpg') . '" onerror="this.src = ' . Yii::getAlias('@imgUrl/notfound.png') . '" alt="Card image cap">',
+                                            ['/shows/view', 'id' => $k->id],
+                                        ) ?>
+
+                                        </div>
+                                    <?php endforeach ?>
+                                    </div>
+                        </div>
+                        <a class="carousel-control-prev text-black-50" href="#carouselExampleControls" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                <?php endif ?>
+
+
+                <?php if (isset($serie)) : ?>
+                    <div class="mt-2">
+                        <h4>Tus series......</h4>
+                        <div id="carouselExampleControls" class="carousel slide w-100" style="height: 150px" data-ride="carousel">
+                            <div class="carousel-inner bg-dark">
+                                <?php foreach ($serie as $k) : ?>
+                                    <?php if ($c) : ?>
+                                        <div class="carousel-item active">
+                                            <?php $c = false ?>
+                                        <?php else : ?>
+                                            <div class="carousel-item ">
+                                            <?php endif ?>
+                                            <?= Html::a(
+                                                '<img style="height: 150px" src="' . Yii::getAlias('@imgCineUrl/' . $k->id . '.jpg') . '" onerror="this.src = ' . Yii::getAlias('@imgUrl/notfound.png') . '" alt="Card image cap">',
+                                                ['/shows/view', 'id' => $k->id],
+                                            ) ?>
+                                            </div>
+                                        <?php endforeach ?>
+                                        </div>
+                            </div>
+                            <a class="carousel-control-prev text-black-50" href="#carouselExampleControls" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    <?php endif ?>
+
+                    </div>
+                </div>

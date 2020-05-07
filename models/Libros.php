@@ -121,6 +121,16 @@ class Libros extends \yii\db\ActiveRecord
         return $this->hasOne(Paises::className(), ['id' => 'pais_id'])->inverseOf('libros');
     }
 
+    /**
+     * Gets query for [[Usuarioshows]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUsuariolibros()
+    {
+        return $this->hasMany(Usuariolibros::className(), ['libro_id' => 'id'])->inverseOf('usuariolibros');
+    }
+
     public function getCriticasWithUsers($sort = null)
     {
         return $this->getCriticas()->joinWith('usuario u')->orderBy(isset($sort) ? $sort->orders : 'id')->all();

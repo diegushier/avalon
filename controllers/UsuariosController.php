@@ -213,18 +213,18 @@ class UsuariosController extends Controller
     public function actionLista()
     {
         $model = Usuarios::findOne(Yii::$app->user->identity->id);
-        $modelSeguimmiento = $model->getUsuarioseguimientos()->all();
+        $shows = $model->getShows()->all();
+        $libro = $model->getLibros()->all();
 
+        $render = [
+            'model'  => $model,
+        ];
 
         $cine = [];
         $serie = [];
-        $libro = [];
 
-        foreach ($modelSeguimmiento as $k) {
+        foreach ($shows as $k) {
             switch ($k->tipo) {
-                case 'libro':
-                    array_push($libro, $k);
-                break;
                 case 'cine':
                     array_push($cine, $k);
                 break;
@@ -237,10 +237,19 @@ class UsuariosController extends Controller
             }
         }
 
-        $render = [
-            'model'  => $model,
-            'data' => $this->chech([$libro, $cine, $serie]),
-        ];
+        if ($libro) {
+            $render += ['libros' => $libro];
+        }
+
+        if (!empty($cine)) {
+            $render += ['cine' => $cine];
+        }
+
+        if (!empty($serie)) {
+            $render += ['serie' => $serie];
+        }
+
+        
 
         return $this->render('lista', $render);
     }

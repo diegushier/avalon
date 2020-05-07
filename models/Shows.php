@@ -12,6 +12,7 @@ use Yii;
  * @property int $productora_id
  * @property string $tipo
  * @property int $pais_id
+ * @property string|null $evento_id
  * @property string|null $fecha
  * @property string|null $sinopsis
  *
@@ -20,7 +21,7 @@ use Yii;
  * @property Reparto[] $repartos
  * @property Empresas $productora
  * @property Paises $pais
- * @property Usuarioseguimiento[] $usuarioseguimientos
+ * @property Usuarioshows[] $usuarioshows
  * @property Valoraciones[] $valoraciones
  */
 class Shows extends \yii\db\ActiveRecord
@@ -63,11 +64,11 @@ class Shows extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nombre' => 'Nombre',
-            'productora_id' => 'Productora',
+            'productora_id' => 'Productora ID',
             'tipo' => 'Tipo',
-            'pais_id' => 'Pais',
+            'pais_id' => 'Pais ID',
+            'evento_id' => 'Evento ID',
             'fecha' => 'Fecha',
-            'evento_id' => 'Evento',
             'sinopsis' => 'Sinopsis',
         ];
     }
@@ -82,11 +83,6 @@ class Shows extends \yii\db\ActiveRecord
         return $this->hasMany(Listacapitulos::className(), ['objetos_id' => 'id'])->inverseOf('objetos');
     }
 
-    public function getCapitulos()
-    {
-        return $this->hasMany(Capitulos::className(), ['id' => 'capitulo_id'])->via('listacapitulos');
-    }
-
     /**
      * Gets query for [[Listageneros]].
      *
@@ -95,11 +91,6 @@ class Shows extends \yii\db\ActiveRecord
     public function getListageneros()
     {
         return $this->hasMany(Listageneros::className(), ['objetos_id' => 'id'])->inverseOf('objetos');
-    }
-
-    public function getGeneros()
-    {
-        return $this->hasMany(Generos::className(), ['id' => 'genero_id'])->via('listageneros');
     }
 
     /**
@@ -133,13 +124,13 @@ class Shows extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Usuarioseguimientos]].
+     * Gets query for [[Usuarioshows]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUsuarioseguimientos()
+    public function getUsuarioshows()
     {
-        return $this->hasMany(Usuarioseguimiento::className(), ['objetos_id' => 'id'])->inverseOf('objetos');
+        return $this->hasMany(Usuarioshows::className(), ['objetos_id' => 'id'])->inverseOf('objetos');
     }
 
     /**
