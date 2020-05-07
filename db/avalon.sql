@@ -19,7 +19,8 @@ DROP TABLE IF EXISTS roles CASCADE;                             -- B C I
 DROP TABLE IF EXISTS usuarioRol CASCADE;                        -- B C I
 DROP TABLE IF EXISTS valoraciones CASCADE;                      -- B C I
 DROP TABLE IF EXISTS criticas CASCADE;                          -- B C I
-DROP TABLE IF EXISTS usuarioSeguimiento CASCADE;                -- B C I
+DROP TABLE IF EXISTS usuarioShows CASCADE;                      -- B C I
+DROP TABLE IF EXISTS usuarioLibros CASCADE;                     -- B C I
 DROP TABLE IF EXISTS seguimiento CASCADE;                       -- B C I
 
 CREATE TABLE usuarioRol
@@ -159,10 +160,19 @@ CREATE TABLE criticas
     ,   fecha           timestamp(0)    NOT NULL DEFAULT current_timestamp
 );
 
-CREATE TABLE usuarioSeguimiento
+CREATE TABLE usuarioShows
 (
         id              bigserial       PRIMARY KEY
     ,   objetos_id      bigint          NOT NULL REFERENCES shows(id)
+    ,   usuario_id      bigint          NOT NULL REFERENCES usuarios (id)
+    ,   seguimiento_id  bigint          NOT NULL REFERENCES seguimiento (id)
+    ,   tipo            VARCHAR(10)     NOT NULL
+);
+
+CREATE TABLE usuarioLibros
+(
+        id              bigserial       PRIMARY KEY
+    ,   libro_id        bigint          NOT NULL REFERENCES libros(id)
     ,   usuario_id      bigint          NOT NULL REFERENCES usuarios (id)
     ,   seguimiento_id  bigint          NOT NULL REFERENCES seguimiento (id)
     ,   tipo            VARCHAR(10)     NOT NULL

@@ -5,26 +5,26 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "usuarioseguimiento".
+ * This is the model class for table "usuariolibros".
  *
  * @property int $id
- * @property int $objetos_id
+ * @property int $libro_id
  * @property int $usuario_id
  * @property int $seguimiento_id
  * @property string $tipo
  *
+ * @property Libros $libro
  * @property Seguimiento $seguimiento
- * @property Shows $objetos
  * @property Usuarios $usuario
  */
-class Usuarioseguimiento extends \yii\db\ActiveRecord
+class Usuariolibros extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'usuarioseguimiento';
+        return 'usuariolibros';
     }
 
     /**
@@ -33,12 +33,12 @@ class Usuarioseguimiento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['objetos_id', 'usuario_id', 'seguimiento_id', 'tipo'], 'required'],
-            [['objetos_id', 'usuario_id', 'seguimiento_id'], 'default', 'value' => null],
-            [['objetos_id', 'usuario_id', 'seguimiento_id'], 'integer'],
+            [['libro_id', 'usuario_id', 'seguimiento_id', 'tipo'], 'required'],
+            [['libro_id', 'usuario_id', 'seguimiento_id'], 'default', 'value' => null],
+            [['libro_id', 'usuario_id', 'seguimiento_id'], 'integer'],
             [['tipo'], 'string', 'max' => 10],
+            [['libro_id'], 'exist', 'skipOnError' => true, 'targetClass' => Libros::className(), 'targetAttribute' => ['libro_id' => 'id']],
             [['seguimiento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Seguimiento::className(), 'targetAttribute' => ['seguimiento_id' => 'id']],
-            [['objetos_id'], 'exist', 'skipOnError' => true, 'targetClass' => Shows::className(), 'targetAttribute' => ['objetos_id' => 'id']],
             [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['usuario_id' => 'id']],
         ];
     }
@@ -50,11 +50,21 @@ class Usuarioseguimiento extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'objetos_id' => 'Objetos ID',
+            'libro_id' => 'Libro ID',
             'usuario_id' => 'Usuario ID',
             'seguimiento_id' => 'Seguimiento ID',
             'tipo' => 'Tipo',
         ];
+    }
+
+    /**
+     * Gets query for [[Libro]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLibro()
+    {
+        return $this->hasOne(Libros::className(), ['id' => 'libro_id'])->inverseOf('usuariolibros');
     }
 
     /**
@@ -64,17 +74,7 @@ class Usuarioseguimiento extends \yii\db\ActiveRecord
      */
     public function getSeguimiento()
     {
-        return $this->hasOne(Seguimiento::className(), ['id' => 'seguimiento_id'])->inverseOf('usuarioseguimientos');
-    }
-
-    /**
-     * Gets query for [[Objetos]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getObjetos()
-    {
-        return $this->hasOne(Shows::className(), ['id' => 'objetos_id'])->inverseOf('usuarioseguimientos');
+        return $this->hasOne(Seguimiento::className(), ['id' => 'seguimiento_id'])->inverseOf('usuariolibros');
     }
 
     /**
@@ -84,6 +84,6 @@ class Usuarioseguimiento extends \yii\db\ActiveRecord
      */
     public function getUsuario()
     {
-        return $this->hasOne(Usuarios::className(), ['id' => 'usuario_id'])->inverseOf('usuarioseguimientos');
+        return $this->hasOne(Usuarios::className(), ['id' => 'usuario_id'])->inverseOf('usuariolibros');
     }
 }

@@ -52,6 +52,13 @@ $this->registerJs($js);
                 'class' => 'btn btn-orange w-100 mt-1',
             ]
         ) ?>
+        <?= Html::a(
+            'Tu lista',
+            ['/usuarios/lista'],
+            [
+                'class' => 'btn btn-orange w-100 mt-1',
+            ]
+        ) ?>
     </div>
     <div class="col-sm-12 col-lg-9">
         <h3>Nuevos Estrenos....</h3>

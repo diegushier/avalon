@@ -4,8 +4,10 @@ namespace app\controllers;
 
 use app\models\Empresas;
 use app\models\ImageForm;
+use app\models\LibrosSearch;
 use app\models\Modificar;
 use app\models\Paises;
+use app\models\ShowsSearch;
 use app\models\Usuarios;
 use Yii;
 use yii\bootstrap4\ActiveForm;
@@ -151,7 +153,7 @@ class UsuariosController extends Controller
 
         $this->updatearClave($usuario, $params);
         $model->imagen = UploadedFile::getInstance($model, 'imagen');
-        
+
         if ($model->create($params)) {
             Yii::$app->session->setFlash('success', 'Se ha modificado correctamente.');
             return $this->goHome();
@@ -206,6 +208,52 @@ class UsuariosController extends Controller
         return $this->render('recuperar', [
             'model' => $model,
         ]);
+    }
+
+    public function actionLista()
+    {
+        $model = Usuarios::findOne(Yii::$app->user->identity->id);
+        $modelSeguimmiento = $model->getUsuarioseguimientos()->all();
+
+
+        $cine = [];
+        $serie = [];
+        $libro = [];
+
+        foreach ($modelSeguimmiento as $k) {
+            switch ($k->tipo) {
+                case 'libro':
+                    array_push($libro, $k);
+                break;
+                case 'cine':
+                    array_push($cine, $k);
+                break;
+                case 'serie':
+                    array_push($serie, $k);
+                    break;
+
+                default:
+                    continue 2;
+            }
+        }
+
+        $render = [
+            'model'  => $model,
+            'data' => $this->chech([$libro, $cine, $serie]),
+        ];
+
+        return $this->render('lista', $render);
+    }
+
+    protected function chech($data)
+    {
+        $result = [];
+        foreach ($data as $k) {
+            if (!empty($k)) {
+                $result[] = $k;
+            }
+        }
+        return $result;
     }
 
     /**

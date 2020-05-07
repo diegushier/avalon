@@ -10,6 +10,7 @@ use app\models\Shows;
 use app\models\ShowsSearch;
 use app\models\Usuarios;
 use app\models\Usuarioseguimiento;
+use app\models\Usuarioshows;
 use app\models\Valoraciones;
 use yii\data\Sort;
 use yii\web\UploadedFile;
@@ -199,7 +200,7 @@ class ShowsController extends Controller
 
     public function actionSeg($id, $tipo, $seguimiento_id)
     {
-        $model = Usuarioseguimiento::find()->where([
+        $model = Usuarioshows::find()->where([
             'objetos_id' => $id, 'usuario_id' => Yii::$app->user->id
         ])->one();
 
@@ -211,7 +212,7 @@ class ShowsController extends Controller
                 $model->delete();
             }
         } else {
-            $model = new Usuarioseguimiento();
+            $model = new Usuarioshows();
             $model->objetos_id = $id;
             $model->usuario_id = Yii::$app->user->id;
             $model->seguimiento_id = $seguimiento_id;

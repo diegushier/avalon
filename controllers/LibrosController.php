@@ -13,6 +13,7 @@ use app\models\LibrosSearch;
 use app\models\Paises;
 use app\models\Seguimiento;
 use app\models\Shows;
+use app\models\Usuariolibros;
 use app\models\Usuarios;
 use app\models\Usuarioseguimiento;
 use app\models\Valoraciones;
@@ -139,8 +140,8 @@ class LibrosController extends Controller
 
     public function actionSeg($id, $tipo, $seguimiento_id)
     {
-        $model = Usuarioseguimiento::find()
-            ->where(['objetos_id' => $id])
+        $model = Usuariolibros::find()
+            ->where(['libro_id' => $id])
             ->andWhere(['usuario_id' => Yii::$app->user->id])
             ->andWhere(['tipo' => $tipo])->one();
 
@@ -152,8 +153,8 @@ class LibrosController extends Controller
                 $model->delete();
             }
         } else {
-            $model = new Usuarioseguimiento();
-            $model->objetos_id = $id;
+            $model = new Usuariolibros();
+            $model->libro_id = $id;
             $model->usuario_id = Yii::$app->user->id;
             $model->seguimiento_id = $seguimiento_id;
             $model->tipo = $tipo;

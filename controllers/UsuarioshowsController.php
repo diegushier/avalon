@@ -3,7 +3,7 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Usuarioseguimiento;
+use app\models\Usuarioshows;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -11,7 +11,7 @@ use yii\filters\VerbFilter;
 /**
  * Implementa las acciones requeridas para el correcto funcionamiento del modelo UsuarioSeguimiento.
  */
-class UsuarioSguimientoController extends Controller
+class UsuarioshowsController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -33,7 +33,7 @@ class UsuarioSguimientoController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Usuarioseguimiento();
+        $model = new Usuarioshows();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -78,7 +78,7 @@ class UsuarioSguimientoController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = Usuarioseguimiento::findOne($id)) !== null) {
+        if (($model = Usuarioshows::findOne($id)) !== null) {
             return $model;
         }
 
