@@ -9,8 +9,42 @@ use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
 use yii\bootstrap4\Breadcrumbs;
 use app\assets\AppAsset;
+use yii\helpers\Url;
 
 AppAsset::register($this);
+$url = Url::to(['mensajes/checker']);
+$js = <<<EOT
+$.ajax({
+    method: 'GET',
+    url: '$url',
+    data: {},
+    success:function(data = null) {
+        if (data != null) {
+            $('#w1').append(
+                "<li class='nav-item'>"+
+                "<div class='btn-group'>"+
+                    "<button class='btn btn-secondary btn-sm dropdown-toggle' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+
+                        "<i class='fas fa-bullhorn'></i>"+
+                    "</button>"+
+                    "<div class='dropdown-menu' id='notif'>"+
+
+                    "</div>"+
+                "</div>"+
+                "</li>");
+
+            $.each(data, (k, v) => {
+                $('#notif').append(
+                    "<a href='index.php?r=libros%2Fview&id="+ v['libro_id'] +"'>"+v['mensaje']+"</a>"
+                )
+            })
+        }
+    },
+    error: () => {
+    }
+})
+EOT;
+
+$this->registerJs($js);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

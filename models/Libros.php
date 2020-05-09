@@ -140,4 +140,9 @@ class Libros extends \yii\db\ActiveRecord
     {
         return $this->getCriticas()->select('COUNT (valoracion) AS suma, SUM (valoracion) AS total')->where('libro_id = ' . $libro_id)->one();
     }
+
+    public function getMenajes()
+    {
+        return $this->hasOne(Menajes::className(), ['id' => 'libro_id'])->inverseOf('libros');
+    }
 }

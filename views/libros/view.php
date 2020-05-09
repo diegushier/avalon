@@ -37,6 +37,18 @@ $back = "$('body').css('background-image', 'url( " . Yii::getAlias('@imgBackLibr
                     error: () => {
                     }
                 })
+
+                $.ajax({
+                    method: 'GET',
+                    url: '" . Url::to(['mensajes/create']) . "',
+                    data: {
+                        libro: '' + " . $model->id . "
+                    },
+                    success:function() {
+                    },
+                    error: () => {
+                    }
+                })
             })
           })";
 
