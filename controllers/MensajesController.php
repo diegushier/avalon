@@ -25,13 +25,14 @@ class MensajesController extends Controller
         ];
     }
 
-    public function actionCreate($libro)
+    public function actionCreate($libro_id)
     {
         $model = new Menajes();
+        $libro = Libros::findOne($libro_id);
         $user = Yii::$app->user->identity->id;
-        $mensaje = 'Queda poco para el estreno de este libro.';
+        $mensaje = 'Estreno: ' . $libro->nombre . ' ' . $libro->fecha;
 
-        $model->libro_id = $libro;
+        $model->libro_id = $libro_id;
         $model->user_id = $user;
         $model->mensaje = $mensaje;
 

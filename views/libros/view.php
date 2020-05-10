@@ -42,7 +42,7 @@ $back = "$('body').css('background-image', 'url( " . Yii::getAlias('@imgBackLibr
                     method: 'GET',
                     url: '" . Url::to(['mensajes/create']) . "',
                     data: {
-                        libro: '' + " . $model->id . "
+                        libro_id: '' + " . $model->id . "
                     },
                     success:function() {
                     },

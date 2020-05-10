@@ -283,6 +283,16 @@ class LibrosController extends Controller
             $calendar->delete($model->evento_id);
         }
 
+        $userlibros = $model->getUsuariolibros();
+        if ($userlibros) {
+            $userlibros->delete();
+        }
+
+        $criticas = $model->getCriticas();
+        if ($criticas) {
+            $criticas->delete();
+        }
+
         $imagen = new ImageForm();
         $imagen->delete($model->id, 'libro');
         $model->delete();

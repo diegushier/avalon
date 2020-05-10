@@ -27,18 +27,17 @@ $.ajax({
             $(id).append(
                 "<li class='nav-item'>"+
                 "<div class='btn-group'>"+
-                    "<button class='btn btn-secondary btn-sm dropdown-toggle' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+
+                    "<button class='btn btn-secondary btn-sm dropdown-toggle' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>"+
                         "<i class='fas fa-bullhorn'></i>"+
                     "</button>"+
-                    "<div class='dropdown-menu' id='notif'>"+
-
+                    "<div class='dropdown-menu' style='width: 200px;' id='notif'>"+
                     "</div>"+
                 "</div>"+
                 "</li>");
 
             $.each(data, (k, v) => {
                 $('#notif').append(
-                    "<a class='btn btn-primary' href='index.php?r=libros%2Fview&id="+ v['libro_id'] +"'>"+v['mensaje']+"</a>"
+                    "<a class='p-1 a-links' style='font-size: 10px' href='index.php?r=libros%2Fview&id="+ v['libro_id'] +"'>"+v['mensaje']+"</a>"
                 )
             })
 
@@ -51,6 +50,7 @@ EOT;
 
 if (isset(Yii::$app->user->identity)) {
     $this->registerJs($js);
+    $this->registerCss('.a-links:hover { text-decoration: none; }');
 }
 ?>
 <?php $this->beginPage() ?>
