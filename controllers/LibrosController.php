@@ -283,21 +283,25 @@ class LibrosController extends Controller
             $calendar->delete($model->evento_id);
         }
 
-        $userlibros = $model->getUsuariolibros();
-        if ($userlibros) {
-            $userlibros->delete();
-        }
-
-        $criticas = $model->getCriticas();
-        if ($criticas) {
-            $criticas->delete();
-        }
+        $this->deleteAlters($model->getCriticas());
+        $this->deleteAlters($model->getMenajes());
+        $this->deleteAlters($model->getUsuariolibros());
+        
 
         $imagen = new ImageForm();
         $imagen->delete($model->id, 'libro');
         $model->delete();
 
         return $this->redirect(['index']);
+    }
+
+    protected function deleteAlters($data)
+    {
+        if (isset($data)) {
+            foreach ($data as $k) {
+                $k->delete();
+            }
+        }
     }
 
     /**
