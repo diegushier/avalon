@@ -12,7 +12,7 @@ use app\assets\AppAsset;
 use yii\helpers\Url;
 
 AppAsset::register($this);
-$url = Url::to(['mensajes/checker']);
+$url = Url::to(['notificacioneslibros/checker']);
 $js = <<<EOT
 
 ref = window.location.href;

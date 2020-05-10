@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "menajes".
+ * This is the model class for table "notificacioneslibros".
  *
  * @property int $id
  * @property int $user_id
@@ -15,14 +15,14 @@ use Yii;
  * @property Libros $libro
  * @property Usuarios $user
  */
-class Menajes extends \yii\db\ActiveRecord
+class Notificacioneslibros extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'menajes';
+        return 'notificacioneslibros';
     }
 
     /**
@@ -60,7 +60,7 @@ class Menajes extends \yii\db\ActiveRecord
      */
     public function getLibro()
     {
-        return $this->hasOne(Libros::className(), ['id' => 'libro_id'])->inverseOf('menajes');
+        return $this->hasOne(Libros::className(), ['id' => 'libro_id'])->inverseOf('notificacioneslibros');
     }
 
     /**
@@ -70,6 +70,6 @@ class Menajes extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(Usuarios::className(), ['id' => 'user_id'])->inverseOf('menajes');
+        return $this->hasOne(Usuarios::className(), ['id' => 'user_id'])->inverseOf('notificacioneslibros');
     }
 }

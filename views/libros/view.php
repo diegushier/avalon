@@ -40,7 +40,7 @@ $back = "$('body').css('background-image', 'url( " . Yii::getAlias('@imgBackLibr
 
                 $.ajax({
                     method: 'GET',
-                    url: '" . Url::to(['mensajes/create']) . "',
+                    url: '" . Url::to(['notificacioneslibros/create']) . "',
                     data: {
                         libro_id: '' + " . $model->id . "
                     },

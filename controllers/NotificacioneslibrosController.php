@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Libros;
 use app\models\Menajes;
+use app\models\Notificacioneslibros;
 use DateTime;
 use Yii;
 use yii\web\Controller;
@@ -11,7 +12,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 
-class MensajesController extends Controller
+class NotificacioneslibrosController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -27,7 +28,7 @@ class MensajesController extends Controller
 
     public function actionCreate($libro_id)
     {
-        $model = new Menajes();
+        $model = new Notificacioneslibros();
         $libro = Libros::findOne($libro_id);
         $user = Yii::$app->user->identity->id;
         $mensaje = 'Estreno: ' . $libro->nombre . ' ' . $libro->fecha;
@@ -42,7 +43,7 @@ class MensajesController extends Controller
     public function actionChecker()
     {
         $date = date('Y-m-d', strtotime('+1 week'));
-        $data = Menajes::find()->joinWith('libro l')->where('user_id = ' . Yii::$app->user->identity->id)->andWhere(['=', 'fecha', $date])->all();
+        $data = Notificacioneslibros::find()->joinWith('libro l')->where('user_id = ' . Yii::$app->user->identity->id)->andWhere(['=', 'fecha', $date])->all();
         Yii::$app->response->format = Response::FORMAT_JSON;
         if (!empty($data)) {
             return $data;
@@ -65,7 +66,7 @@ class MensajesController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = Menajes::findOne($id)) !== null) {
+        if (($model = Notificacioneslibros::findOne($id)) !== null) {
             return $model;
         }
 

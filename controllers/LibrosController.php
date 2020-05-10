@@ -11,12 +11,8 @@ use Yii;
 use app\models\Libros;
 use app\models\LibrosSearch;
 use app\models\Paises;
-use app\models\Seguimiento;
-use app\models\Shows;
 use app\models\Usuariolibros;
 use app\models\Usuarios;
-use app\models\Usuarioseguimiento;
-use app\models\Valoraciones;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -278,16 +274,16 @@ class LibrosController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
+        
+        $this->deleteAlters($model->getCriticas());
+        $this->deleteAlters($model->getNotificacioneslibros());
+        $this->deleteAlters($model->getUsuariolibros());
+        
         if (isset($model->evento_id)) {
             $calendar = new Calendar();
             $calendar->delete($model->evento_id);
         }
-
-        $this->deleteAlters($model->getCriticas());
-        $this->deleteAlters($model->getMenajes());
-        $this->deleteAlters($model->getUsuariolibros());
         
-
         $imagen = new ImageForm();
         $imagen->delete($model->id, 'libro');
         $model->delete();
@@ -297,7 +293,7 @@ class LibrosController extends Controller
 
     protected function deleteAlters($data)
     {
-        if (isset($data)) {
+        if ($data) {
             foreach ($data as $k) {
                 $k->delete();
             }
