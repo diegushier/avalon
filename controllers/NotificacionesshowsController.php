@@ -3,14 +3,15 @@
 namespace app\controllers;
 
 use app\models\Libros;
-use app\models\Notificacioneslibros;
+use app\models\Notificacionesshows;
+use app\models\Shows;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 
-class NotificacioneslibrosController extends Controller
+class NotificacionesshowsController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -24,24 +25,31 @@ class NotificacioneslibrosController extends Controller
         ];
     }
 
-    public function actionCreate($libro_id)
+    public function actionCreate($show_id)
     {
-        $model = new Notificacioneslibros();
-        $libro = Libros::findOne($libro_id);
+        $model = new Notificacionesshows();
+        $show = Shows::findOne($show_id);
         $user = Yii::$app->user->identity->id;
-        $mensaje = 'Estreno: ' . $libro->nombre . ' ' . $libro->fecha;
+        $mensaje = 'Estreno: ' . $show->nombre . ' ' . $show->fecha;
 
-        $model->libro_id = $libro_id;
+
+        $model->show_id = $show_id;
         $model->user_id = $user;
         $model->mensaje = $mensaje;
 
-        $model->save();
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        if ($model->save()) {
+            return true;
+        }
+
+        return false;
     }
 
     public function actionChecker()
     {
         $date = date('Y-m-d', strtotime('+1 week'));
-        $data = Notificacioneslibros::find()->joinWith('libro l')->where('user_id = ' . Yii::$app->user->identity->id)->andWhere(['=', 'fecha', $date])->all();
+        $data = Notificacionesshows::find()->joinWith('show l')->where('user_id = ' . Yii::$app->user->identity->id)->andWhere(['=', 'fecha', $date])->all();
         Yii::$app->response->format = Response::FORMAT_JSON;
         if (!empty($data)) {
             return $data;
@@ -64,7 +72,7 @@ class NotificacioneslibrosController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = Notificacioneslibros::findOne($id)) !== null) {
+        if (($model = Notificacionesshows::findOne($id)) !== null) {
             return $model;
         }
 

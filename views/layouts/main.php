@@ -12,7 +12,8 @@ use app\assets\AppAsset;
 use yii\helpers\Url;
 
 AppAsset::register($this);
-$url = Url::to(['notificacioneslibros/checker']);
+$urllibros = Url::to(['notificacioneslibros/checker']);
+$urlshows = Url::to(['notificacionesshows/checker']);
 $js = <<<EOT
 
 ref = window.location.href;
@@ -20,12 +21,12 @@ site = ['libros', 'shows']
 id = ref.includes('libros') ? '#w2' : ref.includes('shows') ? '#w2' : '#w1'
 $.ajax({
     method: 'GET',
-    url: '$url',
+    url: '$urllibros',
     data: {},
     success:function(data = null) {
         if (data != null) {
             $(id).append(
-                "<li class='nav-item'>"+
+                "<li class='nav-item'  id='output-notif'>"+
                 "<div class='btn-group'>"+
                     "<button class='btn btn-secondary btn-sm dropdown-toggle' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>"+
                         "<i class='fas fa-bullhorn'></i>"+
@@ -38,6 +39,37 @@ $.ajax({
             $.each(data, (k, v) => {
                 $('#notif').append(
                     "<a class='p-1 a-links' style='font-size: 10px' href='index.php?r=libros%2Fview&id="+ v['libro_id'] +"'>"+v['mensaje']+"</a>"
+                )
+            })
+
+        }
+    },
+    error: () => {
+    }
+})
+
+$.ajax({
+    method: 'GET',
+    url: '$urlshows',
+    data: {},
+    success:function(data = null) {
+        if (data != null) {
+            if ($('#output-notif').length == 0){
+                $(id).append(
+                    "<li class='nav-item' id='output-notif'>"+
+                    "<div class='btn-group'>"+
+                        "<button class='btn btn-secondary btn-sm dropdown-toggle' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>"+
+                            "<i class='fas fa-bullhorn'></i>"+
+                        "</button>"+
+                        "<div class='dropdown-menu' style='width: 200px;' id='notif'>"+
+                        "</div>"+
+                    "</div>"+
+                    "</li>");
+            }
+
+            $.each(data, (k, v) => {
+                $('#notif').append(
+                    "<a class='p-1 a-links' style='font-size: 10px' href='index.php?r=shows%2Fview&id="+ v['show_id'] +"'>"+v['mensaje']+"</a>"
                 )
             })
 

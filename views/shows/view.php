@@ -39,6 +39,19 @@ $back = "$('body').css('background-image', 'url( " . Yii::getAlias('@imgBackCine
                     error: () => {
                     }
                 })
+
+                $.ajax({
+                    method: 'GET',
+                    url: '" . Url::to(['notificacionesshows/create']) . "',
+                    data: {
+                        show_id: '' + " . $model->id . "
+                    },
+                    success:function(data) {
+                        console.log(data)
+                    },
+                    error: () => {
+                    }
+                })
             })
         })";
 

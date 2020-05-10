@@ -195,7 +195,7 @@ CREATE TABLE notificacionesShows
 (
         id              bigserial       PRIMARY KEY
     ,   user_id         bigint          NOT NULL REFERENCES usuarios(id)
-    ,   show_id         bigint          NOT NULL REFERENCES libros(id)
+    ,   show_id         bigint          NOT NULL REFERENCES shows(id)
     ,   mensaje         text            NOT NULL
 );
 

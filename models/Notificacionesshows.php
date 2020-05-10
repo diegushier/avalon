@@ -35,7 +35,7 @@ class Notificacionesshows extends \yii\db\ActiveRecord
             [['user_id', 'show_id'], 'default', 'value' => null],
             [['user_id', 'show_id'], 'integer'],
             [['mensaje'], 'string'],
-            [['show_id'], 'exist', 'skipOnError' => true, 'targetClass' => Libros::className(), 'targetAttribute' => ['show_id' => 'id']],
+            [['show_id'], 'exist', 'skipOnError' => true, 'targetClass' => Shows::className(), 'targetAttribute' => ['show_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -60,7 +60,7 @@ class Notificacionesshows extends \yii\db\ActiveRecord
      */
     public function getShow()
     {
-        return $this->hasOne(Libros::className(), ['id' => 'show_id'])->inverseOf('notificacionesshows');
+        return $this->hasOne(Shows::className(), ['id' => 'show_id'])->inverseOf('notificacionesshows');
     }
 
     /**

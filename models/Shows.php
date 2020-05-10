@@ -133,6 +133,11 @@ class Shows extends \yii\db\ActiveRecord
         return $this->hasMany(Usuarioshows::className(), ['objetos_id' => 'id'])->inverseOf('objetos');
     }
 
+    public function getGeneros()
+    {
+        return $this->hasMany(Generos::className(), ['id' => 'genero_id'])->via('listageneros');
+    }
+
     /**
      * Gets query for [[Valoraciones]].
      *
@@ -151,5 +156,10 @@ class Shows extends \yii\db\ActiveRecord
     public function getMedia($show_id)
     {
         return $this->getValoraciones()->select('COUNT (valoracion) AS suma, SUM (valoracion) AS total')->where('objetos_id = ' . $show_id)->one();
+    }
+
+    public function getNotificacionesshows()
+    {
+        return $this->hasOne(Notificacionesshows::className(), ['id' => 'libro_id'])->inverseOf('shows');
     }
 }
