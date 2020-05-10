@@ -14,13 +14,17 @@ use yii\helpers\Url;
 AppAsset::register($this);
 $url = Url::to(['mensajes/checker']);
 $js = <<<EOT
+
+ref = window.location.href;
+site = ['libros', 'shows']
+id = ref.includes('libros') ? '#w2' : ref.includes('shows') ? '#w2' : '#w1'
 $.ajax({
     method: 'GET',
     url: '$url',
     data: {},
     success:function(data = null) {
         if (data != null) {
-            $('#w1').append(
+            $(id).append(
                 "<li class='nav-item'>"+
                 "<div class='btn-group'>"+
                     "<button class='btn btn-secondary btn-sm dropdown-toggle' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+
@@ -34,9 +38,10 @@ $.ajax({
 
             $.each(data, (k, v) => {
                 $('#notif').append(
-                    "<a href='index.php?r=libros%2Fview&id="+ v['libro_id'] +"'>"+v['mensaje']+"</a>"
+                    "<a class='btn btn-primary' href='index.php?r=libros%2Fview&id="+ v['libro_id'] +"'>"+v['mensaje']+"</a>"
                 )
             })
+
         }
     },
     error: () => {
@@ -44,7 +49,9 @@ $.ajax({
 })
 EOT;
 
-$this->registerJs($js);
+if (isset(Yii::$app->user->identity)) {
+    $this->registerJs($js);
+}
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

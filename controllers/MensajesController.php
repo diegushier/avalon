@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Libros;
 use app\models\Menajes;
+use DateTime;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -39,8 +40,8 @@ class MensajesController extends Controller
 
     public function actionChecker()
     {
-        $date = date('Y-m-d');
-        $data = Menajes::find()->joinWith('libro l')->where('user_id = ' . Yii::$app->user->identity->id)->all();
+        $date = date('Y-m-d', strtotime('+1 week'));
+        $data = Menajes::find()->joinWith('libro l')->where('user_id = ' . Yii::$app->user->identity->id)->andWhere(['=', 'fecha', $date])->all();
         Yii::$app->response->format = Response::FORMAT_JSON;
         if (!empty($data)) {
             return $data;
