@@ -55,11 +55,30 @@ class SeguidoresController extends Controller
     public function actionView($id = null)
     {
         $user_id = $id === null ? Yii::$app->user->identity-> id : $id;
-        $model = Seguidores::find()->where(['user_id' => $user_id])->all();
-
+        $model = Seguidores::find()->where(['user_id' => $user_id])->joinWith('seguidor s')->all();
+        $lista = Seguidores::find()->select('seguidor_id')->where(['user_id' => $id])->all();
         return $this->render('view', [
             'model' => $model,
-            'id' => $user_id
+            'id' => $user_id,
+            'lista' => $lista,
+        ]);
+    }
+
+    /**
+     * Displays a single Seguidores model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionSiguiendo($id = null)
+    {
+        $seguidor_id = $id === null ? Yii::$app->user->identity->id : $id;
+        $model = Seguidores::find()->where(['seguidor_id' => $seguidor_id])->joinWith('seguidor s')->all();
+        $lista = Seguidores::find()->select('user_id')->where(['seguidor_id' => $id])->all();
+        return $this->render('siguiendo', [
+            'model' => $model,
+            'id' => $seguidor_id,
+            'lista' => $lista,
         ]);
     }
 

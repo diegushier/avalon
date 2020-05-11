@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Seguidores */
 
-$this->title = 'Seguidores';
+$this->title = 'Siguiendo';
 \yii\web\YiiAsset::register($this);
 
 $urlGet = Url::to(['seguidores/checker']);
@@ -52,9 +52,9 @@ check()
 EOT;
 
 ?>
-<div class="seguidores-view container">
+<div class="seguidores-siguiendo container">
 
-    <h3>Seguidores:</h3>
+    <h3>Siguiendo:</h3>
     <?= Html::a(
         '<i class="fas fa-angle-left"></i> Volver',
         ['usuarios/view', 'id' => $id],
@@ -66,8 +66,8 @@ EOT;
             <?php foreach ($model as $k) : ?>
                 <li class="list-group-item">           
                     <?= Html::a(
-                        $k->seguidor->nickname,
-                        ['usuarios/view', 'id' => $k->seguidor->id],
+                        $k->user->nickname,
+                        ['usuarios/view', 'id' => $k->user->id],
                         ['class' => 'btn btn-light']
                     ) ?>
 

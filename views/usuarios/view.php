@@ -78,26 +78,30 @@ $this->registerJs($js);
             <img src="<?= Yii::getAlias('@imgUserUrl/' . $model->id . '.jpg') ?>" class="mt-3 ml-1 mb-3 mr-3 p-1 w-100 shadow" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'">
             <div class="row">
                 <?php if (Yii::$app->user->identity->id === $model->id) : ?>
+                    <button class="btn btn-dark col-lg-5 ml-lg-3 mb-lg-1" id="follow"></button>
+
                     <?= Html::a(
-                        '<i class="fas fa-cog"></i>',
-                        ['/usuarios/modify'],
+                        'Seguidores',
+                        ['/seguidores/view'],
                         [
-                            'class' => 'btn btn-orange col-lg-2 ml-lg-3 mb-sm-2',
+                            'class' => 'btn btn-dark col-lg-5 mb-lg-1 ml-lg-1',
                         ]
                     ) ?>
-                    <button type="button" class="btn btn-danger col-lg-2 ml-lg-1 mb-sm-2" data-toggle="modal" data-target="#borrarUsuario">
-                        <i class="fa fa-times"></i>
-                    </button>
                 <?php else : ?>
-                    <button class="btn btn-dark col-lg-5 ml-lg-3 mb-sm-2" id="follow"></button>
+                    <?= Html::a(
+                        'Seguidores',
+                        ['/seguidores/view'],
+                        [
+                            'class' => 'btn btn-dark col-lg-5 ml-lg-1',
+                        ]
+                    ) ?>
                 <?php endif ?>
 
-
                 <?= Html::a(
-                    'Seguidores',
-                    ['/seguidores/view'],
+                    'Siguiendo',
+                    ['/seguidores/siguiendo'],
                     [
-                        'class' => 'btn btn-dark col-lg-5 ml-lg-1',
+                        'class' => 'btn btn-dark col-lg-10 ml-lg-3',
                     ]
                 ) ?>
             </div>
@@ -137,7 +141,22 @@ $this->registerJs($js);
 
         <div class="col-lg-7 col-sm-12 mt-3">
             <table class="table">
-                <h4>Usuario:</h4>
+                <div class="row">
+                    <h4 class="col-lg-4">Usuario:</h4>
+
+                    <?php if (Yii::$app->user->identity->id === $model->id) : ?>
+                        <?= Html::a(
+                            '<i class="fas fa-cog"></i>',
+                            ['/usuarios/modify'],
+                            [
+                                'class' => 'btn btn-orange col-lg-1 ml-1 mb-1',
+                            ]
+                        ) ?>
+                        <button type="button" class="btn btn-danger col-lg-1 ml-1 mb-1" data-toggle="modal" data-target="#borrarUsuario">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    <?php endif ?>
+                </div>
 
                 <tbody>
                     <tr>

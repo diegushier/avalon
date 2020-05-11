@@ -58,17 +58,13 @@ class UsuariosController extends Controller
         $render = [
             'model' => $model,
             'pais' => $pais,
-
         ];
 
         $empresa = $model->getEmpresas()->one();
         if ($empresa) {
             $emp_pais = Paises::lista()[$empresa->pais_id];
-            $render[] += [
-                'empresa' => $empresa,
-                'pais' => $pais,
-                'emp_pais' => $emp_pais,
-            ];
+            $render += ['empresa' => $empresa];
+            $render += ['emp_pais' => $emp_pais];
         }
         return $this->render('view', $render);
     }
