@@ -50,10 +50,14 @@ class SeguidoresController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView($id = null)
     {
+        $user_id = $id === null ? Yii::$app->user->identity-> id : $id;
+        $model = Seguidores::find()->where(['user_id' => $user_id])->all();
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'id' => $user_id
         ]);
     }
 

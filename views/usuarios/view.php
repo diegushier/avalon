@@ -30,17 +30,26 @@ $this->title = $model->nickname;
     <div class="row col-lg-8 col-sm-12">
 
         <div class="col-lg-4 col-sm-12">
-            <img src="<?= Yii::getAlias('@imgUserUrl/' . $model->id . '.jpg') ?>" class="m-3 p-1 w-100 shadow" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'">
-            <?= Html::a(
-                '&#x2699',
-                ['/usuarios/modify'],
-                [
-                    'class' => 'btn btn-orange m-3',
-                ]
-            ) ?>
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#borrarUsuario">
-                Eliminar
-            </button>
+            <img src="<?= Yii::getAlias('@imgUserUrl/' . $model->id . '.jpg') ?>" class="mt-3 ml-1 mb-3 mr-3 p-1 w-100 shadow" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'">
+            <div class="row">
+                <?= Html::a(
+                    '<i class="fas fa-cog"></i>',
+                    ['/usuarios/modify'],
+                    [
+                        'class' => 'btn btn-orange col-lg-2 ml-3',
+                    ]
+                ) ?>
+                <button type="button" class="btn btn-danger col-lg-2 ml-1" data-toggle="modal" data-target="#borrarUsuario">
+                    <i class="fa fa-times"></i>
+                </button>
+                <?= Html::a(
+                    'Seguidores',
+                    ['/seguidores/view'],
+                    [
+                        'class' => 'btn btn-dark col-lg-5 ml-1',
+                    ]
+                ) ?>
+            </div>
             <div class="modal fade" id="borrarUsuario" tabindex="-1" role="dialog" aria-labelledby="borrarUsuarioCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -94,7 +103,7 @@ $this->title = $model->nickname;
                     </tr>
                     <tr>
                         <td>Auntenticado</td>
-                        <th><?= $clave ? Html::label('Si', null, ['style' => 'color: green']) : Html::label('No', null, ['style' => 'color:red']) ?></th>
+                        <th><?= $clave ? Html::label('<i class="fas fa-check"></i>', null, ['style' => 'color: green']) : Html::label('<i class="fas fa-times"></i>', null, ['style' => 'color:red']) ?></th>
                     </tr>
                 </tbody>
 
