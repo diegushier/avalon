@@ -83,6 +83,8 @@ class SeguidoresController extends Controller
     {
         $model = Seguidores::find()->where(['user_id' => $id])->andWhere(['seguidor_id' => $user_id])->one();
         if (!$model) {
+            $model->delete();
+        } else {
             $model = new Seguidores();
             $model->user_id = $id;
             $model->seguidor_id = $user_id;
