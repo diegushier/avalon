@@ -6,9 +6,54 @@
 
 use yii\bootstrap4\Html as Bootstrap4Html;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 $clave = $model->clave === null;
 $this->title = $model->nickname;
+
+$urlGet = Url::to(['seguidores/checker']);
+$urlSet = Url::to(['seguidores/follow']);
+$id = $model->id;
+$user_id = Yii::$app->user->identity->id;
+
+$js = <<<EOT
+function check(){
+    $.ajax({
+        method: 'GET',
+        url: "$urlGet",
+        data: {
+            id: "$id",
+            seguidor: "$user_id",
+        },
+        success:function(data) {
+            if (data) {
+                $('#follow').html('No seguir');
+            } else {
+                $('#follow').html('Seguir');
+            }
+    
+        },  
+    })
+}
+
+$('#follow').click(() => {
+    $.ajax({
+        method: 'GET',
+        url: "$urlSet",
+        data: {
+            id: "$id",
+            user_id : "$user_id"
+        },
+        success:function() {
+            check()
+        },  
+    })
+})
+
+check()
+EOT;
+
+$this->registerJs($js);
 ?>
 <div class="site-view row m-auto">
     <div class="col-sm-12 col-lg-2 border-right">
@@ -32,21 +77,27 @@ $this->title = $model->nickname;
         <div class="col-lg-4 col-sm-12">
             <img src="<?= Yii::getAlias('@imgUserUrl/' . $model->id . '.jpg') ?>" class="mt-3 ml-1 mb-3 mr-3 p-1 w-100 shadow" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'">
             <div class="row">
-                <?= Html::a(
-                    '<i class="fas fa-cog"></i>',
-                    ['/usuarios/modify'],
-                    [
-                        'class' => 'btn btn-orange col-lg-2 ml-3',
-                    ]
-                ) ?>
-                <button type="button" class="btn btn-danger col-lg-2 ml-1" data-toggle="modal" data-target="#borrarUsuario">
-                    <i class="fa fa-times"></i>
-                </button>
+                <?php if (Yii::$app->user->identity->id === $model->id) : ?>
+                    <?= Html::a(
+                        '<i class="fas fa-cog"></i>',
+                        ['/usuarios/modify'],
+                        [
+                            'class' => 'btn btn-orange col-lg-2 ml-lg-3 mb-sm-2',
+                        ]
+                    ) ?>
+                    <button type="button" class="btn btn-danger col-lg-2 ml-lg-1 mb-sm-2" data-toggle="modal" data-target="#borrarUsuario">
+                        <i class="fa fa-times"></i>
+                    </button>
+                <?php else : ?>
+                    <button class="btn btn-dark col-lg-5 ml-lg-3 mb-sm-2" id="follow"></button>
+                <?php endif ?>
+
+
                 <?= Html::a(
                     'Seguidores',
                     ['/seguidores/view'],
                     [
-                        'class' => 'btn btn-dark col-lg-5 ml-1',
+                        'class' => 'btn btn-dark col-lg-5 ml-lg-1',
                     ]
                 ) ?>
             </div>

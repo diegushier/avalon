@@ -46,18 +46,31 @@ class UsuariosController extends Controller
     /**
      * Vista del usuario Logueado.
      */
-    public function actionView()
+    public function actionView($id = null)
     {
-        $model = Yii::$app->user->identity;
+        if ($id === null) {
+            $model = Yii::$app->user->identity;
+        } else {
+            $model = Usuarios::find()->where(['id' => $id])->one();
+        }
+        
         $pais = Paises::lista()[$model->pais_id];
-        $empresa = $model->getEmpresas()->one();
-        $emp_pais = Paises::lista()[$empresa->pais_id];
-        return $this->render('view', [
+        $render = [
             'model' => $model,
-            'empresa' => $empresa,
             'pais' => $pais,
-            'emp_pais' => $emp_pais,
-        ]);
+
+        ];
+
+        $empresa = $model->getEmpresas()->one();
+        if ($empresa) {
+            $emp_pais = Paises::lista()[$empresa->pais_id];
+            $render[] += [
+                'empresa' => $empresa,
+                'pais' => $pais,
+                'emp_pais' => $emp_pais,
+            ];
+        }
+        return $this->render('view', $render);
     }
 
     /**
@@ -227,7 +240,7 @@ class UsuariosController extends Controller
             switch ($k->tipo) {
                 case 'cine':
                     array_push($cine, $k);
-                break;
+                    break;
                 case 'serie':
                     array_push($serie, $k);
                     break;
@@ -249,7 +262,7 @@ class UsuariosController extends Controller
             $render += ['serie' => $serie];
         }
 
-        
+
 
         return $this->render('lista', $render);
     }

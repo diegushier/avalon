@@ -5,9 +5,11 @@ namespace app\controllers;
 use Yii;
 use app\models\Seguidores;
 use app\models\SeguidoresSearch;
+use app\models\Seguimiento;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * SeguidoresController implements the CRUD actions for Seguidores model.
@@ -61,56 +63,32 @@ class SeguidoresController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new Seguidores model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
+    public function actionChecker($id, $seguidor)
     {
-        $model = new Seguidores();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $data = false;
+        $model = Seguidores::find()
+                ->where(['user_id' => $id])
+                ->andWhere(['seguidor_id' => $seguidor])
+                ->one();
+        
+        if ($model) {
+            $data = true;
         }
+        Yii::$app->response->format = Response::FORMAT_JSON;
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        return $data;
     }
 
-    /**
-     * Updates an existing Seguidores model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
+    public function actionFollow($id, $user_id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $model = Seguidores::find()->where(['user_id' => $id])->andWhere(['seguidor_id' => $user_id])->one();
+        if (!$model) {
+            $model = new Seguidores();
+            $model->user_id = $id;
+            $model->seguidor_id = $user_id;
+            
+            $model->save();
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing Seguidores model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**
