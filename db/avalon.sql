@@ -23,10 +23,11 @@ DROP TABLE IF EXISTS usuarioShows CASCADE;                      -- B C I
 DROP TABLE IF EXISTS usuarioLibros CASCADE;                     -- B C I
 DROP TABLE IF EXISTS seguimiento CASCADE;                       -- B C I
 DROP TABLE IF EXISTS menajes CASCADE;                           -- B C I
-DROP TABLE IF EXISTS notifiacionesLibros CASCADE;               -- B C I
-DROP TABLE IF EXISTS notifiacionesShows CASCADE;                -- B C I
 DROP TABLE IF EXISTS notificacionesLibros CASCADE;                -- B C I
-DROP TABLE IF EXISTS notificacionesShows CASCADE;                -- B C I
+DROP TABLE IF EXISTS notificacionesShows CASCADE;               -- B C I
+DROP TABLE IF EXISTS seguidores CASCADE;                        -- B C I
+
+
 
 CREATE TABLE usuarioRol
 (
@@ -196,6 +197,14 @@ CREATE TABLE notificacionesShows
         id              bigserial       PRIMARY KEY
     ,   user_id         bigint          NOT NULL REFERENCES usuarios(id)
     ,   show_id         bigint          NOT NULL REFERENCES shows(id)
+    ,   mensaje         text            NOT NULL
+);
+
+CREATE TABLE seguidores
+(
+        id              bigserial       PRIMARY KEY
+    ,   user_id         bigint          NOT NULL REFERENCES usuarios(id)
+    ,   seguidor_id     bigint          NOT NULL REFERENCES usuarios(id)
     ,   mensaje         text            NOT NULL
 );
 
