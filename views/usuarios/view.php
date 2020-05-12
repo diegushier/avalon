@@ -13,6 +13,7 @@ $this->title = $model->nickname;
 
 $urlGet = Url::to(['seguidores/checker']);
 $urlSet = Url::to(['seguidores/follow']);
+$urlBlock = Url::to(['seguidores/block']);
 $id = $model->id;
 $user_id = Yii::$app->user->identity->id;
 
@@ -28,13 +29,36 @@ function check(){
         success:function(data) {
             if (data) {
                 $('#follow').html('No seguir');
+            } else if (data === null) {
+                $('#follow').remove();
             } else {
                 $('#follow').html('Seguir');
             }
     
+            if (data === null) {
+                $('#block').html('Desbloquear')
+            } else {
+                $('#block').html('Bloquear')
+            }
         },  
     })
 }
+
+// Evento, si el usuario target bloquea al usuario actual, redirigir al index.
+
+$('#block').click(() => {
+    $.ajax({
+        method: 'GET',
+        url: "$urlBlock",
+        data: {
+            id: "$id",
+            user_id : "$user_id"
+        },
+        success:function() {
+            check()
+        },  
+    })
+})
 
 $('#follow').click(() => {
     $.ajax({
@@ -77,7 +101,7 @@ $this->registerJs($js);
         <div class="col-lg-4 col-sm-12">
             <img src="<?= Yii::getAlias('@imgUserUrl/' . $model->id . '.jpg') ?>" class="mt-3 ml-1 mb-3 mr-3 p-1 w-100 shadow" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'">
             <div class="row">
-                <?php if (Yii::$app->user->identity->id === $model->id) : ?>
+                <?php if (Yii::$app->user->identity->id !== $model->id) : ?>
                     <button class="btn btn-dark col-lg-5 ml-lg-3 mb-lg-1" id="follow"></button>
 
                     <?= Html::a(
@@ -87,23 +111,30 @@ $this->registerJs($js);
                             'class' => 'btn btn-dark col-lg-5 mb-lg-1 ml-lg-1',
                         ]
                     ) ?>
+                    <?= Html::a(
+                        'Siguiendo',
+                        ['/seguidores/siguiendo'],
+                        [
+                            'class' => 'btn btn-dark col-lg-10 ml-lg-3',
+                        ]
+                    ) ?>
                 <?php else : ?>
                     <?= Html::a(
                         'Seguidores',
                         ['/seguidores/view'],
                         [
-                            'class' => 'btn btn-dark col-lg-5 ml-lg-1',
+                            'class' => 'btn btn-dark col-lg-5 ml-lg-3',
+                        ]
+                    ) ?>
+                    <?= Html::a(
+                        'Siguiendo',
+                        ['/seguidores/siguiendo'],
+                        [
+                            'class' => 'btn btn-dark col-lg-5 ml-lg-2',
                         ]
                     ) ?>
                 <?php endif ?>
 
-                <?= Html::a(
-                    'Siguiendo',
-                    ['/seguidores/siguiendo'],
-                    [
-                        'class' => 'btn btn-dark col-lg-10 ml-lg-3',
-                    ]
-                ) ?>
             </div>
             <div class="modal fade" id="borrarUsuario" tabindex="-1" role="dialog" aria-labelledby="borrarUsuarioCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -154,6 +185,9 @@ $this->registerJs($js);
                         ) ?>
                         <button type="button" class="btn btn-danger col-lg-1 ml-1 mb-1" data-toggle="modal" data-target="#borrarUsuario">
                             <i class="fa fa-times"></i>
+                        </button>
+                    <?php else : ?>
+                        <button type="button" class="btn btn-danger ml-1 mb-1" id="block">
                         </button>
                     <?php endif ?>
                 </div>

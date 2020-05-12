@@ -205,6 +205,7 @@ CREATE TABLE seguidores
         id              bigserial       PRIMARY KEY
     ,   user_id         bigint          NOT NULL REFERENCES usuarios(id)
     ,   seguidor_id     bigint          NOT NULL REFERENCES usuarios(id)
+    ,   bloqueado       boolean 
 );
 
 INSERT INTO usuarioRol (nombre)

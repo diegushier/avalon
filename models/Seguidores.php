@@ -10,6 +10,7 @@ use Yii;
  * @property int $id
  * @property int $user_id
  * @property int $seguidor_id
+ * @property bool|null $bloqueado
  *
  * @property Usuarios $user
  * @property Usuarios $seguidor
@@ -33,6 +34,7 @@ class Seguidores extends \yii\db\ActiveRecord
             [['user_id', 'seguidor_id'], 'required'],
             [['user_id', 'seguidor_id'], 'default', 'value' => null],
             [['user_id', 'seguidor_id'], 'integer'],
+            [['bloqueado'], 'boolean'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['user_id' => 'id']],
             [['seguidor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['seguidor_id' => 'id']],
         ];
@@ -47,6 +49,7 @@ class Seguidores extends \yii\db\ActiveRecord
             'id' => 'ID',
             'user_id' => 'User ID',
             'seguidor_id' => 'Seguidor ID',
+            'bloqueado' => 'Bloqueado',
         ];
     }
 

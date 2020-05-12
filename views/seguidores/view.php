@@ -26,7 +26,9 @@ function check(){
         success:function(data) {
             if (data) {
                 $('#follow').html('No seguir');
-            } else {
+            } elseif (data === null) {
+                $('#follow').remove();
+            } else {    
                 $('#follow').html('Seguir');
             }
     

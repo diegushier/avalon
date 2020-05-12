@@ -31,30 +31,16 @@ class SeguidoresController extends Controller
         ];
     }
 
-    /**
-     * Lists all Seguidores models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new SeguidoresSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
 
     /**
-     * Displays a single Seguidores model.
-     * @param integer $id
+     * Muestra los usuarios que siguen al usuario target
+     *
+     * @param int $id
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id = null)
     {
-        $user_id = $id === null ? Yii::$app->user->identity-> id : $id;
+        $user_id = $id === null ? Yii::$app->user->identity->id : $id;
         $model = Seguidores::find()->where(['user_id' => $user_id])->joinWith('seguidor s')->all();
         $lista = Seguidores::find()->select('seguidor_id')->where(['user_id' => $id])->all();
         return $this->render('view', [
@@ -65,10 +51,10 @@ class SeguidoresController extends Controller
     }
 
     /**
-     * Displays a single Seguidores model.
-     * @param integer $id
+     * Muestra los usuarios a los que sigue el usuario target
+     *
+     * @param int $id
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionSiguiendo($id = null)
     {
@@ -82,32 +68,72 @@ class SeguidoresController extends Controller
         ]);
     }
 
+    /**
+     * Comprueba si el usuario actual esta siguiendo o no al usuario target
+     *
+     * @param int $id usuario target
+     * @param int $seguidor usuario actual
+     * @return boolean
+     */
     public function actionChecker($id, $seguidor)
     {
         $data = false;
         $model = Seguidores::find()
-                ->where(['user_id' => $id])
-                ->andWhere(['seguidor_id' => $seguidor])
-                ->one();
-        
-        if ($model) {
+            ->where(['user_id' => $id])
+            ->andWhere(['seguidor_id' => $seguidor])
+            ->one();
+
+        if ($model && $model->bloqueado === true) {
+            $data = null;
+        } elseif ($model) {
             $data = true;
         }
+
         Yii::$app->response->format = Response::FORMAT_JSON;
 
         return $data;
     }
 
+    /**
+     * Bloquea o desbloquea al usuario target se seguir al usuario actual.
+     * @param int $id usuario target
+     * @param int $seguidor usuario actual
+     */
+    public function actionBlock($id, $user_id)
+    {
+        $model = Seguidores::find()->where(['user_id' => $id])->andWhere(['seguidor_id' => $user_id])->one();
+        if ($model) {
+            if ($model->bloqueado === true) {
+                $model->bloqueado = null;
+            } else {
+                $model->bloqueado = true;
+            }
+            
+            $model->save();
+        }
+    }
+
+    /**
+     * Seguie o deja de seguir al usuario target
+     *
+     * @param int $id usuario target
+     * @param int $user_id usuario actual
+     * @return render view
+     */
     public function actionFollow($id, $user_id)
     {
         $model = Seguidores::find()->where(['user_id' => $id])->andWhere(['seguidor_id' => $user_id])->one();
+        if ($model && $model->bloqueado === null) {
+            return $this->render('site/index');
+        }
+
         if (!$model) {
             $model->delete();
         } else {
             $model = new Seguidores();
             $model->user_id = $id;
             $model->seguidor_id = $user_id;
-            
+
             $model->save();
         }
     }
