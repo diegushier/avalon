@@ -281,12 +281,7 @@ class ShowsController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        $imagen->delete($model->id);
-
-        if (isset($model->evento_id)) {
-            $calendar = new Calendar();
-            $calendar->delete($model->evento_id);
-        }
+        $imagen->delete($model->id, 'cine');
 
         $generos = $model->getListageneros()->all();
         foreach ($generos as $generos) {
@@ -296,6 +291,16 @@ class ShowsController extends Controller
         $reparto = $model->getRepartos()->all();
         foreach ($reparto as $reparto) {
             $reparto->delete();
+        }
+
+        $valoraciones = $model->getValoraciones()->all();
+        foreach ($valoraciones as $valoraciones) {
+            $valoraciones->delete();
+        }
+
+        if (isset($model->evento_id)) {
+            $calendar = new Calendar();
+            $calendar->delete($model->evento_id);
         }
 
         if (!$model->delete()) {

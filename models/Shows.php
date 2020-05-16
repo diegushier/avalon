@@ -138,6 +138,11 @@ class Shows extends \yii\db\ActiveRecord
         return $this->hasMany(Generos::className(), ['id' => 'genero_id'])->via('listageneros');
     }
 
+    public function getCapitulos()
+    {
+        return $this->hasMany(Capitulos::className(), ['id' => 'capitulo_id'])->via('listacapitulos');
+    }
+
     /**
      * Gets query for [[Valoraciones]].
      *
