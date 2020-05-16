@@ -295,7 +295,7 @@ $this->registerCssFile('@web/css/comentario.css');
                                                 <i>
                                                     <?= Html::a(
                                                         '',
-                                                        ['/criticas/delete', 'id' => $k->id, 'objeto' => $model->id],
+                                                        ['/valoraciones/delete', 'id' => $k->id, 'objeto' => $model->id],
                                                         ['class' => 'fa fa-times text-danger',  'data' => [
                                                             'method' => 'post',
                                                         ],]

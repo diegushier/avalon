@@ -30,21 +30,6 @@ class ValoracionesController extends Controller
     }
 
     /**
-     * Lists all Valoraciones models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new ValoracionesSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
      * Displays a single Valoraciones model.
      * @param integer $id
      * @return mixed
