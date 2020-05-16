@@ -129,7 +129,10 @@ class ShowsController extends Controller
 
 
         $criticas = $model->getCriticasWithUsers($sort);
-        $comented = Valoraciones::find()->where('usuario_id = ' . Yii::$app->user->id . 'and id = ' . $model->id)->one();
+        $comented = Valoraciones::find()
+            ->where(['usuario_id' => Yii::$app->user->id])
+            ->andWhere(['objetos_id' => $model->id])
+            ->one();
 
         $render = [
             'model' => $model,

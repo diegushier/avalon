@@ -102,9 +102,13 @@ class LibrosController extends Controller
 
 
         $criticas = $model->getCriticasWithUsers($sort);
-        $comented = Criticas::find()->where('usuario_id =' . Yii::$app->user->id . 'and id = ' . $model->id)->one();
+        $comented = Criticas::find()
+            ->where(['usuario_id' => Yii::$app->user->id])
+            ->andWhere(['libro_id' => $model->id])
+            ->one();
 
         $this->newComment(Yii::$app->request->post());
+        
         $render = [
             'model' => $model,
             'autor' => $autor->nombre,
@@ -274,16 +278,16 @@ class LibrosController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        
+
         $this->deleteAlters($model->getCriticas());
         $this->deleteAlters($model->getNotificacioneslibros());
         $this->deleteAlters($model->getUsuariolibros());
-        
+
         if (isset($model->evento_id)) {
             $calendar = new Calendar();
             $calendar->delete($model->evento_id);
         }
-        
+
         $imagen = new ImageForm();
         $imagen->delete($model->id, 'libro');
         $model->delete();
