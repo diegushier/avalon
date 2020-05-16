@@ -64,107 +64,132 @@ class Shows extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nombre' => 'Nombre',
-            'productora_id' => 'Productora ID',
+            'productora_id' => 'Productora',
             'tipo' => 'Tipo',
-            'pais_id' => 'Pais ID',
-            'evento_id' => 'Evento ID',
+            'pais_id' => 'Pais',
+            'evento_id' => 'Evento',
             'fecha' => 'Fecha',
             'sinopsis' => 'Sinopsis',
         ];
     }
 
-    /**
-     * Gets query for [[Listacapitulos]].
-     *
-     * @return \yii\db\ActiveQuery
+    /*
+     * Obtiene una consulta de los capitulos asociados al modelo
+     * 
+     * @return \yii\db\ActiveQuery 
      */
     public function getListacapitulos()
     {
         return $this->hasMany(Listacapitulos::className(), ['objetos_id' => 'id'])->inverseOf('objetos');
     }
 
-    /**
-     * Gets query for [[Listageneros]].
-     *
-     * @return \yii\db\ActiveQuery
+    /*
+     * Obtiene una consulta de los generos por id asociados al modelo
+     * 
+     * @return \yii\db\ActiveQuery 
      */
     public function getListageneros()
     {
         return $this->hasMany(Listageneros::className(), ['objetos_id' => 'id'])->inverseOf('objetos');
     }
 
-    /**
-     * Gets query for [[Repartos]].
-     *
-     * @return \yii\db\ActiveQuery
+    /*
+     * Obtiene una consulta de los participantes asociados al modelo
+     * 
+     * @return \yii\db\ActiveQuery 
      */
     public function getRepartos()
     {
         return $this->hasMany(Reparto::className(), ['objetos_id' => 'id'])->inverseOf('objetos');
     }
 
-    /**
-     * Gets query for [[Productora]].
-     *
-     * @return \yii\db\ActiveQuery
+    /*
+     * Obtiene una consulta de la empresa asociada al modelo
+     * 
+     * @return \yii\db\ActiveQuery 
      */
     public function getProductora()
     {
         return $this->hasOne(Empresas::className(), ['id' => 'productora_id'])->inverseOf('shows');
     }
 
-    /**
-     * Gets query for [[Pais]].
-     *
-     * @return \yii\db\ActiveQuery
+    /*
+     * Obtiene una consulta de los paises asociados al modelo
+     * 
+     * @return \yii\db\ActiveQuery 
      */
     public function getPais()
     {
         return $this->hasOne(Paises::className(), ['id' => 'pais_id'])->inverseOf('shows');
     }
 
-    /**
-     * Gets query for [[Usuarioshows]].
-     *
-     * @return \yii\db\ActiveQuery
+    /*
+     * Obtiene una consulta de la asociación de usuarios y shows asociados al modelo
+     * 
+     * @return \yii\db\ActiveQuery 
      */
     public function getUsuarioshows()
     {
         return $this->hasMany(Usuarioshows::className(), ['objetos_id' => 'id'])->inverseOf('objetos');
     }
 
+    /*
+     * Obtiene una consulta de los generos asociados al modelo
+     * 
+     * @return \yii\db\ActiveQuery 
+     */
     public function getGeneros()
     {
         return $this->hasMany(Generos::className(), ['id' => 'genero_id'])->via('listageneros');
     }
 
+    /*
+     * Obtiene una consulta de los capitulos asociados al modelo
+     * 
+     * @return \yii\db\ActiveQuery 
+     */
     public function getCapitulos()
     {
         return $this->hasMany(Capitulos::className(), ['id' => 'capitulo_id'])->via('listacapitulos');
     }
 
-    /**
-     * Gets query for [[Valoraciones]].
-     *
-     * @return \yii\db\ActiveQuery
+    /*
+     * Obtiene una consulta de las valoraciones asociadas al modelo
+     * 
+     * @return \yii\db\ActiveQuery 
      */
     public function getValoraciones()
     {
         return $this->hasMany(Valoraciones::className(), ['objetos_id' => 'id'])->inverseOf('objetos');
     }
 
+    /*
+     * Obtiene una consulta de las valoraciones con usuarios asociadas al modelo
+     * 
+     * @return \yii\db\ActiveQuery 
+     */
     public function getCriticasWithUsers($sort = null)
     {
         return $this->getValoraciones()->joinWith('usuario u')->orderBy(isset($sort) ? $sort->orders : 'id')->all();
     }
 
+    /*
+     * Obtiene una consulta de la media de valoraciones asociadas al modelo
+     * 
+     * @return \yii\db\ActiveQuery 
+     */
     public function getMedia($show_id)
     {
         return $this->getValoraciones()->select('COUNT (valoracion) AS suma, SUM (valoracion) AS total')->where('objetos_id = ' . $show_id)->one();
     }
 
+    /*
+     * Obtiene una consulta de las notificaciones asociadas al modelo
+     * 
+     * @return \yii\db\ActiveQuery 
+     */
     public function getNotificacionesshows()
     {
-        return $this->hasOne(Notificacionesshows::className(), ['id' => 'libro_id'])->inverseOf('shows');
+        return $this->hasOne(Notificacionesshows::className(), ['show_id' => 'id'])->inverseOf('shows');
     }
 }
