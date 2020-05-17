@@ -13,27 +13,7 @@ $this->registerCssFile('@web/js/packages/daygrid/main.css');
 $this->registerJsFile('@web/js/packages/core/main.js');
 $this->registerJsFile('@web/js/packages/daygrid/main.js');
 $this->registerJsFile('@web/js/packages/google-calendar/main.js');
-
-$js = "
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            plugins: [ 'dayGrid', 'googleCalendar' ],
-            googleCalendarApiKey: '" . getenv('apikey') . "',
-            events: {
-                googleCalendarId: '" . getenv('calendarId') . "'
-            },
-            eventClick: function(info) {
-                info.jsEvent.preventDefault(); // don't let the browser navigate
-            
-                if (info.event.url) {
-                    //do nothing
-                }
-              }
-        });
-        calendar.render();
-";
-
-$this->registerJs($js);
+$this->registerJsFile('@web/js/googlecalendar.js');
 ?>
 
 <div class="site-index row m-auto">
