@@ -82,15 +82,15 @@ $this->registerJs($js);
 <div class="site-view row m-auto">
     <div class="col-sm-12 col-lg-2 border-right">
         <?= Html::a(
-            'Calendario',
+            'Prox. lanzamientos',
             ['/site/index'],
             [
                 'class' => 'btn btn-orange w-100',
             ]
         ) ?>
         <?= Html::a(
-            'Perfil',
-            ['/usuarios/view'],
+            'Tu lista',
+            ['/usuarios/lista'],
             [
                 'class' => 'btn btn-orange w-100 mt-1',
             ]

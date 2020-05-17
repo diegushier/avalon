@@ -19,13 +19,6 @@ $this->registerJsFile('@web/js/googlecalendar.js');
 <div class="site-index row m-auto">
     <div class="col-sm-12 col-lg-2 border-right">
         <?= Html::a(
-            'Próximos lanzamientos',
-            ['/site/index'],
-            [
-                'class' => 'btn btn-orange w-100',
-            ]
-        ) ?>
-        <?= Html::a(
             'Perfil',
             ['/usuarios/view'],
             [
