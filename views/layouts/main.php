@@ -144,12 +144,12 @@ if (isset(Yii::$app->user->identity)) {
             <?= $content ?>
         </div>
     </div>
-
+<!-- 
     <footer class="footer bg-dark">
         <div class="container">
             <p class="float-left">&copy; Proyecto Final Integrado Avalon <?= date('Y') ?></p>
         </div>
-    </footer>
+    </footer> -->
 
     <?php $this->endBody() ?>
 </body>
