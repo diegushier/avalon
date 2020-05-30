@@ -222,45 +222,47 @@ class UsuariosController extends Controller
     public function actionLista()
     {
         $model = Usuarios::findOne(Yii::$app->user->identity->id);
-        $shows = $model->getShows()->all();
-        $libro = $model->getLibros()->all();
+        $showsVistos = $this->getSeg('show', $model, 3);
+        $libroVistos = $this->getSeg('libros', $model, 3);
+        $showsSeg = $this->getSeg('show', $model, 2);
+        $libroSeg = $this->getSeg('libros', $model, 2);
 
         $render = [
             'model'  => $model,
         ];
 
-        $cine = [];
-        $serie = [];
-
-        foreach ($shows as $k) {
-            switch ($k->tipo) {
-                case 'cine':
-                    array_push($cine, $k);
-                    break;
-                case 'serie':
-                    array_push($serie, $k);
-                    break;
-
-                default:
-                    continue 2;
-            }
+        if ($libroVistos) {
+            $render += ['librosVisto' => $libroVistos];
         }
 
-        if ($libro) {
-            $render += ['libros' => $libro];
+        if ($libroSeg) {
+            $render += ['librosSeg' => $libroSeg];
         }
 
-        if (!empty($cine)) {
-            $render += ['cine' => $cine];
+        if ($showsVistos) {
+            $render += ['showVistos' => $showsVistos];
         }
 
-        if (!empty($serie)) {
-            $render += ['serie' => $serie];
+        if ($showsSeg) {
+            $render += ['showSeg' => $showsSeg];
         }
-
-
 
         return $this->render('lista', $render);
+    }
+
+    protected function getSeg($tipo, $model, $seg_id)
+    {
+        if ($tipo === 'show') {
+            return $model->getUsuarioshows()
+                ->joinWith('objetos')
+                ->where(['seguimiento_id' => $seg_id])
+                ->all();
+        } else {
+            return $model->getUsuariolibros()
+                ->joinWith('libro')
+                ->where(['seguimiento_id' => $seg_id])
+                ->all();
+        }
     }
 
     protected function chech($data)
