@@ -104,6 +104,16 @@ class Shows extends \yii\db\ActiveRecord
     }
 
     /*
+     * Obtiene una consulta de los datos de los participantes asociados al modelo
+     * 
+     * @return \yii\db\ActiveQuery 
+     */
+    public function getIntegrante()
+    {
+        return $this->hasMany(Integrantes::className(), ['id' => 'integrante_id'])->via('repartos');
+    }
+
+    /*
      * Obtiene una consulta de la empresa asociada al modelo
      * 
      * @return \yii\db\ActiveQuery 

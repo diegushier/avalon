@@ -3,12 +3,11 @@
 namespace app\controllers;
 
 use app\models\Empresas;
-use app\models\ImageForm;
-use app\models\LibrosSearch;
 use app\models\Modificar;
 use app\models\Paises;
-use app\models\ShowsSearch;
+use app\models\Usuariolibros;
 use app\models\Usuarios;
+use app\models\Usuarioshows;
 use Yii;
 use yii\bootstrap4\ActiveForm;
 use yii\filters\AccessControl;
@@ -53,7 +52,7 @@ class UsuariosController extends Controller
         } else {
             $model = Usuarios::find()->where(['id' => $id])->one();
         }
-        
+
         $pais = Paises::lista()[$model->pais_id];
         $render = [
             'model' => $model,
@@ -213,7 +212,6 @@ class UsuariosController extends Controller
             $model = new Usuarios();
         }
 
-
         return $this->render('recuperar', [
             'model' => $model,
         ]);
@@ -221,48 +219,49 @@ class UsuariosController extends Controller
 
     public function actionLista()
     {
-        $model = Usuarios::findOne(Yii::$app->user->identity->id);
-        $showsVistos = $this->getSeg('show', $model, 3);
-        $libroVistos = $this->getSeg('libros', $model, 3);
-        $showsSeg = $this->getSeg('show', $model, 2);
-        $libroSeg = $this->getSeg('libros', $model, 2);
+        $model = Yii::$app->user->identity->id;
+
+        $show = Usuarioshows::find()
+            ->where(['usuario_id' => $model])
+            ->joinWith(['objetos o', 'objetos.integrante oi', 'objetos.productora op']);
+        $libro = Usuariolibros::find()
+            ->where(['usuario_id' => $model])
+            ->joinWith(['libro l', 'libro.autor la', 'libro.editorial le']);
 
         $render = [
             'model'  => $model,
         ];
 
-        if ($libroVistos) {
-            $render += ['librosVisto' => $libroVistos];
+        if (Yii::$app->request->get()) {
+            $dataName = Yii::$app->request->get('dataName', '');
+            $age = Yii::$app->request->get('age', '');
+
+            $show->where(['ilike', 'o.nombre', $dataName]);
+            $libro->where(['ilike', 'l.nombre', $dataName]);
+
+            $show->where(['oi.nombre' => $dataName]);
+            $libro->where(['la.nombre' => $dataName]);
+
+            $show->where(['ilike', 'op.nombre', $dataName]);
+            $libro->where(['ilike', 'le.nombre', $dataName]);
+
+
+            $render += [
+                'dataName' => $dataName,
+                'age' => $age,
+            ];
         }
 
-        if ($libroSeg) {
-            $render += ['librosSeg' => $libroSeg];
+        if ($libro) {
+            $render += ['libro' => $libro->all()];
         }
 
-        if ($showsVistos) {
-            $render += ['showVistos' => $showsVistos];
+        if ($show) {
+            $render += ['show' => $show->all()];
         }
 
-        if ($showsSeg) {
-            $render += ['showSeg' => $showsSeg];
-        }
 
         return $this->render('lista', $render);
-    }
-
-    protected function getSeg($tipo, $model, $seg_id)
-    {
-        if ($tipo === 'show') {
-            return $model->getUsuarioshows()
-                ->joinWith('objetos')
-                ->where(['seguimiento_id' => $seg_id])
-                ->all();
-        } else {
-            return $model->getUsuariolibros()
-                ->joinWith('libro')
-                ->where(['seguimiento_id' => $seg_id])
-                ->all();
-        }
     }
 
     protected function chech($data)

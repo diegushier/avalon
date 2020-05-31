@@ -3,28 +3,33 @@
 /* @var $this yii\web\View */
 
 use Symfony\Component\VarDumper\VarDumper;
+use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
+use yii\helpers\Json;
+use yii\helpers\Url;
 
 $this->title = 'Mi lista';
 $a = true;
 $b = true;
 $c = true;
 
+$aux = null;
+
 $js = <<<EOT
-$('#seguimiento').fadeOut(0);
-$('#vistos').fadeIn(1000);
 
-$("#list-1-list").click(() => {
-    $('#seguimiento').fadeOut(0);
-    $('#vistos').fadeIn(1000);
-})
+contador = 1990;
+date = new Date();
+date = date.getFullYear();
 
-$("#list-2-list").click(() => {
-    $('#vistos').fadeOut(0);
-    $('#seguimiento').show(1000);
-})
+while(contador <= date) {
+    $('#age').append('<option value="'+contador+'">'+contador+'</option>')
+    contador++
+}
 
+console.log($age);
+console.log('$dataName');
 EOT;
+
 
 $css = '
     .alert-own {
@@ -42,151 +47,110 @@ $this->registerCss($css);
 
 <div class="site-index row m-auto">
     <div class="col-sm-12 col-lg-2 border-right">
-        <div>
-            <?= Html::a(
-                'Calendario',
-                ['/site/index'],
-                [
-                    'class' => 'btn btn-orange w-100',
-                ]
-            ) ?>
-            <?= Html::a(
-                'Perfil',
-                ['/usuarios/view'],
-                [
-                    'class' => 'btn btn-orange w-100 mt-1',
-                ]
-            ) ?>
-        </div>
+
+        <?= Html::a(
+            'Calendario',
+            ['/site/index'],
+            [
+                'class' => 'btn btn-orange w-100',
+            ]
+        ) ?>
+        <?= Html::a(
+            'Perfil',
+            ['/usuarios/view'],
+            [
+                'class' => 'btn btn-orange w-100 mt-1 mb-2',
+            ]
+        ) ?>
+        <br>
+        <br>
         <br>
 
-        <div class="list-group" id="list-tab" role="tablist">
-            <?php if (isset($librosVisto) || isset($showVisto)) : ?>
-                <a class="list-group-item list-group-item-action active" id="list-1-list" data-toggle="list" href="#vistos" role="tab" aria-controls="home">Vistos</a>
-            <?php endif ?>
-            <?php if (isset($librosVisto) || isset($showVisto)) : ?>
-                <a class="list-group-item list-group-item-action" id="list-2-list" data-toggle="list" href="#seguimiento" role="tab" aria-controls="profile">Siguiendo</a>
-            <?php endif ?>
+        <?php $form = ActiveForm::begin([
+            'action' => ['usuarios/lista'],
+            'method' => 'get',
+        ]); ?>
+        <div class="form-group">
+            <?= Html::textInput(
+                'dataName',
+                $dataName,
+                ['class' =>  'form-control', 'value' => '', 'placeholder' => 'Palabra clave...', 'id' =>  'dataName']
+            ) ?>
+
+            <?= Html::dropDownList(
+                'age',
+                $age,
+                ['Año'],
+                ['id' => 'age', 'class' => 'form-control mt-2']
+            ) ?>
         </div>
+
+
+        <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary w-100']) ?>
+
+        <?php ActiveForm::end(); ?>
+
     </div>
 
-    <div class="col-sm-12 col-lg-9 ">
-        <?php if (!(isset($librosVisto) || isset($librosSeg) || isset($showVisto) || isset($showSeg))) : ?>
+    <div class="col-sm-12 col-lg-8 ">
+        <?php if (!(isset($libro) || isset($show))) : ?>
             <div class="alert alert-own">
                 No estas siguiendo nada ni has visto nada aun...
             </div>
         <?php endif ?>
 
         <div class="tab-content" id="nav-tabContent">
-            <?php if (isset($librosVisto) || isset($showVisto)) : ?>
-                <div class="tab-pane fade show active" id="vistos" role="tabpanel" aria-labelledby="list-1-list">
-                    <?php if (isset($librosVisto)) : ?>
-                        <div>
-                            <h4>Tus libros: </h4>
-                            <hr>
-                            <div class="row">
-                                <?php foreach ($librosVisto as $k) : ?>
-                                    <div class="card col-md-2 border-0">
-                                        <img class="card-img-top mw-100 mh-100" src="<?= Yii::getAlias('@imgLibrosUrl/' . $k->libro->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'" alt="Card image cap">
+            <div class="tab-pane fade show active" id="vistos" role="tabpanel" aria-labelledby="list-1-list">
+                <?php if (isset($libro)) : ?>
+                    <div>
+                        <h4>Tus libros: </h4>
+                        <hr>
+                        <div class="row">
+                            <?php foreach ($libro as $k) : ?>
+                                <div class="card col-md-2 border-0">
+                                    <img class="card-img-top mw-100 mh-100" src="<?= Yii::getAlias('@imgLibrosUrl/' . $k->libro->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'" alt="Card image cap">
 
-                                        <div class="card-img-overlay card-body d-flex flex-column">
-                                            <?= Html::a(
-                                                $k->libro->nombre,
-                                                ['libros/view', 'id' => $k->libro->id],
-                                                [
-                                                    'class' => 'btn btn-dark btn-block mt-auto card-text  text-light',
-                                                    'style' => 'font-size: 8px;'
-                                                ]
-                                            ) ?>
-                                        </div>
+                                    <div class="card-img-overlay card-body d-flex flex-column">
+                                        <?= Html::a(
+                                            $k->libro->nombre,
+                                            ['libros/view', 'id' => $k->libro->id],
+                                            [
+                                                'class' => 'btn btn-dark btn-block mt-auto card-text  text-light',
+                                                'style' => 'font-size: 8px;'
+                                            ]
+                                        ) ?>
                                     </div>
-                                <?php endforeach ?>
-                            </div>
+                                </div>
+                            <?php endforeach ?>
                         </div>
-                    <?php endif ?>
+                    </div>
+                <?php endif ?>
 
-                    <?php if (isset($showVisto)) : ?>
-                        <br><br>
-                        <div>
-                            <h4>Tu cine y series: </h4>
-                            <hr>
-                            <div class="row">
-                                <?php foreach ($showVisto as $k) : ?>
-                                    <div class="card col-md-2 border-0">
-                                        <img class="card-img-top mw-100 mh-100" src="<?= Yii::getAlias('@imgCineUrl/' . $k->objetos->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'" alt="Card image cap">
+                <?php if (isset($show)) : ?>
+                    <br><br>
+                    <div>
+                        <h4>Tu cine y series: </h4>
+                        <hr>
+                        <div class="row">
+                            <?php foreach ($show as $k) : ?>
+                                <div class="card col-md-2 border-0">
+                                    <img class="card-img-top mw-100 mh-100" src="<?= Yii::getAlias('@imgCineUrl/' . $k->objetos->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'" alt="Card image cap">
 
-                                        <div class="card-img-overlay card-body d-flex flex-column">
-                                            <?= Html::a(
-                                                $k->objetos->nombre,
-                                                ['shows/view', 'id' => $k->objetos->id],
-                                                [
-                                                    'class' => 'btn btn-dark btn-block mt-auto card-text  text-light',
-                                                    'style' => 'font-size: 8px;'
-                                                ]
-                                            ) ?>
-                                        </div>
+                                    <div class="card-img-overlay card-body d-flex flex-column">
+                                        <?= Html::a(
+                                            $k->objetos->nombre,
+                                            ['shows/view', 'id' => $k->objetos->id],
+                                            [
+                                                'class' => 'btn btn-dark btn-block mt-auto card-text  text-light',
+                                                'style' => 'font-size: 8px;'
+                                            ]
+                                        ) ?>
                                     </div>
-                                <?php endforeach ?>
-                            </div>
+                                </div>
+                            <?php endforeach ?>
                         </div>
-                    <?php endif ?>
-                </div>
-            <?php endif ?>
-            <?php if (isset($librosSeg) || isset($showSeg)) : ?>
-                <div class="tab-pane fade show active" id="seguimiento" role="tabpanel" aria-labelledby="list-2-list">
-                    <?php if (isset($librosSeg)) : ?>
-                        <div>
-                            <h4>Tus libros: </h4>
-                            <hr>
-                            <div class="row">
-                                <?php foreach ($librosSeg as $k) : ?>
-                                    <div class="card col-md-2 border-0">
-                                        <img class="card-img-top mw-100 mh-100" src="<?= Yii::getAlias('@imgLibrosUrl/' . $k->libro->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'" alt="Card image cap">
-
-                                        <div class="card-img-overlay card-body d-flex flex-column">
-                                            <?= Html::a(
-                                                $k->libro->nombre,
-                                                ['libros/view', 'id' => $k->libro->id],
-                                                [
-                                                    'class' => 'btn btn-dark btn-block mt-auto card-text  text-light',
-                                                    'style' => 'font-size: 8px;'
-                                                ]
-                                            ) ?>
-                                        </div>
-                                    </div>
-                                <?php endforeach ?>
-                            </div>
-                        </div>
-                    <?php endif ?>
-
-                    <?php if (isset($showSeg)) : ?>
-                        <br><br>
-                        <div>
-                            <h4>Tu cine y series: </h4>
-                            <hr>
-                            <div class="row">
-                                <?php foreach ($showSeg as $k) : ?>
-                                    <div class="card col-md-2 border-0">
-                                        <img class="card-img-top mw-100 mh-100" src="<?= Yii::getAlias('@imgCineUrl/' . $k->objetos->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'" alt="Card image cap">
-
-                                        <div class="card-img-overlay card-body d-flex flex-column">
-                                            <?= Html::a(
-                                                $k->objetos->nombre,
-                                                ['shows/view', 'id' => $k->objetos->id],
-                                                [
-                                                    'class' => 'btn btn-dark btn-block mt-auto card-text  text-light',
-                                                    'style' => 'font-size: 8px;'
-                                                ]
-                                            ) ?>
-                                        </div>
-                                    </div>
-                                <?php endforeach ?>
-                            </div>
-                        </div>
-                    <?php endif ?>
-                </div>
-            <?php endif ?>
-
+                    </div>
+                <?php endif ?>
+            </div>
         </div>
-
     </div>
