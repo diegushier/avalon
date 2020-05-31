@@ -103,21 +103,25 @@ $this->registerCssFile('@web/css/comentario.css');
                 </button>
             <?php endif ?>
 
-            <table class="table col-lg-8 col-sm-12">
+            <table class="table col-lg-8 col-sm-12"  itemscope itemtype="http://schema.org/Book">
                 <tbody>
-                    <tr>
+                    <tr itemprop="name">
                         <td>Nombre</td>
                         <td><?= $model->nombre ?></td>
                     </tr>
-                    <tr>
+                    <tr itemprop="author">
                         <td>Autor</td>
                         <td><?= $autor ?></td>
                     </tr>
-                    <tr>
+                    <tr itemprop="isbn">
+                        <td>ISBN</td>
+                        <td><?= $model->isbn ?></td>
+                    </tr>
+                    <tr itemprop="sponsor">
                         <td>Editorial</td>
                         <td><?= $productora ?></td>
                     </tr>
-                    <tr>
+                    <tr  itemprop="country">
                         <td>Pais</td>
                         <td><?= $pais ?></td>
                     </tr>

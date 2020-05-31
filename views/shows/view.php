@@ -202,13 +202,13 @@ $this->registerCssFile('@web/css/comentario.css');
                 </button>
             <?php endif ?>
 
-            <table class="table col-lg-8 col-sm-12">
+            <table class="table col-lg-8 col-sm-12" itemscope itemtype="http://schema.org/Movie">
                 <tbody>
                     <tr>
-                        <td>Nombre</td>
+                        <td itemprop="name">Nombre</td>
                         <td><?= $model->nombre ?></td>
                     </tr>
-                    <tr>
+                    <tr itemprop="productionCompany">
                         <td>Productora</td>
                         <td><?= $productora ?></td>
                     </tr>
@@ -219,7 +219,7 @@ $this->registerCssFile('@web/css/comentario.css');
                         </tr>
                     <?php endif ?>
                     <?php if ($model->fecha !== '' && $model->fecha !== null) : ?>
-                        <tr>
+                        <tr itemprop="datePublished">
                             <td>Fecha de estreno</td>
                             <td><?= date_format(date_create($model->fecha), 'j F Y') ?></td>
                         </tr>
