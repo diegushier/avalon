@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 use yii\grid\GridView;
 
@@ -10,7 +11,6 @@ use yii\grid\GridView;
 $this->title = 'Libros';
 ?>
 <div class="libros-index row">
-    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
     <div class="col-sm-12 col-lg-2 border-right">
         <p>
             <button class="btn btn-orange w-100" type="button" data-toggle="collapse" data-target="#menuSearch" aria-expanded="false" aria-controls="collapseExample">
@@ -34,8 +34,33 @@ $this->title = 'Libros';
                 <li class="list-group-item text-center"><?= $sort->link('genero_id') ?></li>
             </ul>
         </div>
+
+        <br>
+        <br>
+        <br>
+
+        <?php $form = ActiveForm::begin([
+            'action' => ['libros/index'],
+            'method' => 'get',
+        ]); ?>
+
+        <div class="form-group">
+            <?= Html::textInput(
+                'dataName',
+                $dataName,
+                ['class' =>  'form-control', 'value' => '', 'placeholder' => 'Palabra clave...', 'id' =>  'dataName']
+            ) ?>
+
+
+        </div>
+
+
+        <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary w-100']) ?>
+
+        <?php ActiveForm::end(); ?>
     </div>
     <div class="col-sm-12 col-lg-9">
+        <?= var_dump($dataName) ?>
         <div class="row">
             <?php foreach ($libros as $libros) : ?>
                 <div class="col-lg-3 col-sm-5 d-flex justify-content-center">
