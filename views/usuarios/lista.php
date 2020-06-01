@@ -13,9 +13,15 @@ $a = true;
 $b = true;
 $c = true;
 
-$aux = null;
+$librosJS = Json::encode($libro);
+$showsJS = Json::encode($show);
 
 $js = <<<EOT
+
+var libros = $librosJS;
+var shows = $showsJS;
+var librosId = [];
+var showsId = [];
 
 contador = 1990;
 date = new Date();
@@ -26,8 +32,40 @@ while(contador <= date) {
     contador++
 }
 
-console.log($age);
-console.log('$dataName');
+
+shows.forEach(k => {
+    var index = $('#cine_' + k.objetos_id)
+    var nombre = index.text();
+    if (nombre.length >= 9) {
+        index.text(nombre.substr(0, 9) + '...')
+        index.mouseover(() => {
+            index.text(nombre)
+        })
+        
+        index.mouseout(() => {
+            index.text(nombre.substr(0, 9) + '...')
+        });
+    }
+})
+
+libros.forEach(k => {
+    var index = $('#libro_' + k.libro_id)
+    var nombre = index.text();
+    if (nombre.length >= 9) {
+        index.text(nombre.substr(0, 9) + '...')
+        index.mouseover(() => {
+            index.text(nombre)
+        })
+
+        index.mouseout(() => {
+            index.text(nombre.substr(0, 9) + '...')
+        });
+    }
+})
+
+shows.forEach(k => $('#cine_' + k.objetos_id).mouseover(() => {console.log($('#cine_' + k.objetos_id).text())}))
+
+
 EOT;
 
 
@@ -108,15 +146,16 @@ $this->registerCss($css);
                         <div class="row">
                             <?php foreach ($libro as $k) : ?>
                                 <div class="card col-md-2 border-0">
-                                    <img class="card-img-top mw-100 mh-100" src="<?= Yii::getAlias('@imgLibrosUrl/' . $k->libro->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'" alt="Card image cap">
+                                    <img class="card-img-top mw-100 mh-100" style="max-height: 100%" src="<?= Yii::getAlias('@imgLibrosUrl/' . $k->libro->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'" alt="Card image cap">
 
                                     <div class="card-img-overlay card-body d-flex flex-column">
                                         <?= Html::a(
                                             $k->libro->nombre,
                                             ['libros/view', 'id' => $k->libro->id],
                                             [
-                                                'class' => 'btn btn-dark btn-block mt-auto card-text  text-light',
-                                                'style' => 'font-size: 8px;'
+                                                'class' => 'btn btn-dark btn-block mt-auto card-text text-light linkdata',
+                                                'style' => 'font-size: 8px;',
+                                                'id' => 'libro_' . $k->libro_id
                                             ]
                                         ) ?>
                                     </div>
@@ -134,15 +173,16 @@ $this->registerCss($css);
                         <div class="row">
                             <?php foreach ($show as $k) : ?>
                                 <div class="card col-md-2 border-0">
-                                    <img class="card-img-top mw-100 mh-100" src="<?= Yii::getAlias('@imgCineUrl/' . $k->objetos->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'" alt="Card image cap">
+                                    <img class="card-img-top mw-100 mh-100" style="max-height: 100%" src="<?= Yii::getAlias('@imgCineUrl/' . $k->objetos->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'" alt="Card image cap">
 
                                     <div class="card-img-overlay card-body d-flex flex-column">
                                         <?= Html::a(
                                             $k->objetos->nombre,
                                             ['shows/view', 'id' => $k->objetos->id],
                                             [
-                                                'class' => 'btn btn-dark btn-block mt-auto card-text  text-light',
-                                                'style' => 'font-size: 8px;'
+                                                'class' => 'btn btn-dark btn-block mt-auto card-text  text-light linkdata',
+                                                'style' => 'font-size: 8px;',
+                                                'id'  => 'cine_' . $k->objetos_id
                                             ]
                                         ) ?>
                                     </div>
