@@ -108,6 +108,7 @@ if (isset(Yii::$app->user->identity)) {
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar-dark bg-dark navbar-expand-md fixed-top',
+                'style' => 'background-color: #3E3F3A !important;'
             ],
             'collapseOptions' => [
                 'class' => 'justify-content-end',

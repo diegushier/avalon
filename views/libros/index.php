@@ -12,31 +12,30 @@ $this->title = 'Libros';
 ?>
 <div class="libros-index row">
     <div class="col-sm-12 col-lg-2 border-right">
-        <p>
-            <button class="btn btn-orange w-100" type="button" data-toggle="collapse" data-target="#menuSearch" aria-expanded="false" aria-controls="collapseExample">
-                Menu
-            </button>
+        <div>
             <?php if (isset(Yii::$app->user->identity) && Yii::$app->user->identity->clave === null) : ?>
                 <?= Html::a(
                     'Añade tu libro',
                     ['create', 'scenario' => true],
                     [
-                        'class' => 'btn btn-orange btn-block mt-1',
+                        'class' => 'btn btn-dark btn-block mb-2',
                     ]
                 ) ?>
             <?php endif ?>
-        </p>
-        <div class="collapse" id="menuSearch">
+            <button class="btn btn-orange w-100" type="button" data-toggle="collapse" data-target="#menuSearch" aria-expanded="false" aria-controls="collapseExample">
+                Menu
+            </button>
+            <div class="collapse" id="menuSearch">
 
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item text-center font-weight-bold">Ordenar por:</li>
-                <li class="list-group-item text-center"><?= $sort->link('nombre') ?></li>
-                <li class="list-group-item text-center"><?= $sort->link('genero_id') ?></li>
-            </ul>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item text-center font-weight-bold">Ordenar por:</li>
+                    <li class="list-group-item text-center"><?= $sort->link('nombre') ?></li>
+                    <li class="list-group-item text-center"><?= $sort->link('genero_id') ?></li>
+                </ul>
+            </div>
+
         </div>
 
-        <br>
-        <br>
         <br>
 
         <?php $form = ActiveForm::begin([
@@ -55,12 +54,11 @@ $this->title = 'Libros';
         </div>
 
 
-        <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary w-100']) ?>
+        <?= Html::submitButton('Buscar', ['class' => 'btn btn-dark w-100']) ?>
 
         <?php ActiveForm::end(); ?>
     </div>
     <div class="col-sm-12 col-lg-9">
-        <?= var_dump($dataName) ?>
         <div class="row">
             <?php foreach ($libros as $libros) : ?>
                 <div class="col-lg-3 col-sm-5 d-flex justify-content-center">
