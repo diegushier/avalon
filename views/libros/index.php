@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 use yii\grid\GridView;
 
@@ -10,30 +11,52 @@ use yii\grid\GridView;
 $this->title = 'Libros';
 ?>
 <div class="libros-index row">
-    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
     <div class="col-sm-12 col-lg-2 border-right">
-        <p>
-            <button class="btn btn-orange w-100" type="button" data-toggle="collapse" data-target="#menuSearch" aria-expanded="false" aria-controls="collapseExample">
-                Menu
-            </button>
+        <div>
             <?php if (isset(Yii::$app->user->identity) && Yii::$app->user->identity->clave === null) : ?>
                 <?= Html::a(
                     'Añade tu libro',
                     ['create', 'scenario' => true],
                     [
-                        'class' => 'btn btn-orange btn-block mt-1',
+                        'class' => 'btn btn-dark btn-block mb-2',
                     ]
                 ) ?>
             <?php endif ?>
-        </p>
-        <div class="collapse" id="menuSearch">
+            <button class="btn btn-orange w-100" type="button" data-toggle="collapse" data-target="#menuSearch" aria-expanded="false" aria-controls="collapseExample">
+                Menu
+            </button>
+            <div class="collapse" id="menuSearch">
 
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item text-center font-weight-bold">Ordenar por:</li>
-                <li class="list-group-item text-center"><?= $sort->link('nombre') ?></li>
-                <li class="list-group-item text-center"><?= $sort->link('genero_id') ?></li>
-            </ul>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item text-center font-weight-bold">Ordenar por:</li>
+                    <li class="list-group-item text-center"><?= $sort->link('nombre') ?></li>
+                    <li class="list-group-item text-center"><?= $sort->link('genero_id') ?></li>
+                </ul>
+            </div>
+
         </div>
+
+        <br>
+
+        <?php $form = ActiveForm::begin([
+            'action' => ['libros/index'],
+            'method' => 'get',
+        ]); ?>
+
+        <div class="form-group">
+            <?= Html::textInput(
+                'dataName',
+                $dataName,
+                ['class' =>  'form-control', 'value' => '', 'placeholder' => 'Palabra clave...', 'id' =>  'dataName']
+            ) ?>
+
+
+        </div>
+
+
+        <?= Html::submitButton('Buscar', ['class' => 'btn btn-dark w-100']) ?>
+
+        <?php ActiveForm::end(); ?>
     </div>
     <div class="col-sm-12 col-lg-9">
         <div class="row">

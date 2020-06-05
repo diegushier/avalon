@@ -108,6 +108,7 @@ if (isset(Yii::$app->user->identity)) {
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar-dark bg-dark navbar-expand-md fixed-top',
+                'style' => 'background-color: #3E3F3A !important;'
             ],
             'collapseOptions' => [
                 'class' => 'justify-content-end',
@@ -126,7 +127,7 @@ if (isset(Yii::$app->user->identity)) {
                 ['label' => 'Regitrarse', 'url' => ['/usuarios/registrar']],
             ]];
         } else {
-            $menu[] = ['label' => 'Deconectar', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
+            $menu[] = ['label' => 'Desconectar', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
         }
 
         echo Nav::widget([

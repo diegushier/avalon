@@ -10,7 +10,9 @@ use yii\grid\GridView;
 $this->title = 'Series';
 ?>
 <div class="shows-series row">
+    <h1><?= $this->title ?></h1>
     <?php echo $this->render('_search', ['model' => $searchModel, 'tipo' => 'series']); ?>
+
     <div class="col-sm-12 col-lg-2 border-right">
         <p>
             <button class="btn btn-orange w-100" type="button" data-toggle="collapse" data-target="#menuSearch" aria-expanded="false" aria-controls="collapseExample">

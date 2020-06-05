@@ -46,8 +46,19 @@ class LibrosController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new LibrosSearch();
-        $params = Yii::$app->request->queryParams;
+        $model = Libros::find()
+            ->joinWith(['editorial e', 'autor a']);
+        $render = [];
+
+        if (Yii::$app->request->get()) {
+            $dataName = Yii::$app->request->get('dataName', '');
+            $render = ['dataName' => $dataName];
+
+            $model->where(['ilike', 'nombre', $dataName]);
+            $model->where(['ilike', 'e.nombre', $dataName]);
+            $model->where(['ilike', 'a.nombre', $dataName]);
+        }
+
         $sort = new Sort([
             'attributes' => [
                 'nombre',
@@ -59,12 +70,15 @@ class LibrosController extends Controller
                 ]
             ]
         ]);
-        $libros = $searchModel->getObjetos($params, $sort);
-        return $this->render('index', [
-            'libros' =>  $libros,
+
+        $model->orderBy($sort->orders);
+
+        $render += [
+            'libros' =>  $model->all(),
             'sort' => $sort,
-            'searchModel' => $searchModel,
-        ]);
+        ];
+
+        return $this->render('index', $render);
     }
 
     /**
@@ -108,7 +122,7 @@ class LibrosController extends Controller
             ->one();
 
         $this->newComment(Yii::$app->request->post());
-        
+
         $render = [
             'model' => $model,
             'autor' => $autor->nombre,
