@@ -7,15 +7,15 @@
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 
-// $img = Yii::getAlias('@imgUrl/login.jpg');
+$img = Yii::getAlias('@imgUrl/login.jpg');
 
-// $js = "$('body').css({
-//             backgroundImage : 'url(" . $img . ")'
-//         ,   backgroundColor : 'black'  
-//         });
-//     ";
+$js = "$('body').css({
+            backgroundImage : 'url(" . $img . ")'
+        ,   backgroundColor : 'black'  
+        });
+    ";
 
-// $this->registerJs($js);
+$this->registerJs($js);
 $this->title = 'Login';
 ?>
 <div class="site-login">
