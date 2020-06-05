@@ -127,7 +127,7 @@ if (isset(Yii::$app->user->identity)) {
                 ['label' => 'Regitrarse', 'url' => ['/usuarios/registrar']],
             ]];
         } else {
-            $menu[] = ['label' => 'Deconectar', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
+            $menu[] = ['label' => 'Desconectar', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
         }
 
         echo Nav::widget([

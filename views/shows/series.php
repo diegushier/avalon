@@ -10,7 +10,9 @@ use yii\grid\GridView;
 $this->title = 'Series';
 ?>
 <div class="shows-series row">
+    <h1><?= $this->title ?></h1>
     <?php echo $this->render('_search', ['model' => $searchModel, 'tipo' => 'series']); ?>
+
     <div class="col-sm-12 col-lg-2 border-right">
         <p>
             <button class="btn btn-orange w-100" type="button" data-toggle="collapse" data-target="#menuSearch" aria-expanded="false" aria-controls="collapseExample">
@@ -40,7 +42,6 @@ $this->title = 'Series';
             <?php foreach ($series as $series) : ?>
                 <div class="col-lg-3 col-sm-5 d-flex justify-content-center">
                     <div class="card mt-2" style="width: 15rem;">
-                        <img class="card-img-top mw-100 mh-100" src="<?= Yii::getAlias('@imgCineUrl/' . $series->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'" alt="Card image cap">
                         <div class="card-body d-flex flex-column mt-auto">
                             <h5 class="card-title"><?= $series->nombre ?></h5>
                             <?= Html::a(

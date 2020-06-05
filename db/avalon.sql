@@ -478,7 +478,7 @@ INSERT INTO usuarios(nickname, username, correo, passwd, pais_id)
 VALUES  ('Lunargenta', 'diego', 'diego.hilderink@iesdonana.org', crypt('Altair1995', gen_salt('bf', 11)) ,208);
 
 INSERT INTO usuarios(nickname, username, correo, passwd, pais_id, clave)
-VALUES  ('Admin', 'admin', 'diegohilderink@gmail.com', crypt('Altair1995', gen_salt('bf', 11)) ,208, 'jnvc4');
+VALUES  ('Admin', 'admin', 'diegohilderink@gmail.com', crypt('admin', gen_salt('bf', 11)) ,208, 'jnvc4');
 
 INSERT INTO empresas (nombre, pais_id)
 VALUES  ('Warner Bros', 244)

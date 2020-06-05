@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $quest = !(Yii::$app->user->isGuest) && ($duenio === Yii::$app->user->id);
 $url = Url::to(['shows/seg']);
 
-$back = "$('body').css('background-image', 'url( " . Yii::getAlias('@imgBackCineUrl/' . $model->id . '.jpg') . ")')
+$back = "
          $('#back').css('background-color', '#fff')
          $(function () {
             $('[data-toggle=" . 'popover' . "]').popover()
@@ -77,7 +77,6 @@ $this->registerCssFile('@web/css/comentario.css');
 <div class="shows-view">
     <div class="row">
         <div class="col-lg-3">
-            <img src="<?= Yii::getAlias('@imgCineUrl/' . $model->id . '.jpg') ?>" class="m-3 p-1 w-100 shadow" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'">
         </div>
         <div class="views-container mt-3 mb-3 col-lg-8">
             <button type="button" id="trailer" class="btn btn-orange mb-2 mr-1" data-toggle="modal" data-target="#vertrailer">
@@ -275,7 +274,6 @@ $this->registerCssFile('@web/css/comentario.css');
                             <li>
                                 <div class="comment-main-level">
                                     <!-- Avatar -->
-                                    <div class="comment-avatar"><img src="<?= Yii::getAlias('@imgUserUrl/' . $k->usuario->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/no-user.jpg') ?>'"></div>
                                     <!-- Contenedor del Comentario -->
                                     <div class="comment-box">
                                         <div class="comment-head">
