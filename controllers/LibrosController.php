@@ -154,25 +154,25 @@ class LibrosController extends Controller
 
     public function actionSeg($id, $tipo, $seguimiento_id)
     {
-        $model = Usuariolibros::find()
+        $libros = Usuariolibros::find()
             ->where(['libro_id' => $id])
             ->andWhere(['usuario_id' => Yii::$app->user->id])
             ->andWhere(['tipo' => $tipo])->one();
 
-        if ($model) {
+        if ($libros) {
             if ($seguimiento_id !== 'null') {
-                $model->seguimiento_id = $seguimiento_id;
-                $model->update();
+                $libros->seguimiento_id = $seguimiento_id;
+                $libros->update();
             } else {
-                $model->delete();
+                $libros->delete();
             }
         } else {
-            $model = new Usuariolibros();
-            $model->libro_id = $id;
-            $model->usuario_id = Yii::$app->user->id;
-            $model->seguimiento_id = $seguimiento_id;
-            $model->tipo = $tipo;
-            $model->save();
+            $libros = new Usuariolibros();
+            $libros->libro_id = $id;
+            $libros->usuario_id = Yii::$app->user->id;
+            $libros->seguimiento_id = $seguimiento_id;
+            $libros->tipo = $tipo;
+            $libros->save();
         }
     }
 

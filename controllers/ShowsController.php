@@ -203,24 +203,24 @@ class ShowsController extends Controller
 
     public function actionSeg($id, $tipo, $seguimiento_id)
     {
-        $model = Usuarioshows::find()->where([
+        $shows = Usuarioshows::find()->where([
             'objetos_id' => $id, 'usuario_id' => Yii::$app->user->id
         ])->one();
 
-        if ($model) {
+        if ($shows) {
             if ($seguimiento_id !== 'null') {
-                $model->seguimiento_id = $seguimiento_id;
-                $model->update();
+                $shows->seguimiento_id = $seguimiento_id;
+                $shows->update();
             } else {
-                $model->delete();
+                $shows->delete();
             }
         } else {
-            $model = new Usuarioshows();
-            $model->objetos_id = $id;
-            $model->usuario_id = Yii::$app->user->id;
-            $model->seguimiento_id = $seguimiento_id;
-            $model->tipo = $tipo;
-            $model->save();
+            $shows = new Usuarioshows();
+            $shows->objetos_id = $id;
+            $shows->usuario_id = Yii::$app->user->id;
+            $shows->seguimiento_id = $seguimiento_id;
+            $shows->tipo = $tipo;
+            $shows->save();
         }
     }
 
