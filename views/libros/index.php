@@ -11,7 +11,7 @@ use yii\grid\GridView;
 $this->title = 'Libros';
 ?>
 <div class="libros-index row">
-    <div class="col-sm-12 col-lg-2 border-right">
+    <div class="col-sm-12 col-lg-2 lg-border-right">
         <div>
             <?php if (isset(Yii::$app->user->identity) && Yii::$app->user->identity->clave === null) : ?>
                 <?= Html::a(
@@ -49,10 +49,7 @@ $this->title = 'Libros';
                 $dataName,
                 ['class' =>  'form-control', 'value' => '', 'placeholder' => 'Palabra clave...', 'id' =>  'dataName']
             ) ?>
-
-
         </div>
-
 
         <?= Html::submitButton('Buscar', ['class' => 'btn btn-dark w-100']) ?>
 

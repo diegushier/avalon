@@ -44,25 +44,39 @@ class ShowsController extends Controller
      */
     public function actionPeliculas()
     {
-        $searchModel = new ShowsSearch();
-        $params = Yii::$app->request->queryParams;
+        $params = Yii::$app->request->get();
+        $dataName = Yii::$app->request->get('dataName', '');
+        $model = Shows::find();
+        $render = [];
+
+        if ($params) {
+            $dataName = $dataName;
+            $render = ['dataName' => $dataName];
+
+            $model->where(['ilike', 'nombre', $dataName]);
+            $model->andFilterWhere(['ilike', 'tipo', 'cine']);
+        }
+
         $sort = new Sort([
             'attributes' => [
                 'nombre',
                 'fecha' => [
-                    'asc' => ['fecha'  => SORT_ASC],
-                    'desc' => ['fecha'  => SORT_DESC],
+                    'asc' => ['genero_id'  => SORT_ASC],
+                    'desc' => ['genero_id'  => SORT_DESC],
                     'default' => SORT_ASC,
-                    'label' => 'Fecha'
-                ],
+                    'label' => 'Genero'
+                ]
             ]
         ]);
-        $peliculas = $searchModel->getObjetos(Shows::PELICULAS, $params, $sort);
-        return $this->render('peliculas', [
-            'peliculas' =>  $peliculas,
+
+        $model->orderBy($sort->orders);
+
+        $render += [
+            'shows' =>  $model->all(),
             'sort' => $sort,
-            'searchModel' => $searchModel,
-        ]);
+        ];
+
+        return $this->render('peliculas', $render);
     }
 
     /**
@@ -71,26 +85,75 @@ class ShowsController extends Controller
      */
     public function actionSeries()
     {
-        $searchModel = new ShowsSearch();
-        $params = Yii::$app->request->queryParams;
+        $params = Yii::$app->request->get();
+        $dataName = Yii::$app->request->get('dataName', '');
+        $model = Shows::find();
+        $render = [];
+
+        if ($params) {
+            $dataName = $dataName;
+            $render = ['dataName' => $dataName];
+
+            $model->where(['ilike', 'nombre', $dataName]);
+            $model->andFilterWhere(['ilike', 'tipo', 'serie']);
+        }
+
         $sort = new Sort([
             'attributes' => [
                 'nombre',
                 'fecha' => [
-                    'asc' => ['fecha'  => SORT_ASC],
-                    'desc' => ['fecha'  => SORT_DESC],
+                    'asc' => ['genero_id'  => SORT_ASC],
+                    'desc' => ['genero_id'  => SORT_DESC],
                     'default' => SORT_ASC,
-                    'label' => 'Fecha'
-                ],
+                    'label' => 'Genero'
+                ]
             ]
         ]);
-        $series = $searchModel->getObjetos(Shows::SERIES, $params, $sort);
 
-        return $this->render('series', [
-            'series' =>  $series,
+        $model->orderBy($sort->orders);
+
+        $render += [
+            'shows' =>  $model->all(),
             'sort' => $sort,
-            'searchModel' => $searchModel,
+        ];
+
+        return $this->render('series', $render);
+    }
+
+    protected function search($tipo, $params, $dataName)
+    {
+        $model = Shows::find()
+            ->joinWith(['productora p']);
+        $render = [];
+
+        if ($params) {
+            $dataName = $dataName;
+            $render = ['dataName' => $dataName];
+
+            $model->where(['ilike', 'nombre', $dataName]);
+            $model->where(['ilike', 'p.nombre', $dataName]);
+        }
+
+        $sort = new Sort([
+            'attributes' => [
+                'nombre',
+                'fecha' => [
+                    'asc' => ['genero_id'  => SORT_ASC],
+                    'desc' => ['genero_id'  => SORT_DESC],
+                    'default' => SORT_ASC,
+                    'label' => 'Genero'
+                ]
+            ]
         ]);
+
+        $model->orderBy($sort->orders);
+
+        $render += [
+            'shows' =>  $model->all(),
+            'sort' => $sort,
+        ];
+
+        return $render;
     }
 
 
