@@ -63,8 +63,7 @@ libros.forEach(k => {
     }
 })
 
-shows.forEach(k => $('#cine_' + k.objetos_id).mouseover(() => {console.log($('#cine_' + k.objetos_id).text())}))
-
+2
 
 EOT;
 
@@ -84,7 +83,7 @@ $this->registerCss($css);
 ?>
 
 <div class="site-index row m-auto">
-    <div class="col-sm-12 col-lg-2 border-right">
+    <div class="col-sm-12 col-lg-2 lg-border-right">
 
         <?= Html::a(
             'Calendario',

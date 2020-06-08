@@ -9,6 +9,8 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Libros;
+use app\models\Shows;
 use app\models\Usuarios;
 use yii\bootstrap4\Html;
 
@@ -66,7 +68,30 @@ class SiteController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['site/login']);
         }
-        return $this->render('index');
+
+        $id = Yii::$app->user->id;
+
+        $libros = Libros::find()
+        ->select('libros.id, libros.nombre')
+        ->joinWith('usuariolibros u')
+        ->where(['!=', 'u.usuario_id', $id])
+        ->orWhere('u.usuario_id is null')
+        ->limit(4)
+        ->all();
+        
+        $shows = Shows::find()
+        ->select('shows.id, shows.nombre, shows.tipo')
+        ->joinWith('usuarioshows u')
+        ->where(['!=', 'u.usuario_id', $id])
+        ->orWhere('u.usuario_id is null')
+        ->limit(4)
+        ->all();
+
+
+        return $this->render('index', [
+            'libros' => $libros,
+            'shows' => $shows,
+        ]);
     }
 
     /**
