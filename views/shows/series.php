@@ -31,7 +31,7 @@ $this->title = 'Series';
         <?php if (isset(Yii::$app->user->identity) && Yii::$app->user->identity->clave === null) : ?>
             <?= Html::a(
                 'Añade tu serie',
-                ['create', 'scenario' => true],
+                ['create', 'tipo' => 'serie'],
                 [
                     'class' => 'btn btn-orange btn-block mb-2',
                 ]
