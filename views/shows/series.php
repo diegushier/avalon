@@ -12,32 +12,6 @@ $this->title = 'Series';
 ?>
 <div class="shows-series row">
     <div class="col-sm-12 col-lg-2 lg-border-right">
-        <div>
-            <?php if (isset(Yii::$app->user->identity) && Yii::$app->user->identity->clave === null) : ?>
-                <?= Html::a(
-                    'Añade tu serie',
-                    ['create', 'scenario' => true],
-                    [
-                        'class' => 'btn btn-dark btn-block mb-2',
-                    ]
-                ) ?>
-            <?php endif ?>
-            <button class="btn btn-orange w-100" type="button" data-toggle="collapse" data-target="#menuSearch" aria-expanded="false" aria-controls="collapseExample">
-                Menu
-            </button>
-            <div class="collapse" id="menuSearch">
-
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item text-center font-weight-bold">Ordenar por:</li>
-                    <li class="list-group-item text-center"><?= $sort->link('nombre') ?></li>
-                    <li class="list-group-item text-center"><?= $sort->link('fecha') ?></li>
-                </ul>
-            </div>
-
-        </div>
-
-        <br>
-
         <?php $form = ActiveForm::begin([
             'action' => ['shows/series'],
             'method' => 'get',
@@ -51,23 +25,36 @@ $this->title = 'Series';
             ) ?>
         </div>
 
-        <?= Html::submitButton('Buscar', ['class' => 'btn btn-dark w-100']) ?>
+        <?= Html::submitButton('Buscar', ['class' => 'btn btn-orange w-100 mb-2']) ?>
 
         <?php ActiveForm::end(); ?>
+        <?php if (isset(Yii::$app->user->identity) && Yii::$app->user->identity->clave === null) : ?>
+            <?= Html::a(
+                'Añade tu serie',
+                ['create', 'scenario' => true],
+                [
+                    'class' => 'btn btn-orange btn-block mb-2',
+                ]
+            ) ?>
+        <?php endif ?>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item text-center font-weight-bold">Ordenar por:</li>
+            <li class="list-group-item text-center"><?= $sort->link('nombre') ?></li>
+            <li class="list-group-item text-center"><?= $sort->link('fecha') ?></li>
+        </ul>
     </div>
     <div class="col-sm-12 col-lg-8">
         <div class="row">
             <?php foreach ($shows as $shows) : ?>
-                <div class="col-lg-3 col-sm-5 d-flex justify-content-center">
+                <div class="col-lg-3 col-sm-6 d-flex justify-content-center">
                     <div class="card mt-2" style="width: 15rem;">
                         <img class="card-img-top mw-100 mh-100" src="<?= Yii::getAlias('@imgCineUrl/' . $shows->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'" alt="Card image cap">
                         <div class="card-body d-flex flex-column mt-auto">
-                            <h5 class="card-title"><?= $shows->nombre ?></h5>
                             <?= Html::a(
-                                'Ver',
+                                $shows->nombre,
                                 ['shows/view', 'id' => $shows->id],
                                 [
-                                    'class' => 'btn btn-primary btn-block mt-auto',
+                                    'class' => 'btn btn-dark btn-block mt-auto',
                                 ]
                             ) ?>
                         </div>
