@@ -4,6 +4,8 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
+use yii\imagine\Image;
+use Imagine\Image\Box;
 
 /**
  * Clase generarda para la subida y asignación de imagenes a Objetos de tipo Libros, Shows o Usuarios.
@@ -35,14 +37,11 @@ class ImageForm extends Model
     public function upload($id, $tipo)
     {
         if ($this->validate()) {
-            if ($this->imagen) {
-                $filename = $id . '.' . $this->imagen->extension;
-                $origen = Yii::getAlias($this->alias[$tipo] . $filename);
-                $destino = Yii::getAlias($this->alias[$tipo] . $filename);
-                $this->imagen->saveAs($origen);
-                rename($origen, $destino);
-                return true;
-            }
+            $filename = $id . '.' . $this->imagen->extension;
+            $this->imagen->saveAs($this->alias[$tipo] . $filename);
+            Image::thumbnail($this->alias[$tipo] . $this->imagen, 325, 500)
+                ->resize(new Box(325, 500))
+                ->save('../web/img/libros/' . $id . '.' . $this->imagen->extension, ['quality' => 70]);
         } else {
             return false;
         }
