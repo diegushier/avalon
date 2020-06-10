@@ -34,7 +34,9 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
         }
       }
 });
+
 calendar.render();
+calendar.setOption('height', 650);
 EOT;
 
 $librosJS = Json::encode($libros);
@@ -120,20 +122,16 @@ $this->registerJs($googleCalendar);
             <?php foreach ($libros as $k) : ?>
                 <div class="col-lg-6 col-sm-3 d-flex justify-content-center">
                     <div class="card mt-2" style="width: 15rem;">
-                        <img class="card-img-top mw-100 mh-100" src="<?= Yii::getAlias('@imgLibrosUrl/' . $k->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'" alt="Card image cap">
-                        <div class="card-body d-flex flex-column mt-auto">
-                            <h5 class="card-title"><?= $k->nombre ?></h5>
+                        <img class="card-img-top mw-100 mh-100" src="<?= Yii::getAlias('@imgLibrosUrl/' . $k->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.jpg') ?>'" alt="Card image cap">
                             <?= Html::a(
                                 $k->nombre,
                                 ['shows/view', 'id' => $k->id],
                                 [
-                                    'class' => 'btn btn-dark btn-block mt-auto card-text  text-light linkdata',
+                                    'class' => 'btn btn-dark btn-block card-body d-flex flex-column text-light linkdata',
                                     'style' => 'font-size: 8px;',
                                     'id'  => 'libro_' . $k->id
                                 ]
                             ) ?>
-
-                        </div>
                     </div>
                 </div>
             <?php endforeach ?>
@@ -145,20 +143,17 @@ $this->registerJs($googleCalendar);
             <?php foreach ($shows as $k) : ?>
                 <div class="col-lg-6 col-sm-3 d-flex justify-content-center">
                     <div class="card mt-2" style="width: 15rem;">
-                        <img class="card-img-top mw-100 mh-100" src="<?= Yii::getAlias('@imgCineUrl/' . $k->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'" alt="Card image cap">
-                        <div class="card-body d-flex flex-column mt-auto">
-                            <h5 class="card-title"><?= $k->nombre ?></h5>
+                        <img class="card-img-top mw-100 mh-100" src="<?= Yii::getAlias('@imgCineUrl/' . $k->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.jpg') ?>'" alt="Card image cap">
                             <?= Html::a(
                                 $k->nombre,
                                 ['shows/view', 'id' => $k->id],
                                 [
-                                    'class' => 'btn btn-dark btn-block mt-auto card-text  text-light linkdata',
+                                    'class' => 'btn btn-dark btn-block card-body d-flex flex-column text-light linkdata',
                                     'style' => 'font-size: 8px;',
                                     'id'  => 'cine_' . $k->id
                                 ]
                             ) ?>
 
-                        </div>
                     </div>
                 </div>
             <?php endforeach ?>
