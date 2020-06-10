@@ -128,7 +128,6 @@ $this->registerJs($googleCalendar);
                                 ['shows/view', 'id' => $k->id],
                                 [
                                     'class' => 'btn btn-dark btn-block card-body d-flex flex-column text-light linkdata',
-                                    'style' => 'font-size: 8px;',
                                     'id'  => 'libro_' . $k->id
                                 ]
                             ) ?>
@@ -149,7 +148,6 @@ $this->registerJs($googleCalendar);
                                 ['shows/view', 'id' => $k->id],
                                 [
                                     'class' => 'btn btn-dark btn-block card-body d-flex flex-column text-light linkdata',
-                                    'style' => 'font-size: 8px;',
                                     'id'  => 'cine_' . $k->id
                                 ]
                             ) ?>
@@ -160,7 +158,9 @@ $this->registerJs($googleCalendar);
         </div>
     </div>
     <div id="right" class="col-sm-12 col-lg-4">
-        <h5 class="text-center">Nuevos Estrenos....</h5>
-        <div id="calendar"></div>
+        <div class="rounded border p-2">
+            <h5 class="text-center border-bottom">Nuevos Estrenos....</h5>
+            <div id="calendar" class=""></div>
+        </div>
     </div>
 </div>

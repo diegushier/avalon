@@ -25,7 +25,7 @@ $this->title = 'Peliculas';
             ) ?>
         </div>
 
-        <?= Html::submitButton('Buscar', ['class' => 'btn btn-oranges w-100 mb-2']) ?>
+        <?= Html::submitButton('Buscar', ['class' => 'btn btn-orange w-100 mb-2']) ?>
 
         <?php ActiveForm::end(); ?>
         <div>
@@ -60,6 +60,7 @@ $this->title = 'Peliculas';
                                 ['shows/view', 'id' => $shows->id],
                                 [
                                     'class' => 'btn btn-dark btn-block card-body d-flex flex-column mt-auto',
+                                    'id' => 
                                 ]
                             ) ?>
                     </div>

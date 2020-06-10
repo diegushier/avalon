@@ -63,8 +63,6 @@ libros.forEach(k => {
     }
 })
 
-2
-
 EOT;
 
 
@@ -153,7 +151,6 @@ $this->registerCss($css);
                                             ['libros/view', 'id' => $k->libro->id],
                                             [
                                                 'class' => 'btn btn-dark btn-block mt-auto card-text text-light linkdata',
-                                                'style' => 'font-size: 8px;',
                                                 'id' => 'libro_' . $k->libro_id
                                             ]
                                         ) ?>
@@ -180,7 +177,6 @@ $this->registerCss($css);
                                             ['shows/view', 'id' => $k->objetos->id],
                                             [
                                                 'class' => 'btn btn-dark btn-block mt-auto card-text  text-light linkdata',
-                                                'style' => 'font-size: 8px;',
                                                 'id'  => 'cine_' . $k->objetos_id
                                             ]
                                         ) ?>
