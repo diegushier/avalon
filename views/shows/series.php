@@ -40,7 +40,7 @@ $this->title = 'Series';
         <ul class="list-group list-group-flush">
             <li class="list-group-item text-center font-weight-bold">Ordenar por:</li>
             <li class="list-group-item text-center"><?= $sort->link('nombre') ?></li>
-            <li class="list-group-item text-center"><?= $sort->link('fecha') ?></li>
+            <li class="list-group-item text-center font-orange"><?= $sort->link('productora') ?></li>
         </ul>
     </div>
     <div class="col-sm-12 col-lg-8">

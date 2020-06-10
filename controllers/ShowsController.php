@@ -101,11 +101,11 @@ class ShowsController extends Controller
         $sort = new Sort([
             'attributes' => [
                 'nombre',
-                'fecha' => [
-                    'asc' => ['genero_id'  => SORT_ASC],
-                    'desc' => ['genero_id'  => SORT_DESC],
+                'productora' => [
+                    'asc' => ['productora_id'  => SORT_ASC],
+                    'desc' => ['productora_id'  => SORT_DESC],
                     'default' => SORT_ASC,
-                    'label' => 'Genero'
+                    'label' => 'Productora'
                 ]
             ]
         ]);
