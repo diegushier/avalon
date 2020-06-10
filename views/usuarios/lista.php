@@ -145,7 +145,7 @@ $this->registerCss($css);
                         <div class="row">
                             <?php foreach ($libro as $k) : ?>
                                 <div class="card col-md-2 border-0">
-                                    <img class="card-img-top mw-100 mh-100" style="max-height: 100%" src="<?= Yii::getAlias('@imgLibrosUrl/' . $k->libro->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'" alt="Card image cap">
+                                    <img class="card-img-top mw-100 mh-100" style="max-height: 100%" src="<?= Yii::getAlias('@imgLibrosUrl/' . $k->libro->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.jpg') ?>'" alt="Card image cap">
 
                                     <div class="card-img-overlay card-body d-flex flex-column">
                                         <?= Html::a(
@@ -172,7 +172,7 @@ $this->registerCss($css);
                         <div class="row">
                             <?php foreach ($show as $k) : ?>
                                 <div class="card col-md-2 border-0">
-                                    <img class="card-img-top mw-100 mh-100" style="max-height: 100%" src="<?= Yii::getAlias('@imgCineUrl/' . $k->objetos->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'" alt="Card image cap">
+                                    <img class="card-img-top mw-100 mh-100" style="max-height: 100%" src="<?= Yii::getAlias('@imgCineUrl/' . $k->objetos->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.jpg') ?>'" alt="Card image cap">
 
                                     <div class="card-img-overlay card-body d-flex flex-column">
                                         <?= Html::a(
