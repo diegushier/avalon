@@ -32,7 +32,7 @@ $this->title = 'Peliculas';
             <?php if (isset(Yii::$app->user->identity) && Yii::$app->user->identity->clave === null) : ?>
                 <?= Html::a(
                     'Añade tu película',
-                    ['create', 'scenario' => true],
+                    ['create', 'tipo' => 'cine'],
                     [
                         'class' => 'btn btn-orange btn-block mb-2',
                     ]

@@ -144,6 +144,6 @@ class Libros extends \yii\db\ActiveRecord
 
     public function getNotificacioneslibros()
     {
-        return $this->hasOne(Notificacioneslibros::className(), ['id' => 'libro_id'])->inverseOf('libros');
+        return $this->hasOne(Notificacioneslibros::className(), ['libro_id' => 'id'])->inverseOf('libros');
     }
 }

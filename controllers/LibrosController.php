@@ -223,8 +223,10 @@ class LibrosController extends Controller
                     $calendar->create($model);
                 }
 
-                $imagen->imagen = UploadedFile::getInstance($imagen, 'imagen');
-                $imagen->upload($model->id, $tipo);
+                if ($params['ImageForm']['imagen'] !== '') {
+                    $imagen->imagen = UploadedFile::getInstance($imagen, 'imagen');
+                    $imagen->upload($model->id, $tipo);
+                }
             }
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -293,9 +295,9 @@ class LibrosController extends Controller
     {
         $model = $this->findModel($id);
 
-        $this->deleteAlters($model->getCriticas());
-        $this->deleteAlters($model->getNotificacioneslibros());
-        $this->deleteAlters($model->getUsuariolibros());
+        $this->deleteAlters($model->getCriticas()->all());
+        $this->deleteAlters($model->getNotificacioneslibros()->all());
+        $this->deleteAlters($model->getUsuariolibros()->all());
 
         if (isset($model->evento_id)) {
             $calendar = new Calendar();

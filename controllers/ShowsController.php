@@ -239,22 +239,26 @@ class ShowsController extends Controller
         $imagen = new ImageForm();
         $empresa = Usuarios::findOne(Yii::$app->user->id)->getEmpresas()->one()->id;
         $paises = Paises::lista();
+        $params = Yii::$app->request->post();
+        $calendar = new Calendar();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if (Yii::$app->request->post()) {
+        Yii::debug($params);
+        if ($model->load($params) && $model->save()) {
+            if ($params) {
                 if ($model->fecha !== '') {
-                    $calendar = new Calendar();
                     $calendar->name = $model->nombre;
                     $calendar->date = $model->fecha;
                     $calendar->create($model);
                 }
-                $imagen->imagen = UploadedFile::getInstance($imagen, 'imagen');
-                $imagen->upload($model->id, 'cine');
+
+                if ($params['ImageForm']['imagen'] !== '') {
+                    $imagen->imagen = UploadedFile::getInstance($imagen, 'imagen');
+                    $imagen->upload($model->id, $tipo);
+                }
             }
-
             return $this->redirect(['view', 'id' => $model->id]);
+            // return $this->redirect(['create', 'tipo' => 'cine']);
         }
-
         return $this->render('create', [
             'model' => $model,
             'imagen' => $imagen,
@@ -349,20 +353,9 @@ class ShowsController extends Controller
 
         $imagen->delete($model->id, 'cine');
 
-        $generos = $model->getListageneros()->all();
-        foreach ($generos as $generos) {
-            $generos->delete();
-        }
-
-        $reparto = $model->getRepartos()->all();
-        foreach ($reparto as $reparto) {
-            $reparto->delete();
-        }
-
-        $valoraciones = $model->getValoraciones()->all();
-        foreach ($valoraciones as $valoraciones) {
-            $valoraciones->delete();
-        }
+        $this->deleteAlters($model->getListageneros()->all());
+        $this->deleteAlters($model->getRepartos()->all());
+        $this->deleteAlters($model->getValoraciones()->all());
 
         if (isset($model->evento_id)) {
             $calendar = new Calendar();
@@ -378,6 +371,13 @@ class ShowsController extends Controller
             } else {
                 return $this->redirect(['peliculas']);
             }
+        }
+    }
+
+    protected function deleteAlters($data)
+    {
+        foreach ($data as $data) {
+            $data->delete();
         }
     }
 
