@@ -59,8 +59,7 @@ $this->title = 'Peliculas';
                                 $shows->nombre,
                                 ['shows/view', 'id' => $shows->id],
                                 [
-                                    'class' => 'btn btn-dark btn-block card-body d-flex flex-column mt-auto',
-                                    'id' => 
+                                    'class' => 'btn btn-dark btn-block card-body d-flex flex-column mt-auto p-2',
                                 ]
                             ) ?>
                     </div>

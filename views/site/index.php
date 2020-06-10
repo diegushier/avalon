@@ -125,7 +125,7 @@ $this->registerJs($googleCalendar);
                         <img class="card-img-top mw-100 mh-100" src="<?= Yii::getAlias('@imgLibrosUrl/' . $k->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.jpg') ?>'" alt="Card image cap">
                             <?= Html::a(
                                 $k->nombre,
-                                ['shows/view', 'id' => $k->id],
+                                ['libros/view', 'id' => $k->id],
                                 [
                                     'class' => 'btn btn-dark btn-block card-body d-flex flex-column text-light linkdata',
                                     'id'  => 'libro_' . $k->id
