@@ -77,7 +77,7 @@ $this->registerCssFile('@web/css/comentario.css');
 <div class="shows-view">
     <div class="row">
         <div class="col-lg-3">
-            <img src="<?= Yii::getAlias('@imgCineUrl/' . $model->id . '.jpg') ?>" class="m-3 p-1 w-100 shadow" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'">
+            <img src="<?= Yii::getAlias('@imgCineUrl/' . $model->id . '.jpg') ?>" class="m-3 p-1 w-100 shadow" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.jpg') ?>'">
         </div>
         <div class="views-container mt-3 mb-3 col-lg-8">
             <button type="button" id="trailer" class="btn btn-orange mb-2 mr-1" data-toggle="modal" data-target="#vertrailer">

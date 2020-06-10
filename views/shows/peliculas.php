@@ -54,16 +54,14 @@ $this->title = 'Peliculas';
             <?php foreach ($shows as $shows) : ?>
                 <div class="col-lg-3 col-sm-6 d-flex justify-content-center">
                     <div class="card mt-2" style="width: 15rem;">
-                        <img class="card-img-top mw-100 mh-100" src="<?= Yii::getAlias('@imgCineUrl/' . $shows->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'" alt="Card image cap">
-                        <div class="card-body d-flex flex-column mt-auto">
+                        <img class="card-img-top mw-100 mh-100" src="<?= Yii::getAlias('@imgCineUrl/' . $shows->id . '.jpg') ?>" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.jpg') ?>'" alt="Card image cap">
                             <?= Html::a(
                                 $shows->nombre,
                                 ['shows/view', 'id' => $shows->id],
                                 [
-                                    'class' => 'btn btn-dark btn-block mt-auto',
+                                    'class' => 'btn btn-dark btn-block card-body d-flex flex-column mt-auto',
                                 ]
                             ) ?>
-                        </div>
                     </div>
                 </div>
             <?php endforeach ?>
