@@ -8,9 +8,6 @@ use yii\bootstrap4\Html;
 /* @var $model app\models\Shows */
 
 $this->title = 'Create Shows';
-$this->params['breadcrumbs'][] = ['label' => 'Shows', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-
 
 $js = "arr = { '#imageform-imagen': '#setImg'}
 

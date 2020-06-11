@@ -10,8 +10,6 @@ use yii\helpers\Url;
 /* @var $model app\models\Shows */
 
 $this->title = $model->nombre;
-$this->params['breadcrumbs'][] = ['label' =>  'shows', 'url' => [$model->tipo . 's']];
-$this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 $quest = !(Yii::$app->user->isGuest) && ($duenio === Yii::$app->user->id);
 $url = Url::to(['shows/seg']);

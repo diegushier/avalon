@@ -6,9 +6,6 @@ use yii\bootstrap4\Html;
 /* @var $model app\models\Libros */
 
 $this->title = 'Update Libros: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Libros', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="libros-update">
 

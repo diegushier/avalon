@@ -6,8 +6,6 @@ use yii\bootstrap4\Html;
 /* @var $model app\models\Libros */
 
 $this->title = 'Crear nuevo libro';
-$this->params['breadcrumbs'][] = ['label' => 'Libros', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="libros-create">
 

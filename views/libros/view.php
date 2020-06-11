@@ -9,8 +9,6 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Libros */
 
 $this->title = $model->nombre;
-$this->params['breadcrumbs'][] = ['label' => 'Libros', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 $quest = !(Yii::$app->user->isGuest) && ($duenio === Yii::$app->user->id);
 \yii\web\YiiAsset::register($this);
 
