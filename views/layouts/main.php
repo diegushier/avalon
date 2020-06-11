@@ -115,17 +115,20 @@ if (isset(Yii::$app->user->identity)) {
             ],
         ]);
 
-        $menu = [
-            ['label' => 'Libros', 'url' => ['/libros/index']],
-            ['label' => 'Peliculas', 'url' => ['/shows/peliculas']],
-            ['label' => 'Series', 'url' => ['/shows/series']]
-        ];
+        $menu = [];
+
+        if (!(Yii::$app->user->isGuest)) {
+            $menu += [
+                ['label' => 'Libros', 'url' => ['/libros/index']],
+                ['label' => 'Peliculas', 'url' => ['/shows/peliculas']],
+                ['label' => 'Series', 'url' => ['/shows/series']]
+            ];
+        }
 
         if (Yii::$app->user->isGuest) {
-            $menu[] = ['label' => 'Usuarios', 'items' => [
+            $menu += [
                 ['label' => 'Login', 'url' => ['/site/login']],
-                ['label' => 'Regitrarse', 'url' => ['/usuarios/registrar']],
-            ]];
+            ];
         } else {
             $menu[] = ['label' => 'Desconectar', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
         }
@@ -145,7 +148,7 @@ if (isset(Yii::$app->user->identity)) {
             <?= $content ?>
         </div>
     </div>
-<!-- 
+    <!-- 
     <footer class="footer bg-dark">
         <div class="container">
             <p class="float-left">&copy; Proyecto Final Integrado Avalon <?= date('Y') ?></p>
