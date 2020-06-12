@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Valoraciones;
 use app\models\ValoracionesSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -14,12 +15,22 @@ use yii\filters\VerbFilter;
  */
 class ValoracionesController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['create', 'delete'],
+                'rules' => [
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'actions' => ['create', 'delete'],
+                        'roles' => ['@'],
+                    ],
+                    // everything else is denied by default
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

@@ -4,9 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Empresas;
-use app\models\EmpresasSearch;
 use app\models\Paises;
-use app\models\Usuarios;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -16,12 +15,20 @@ use yii\filters\VerbFilter;
  */
 class EmpresasController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    // everything else is denied by default
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

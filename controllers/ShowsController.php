@@ -13,6 +13,7 @@ use app\models\Usuarioseguimiento;
 use app\models\Usuarioshows;
 use app\models\Valoraciones;
 use yii\data\Sort;
+use yii\filters\AccessControl;
 use yii\web\UploadedFile;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -23,12 +24,20 @@ use yii\filters\VerbFilter;
  */
 class ShowsController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    // everything else is denied by default
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -119,43 +128,6 @@ class ShowsController extends Controller
 
         return $this->render('series', $render);
     }
-
-    protected function search($tipo, $params, $dataName)
-    {
-        $model = Shows::find()
-            ->joinWith(['productora p']);
-        $render = [];
-
-        if ($params) {
-            $dataName = $dataName;
-            $render = ['dataName' => $dataName];
-
-            $model->where(['ilike', 'nombre', $dataName]);
-            $model->where(['ilike', 'p.nombre', $dataName]);
-        }
-
-        $sort = new Sort([
-            'attributes' => [
-                'nombre',
-                'fecha' => [
-                    'asc' => ['genero_id'  => SORT_ASC],
-                    'desc' => ['genero_id'  => SORT_DESC],
-                    'default' => SORT_ASC,
-                    'label' => 'Genero'
-                ]
-            ]
-        ]);
-
-        $model->orderBy($sort->orders);
-
-        $render += [
-            'shows' =>  $model->all(),
-            'sort' => $sort,
-        ];
-
-        return $render;
-    }
-
 
     /**
      * Displays a single Shows model.

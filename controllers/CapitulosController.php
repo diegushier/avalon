@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Capitulos;
-use app\models\CapitulosSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -20,8 +20,16 @@ class CapitulosController extends Controller
     public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    // everything else is denied by default
+                ],
             ],
         ];
     }
