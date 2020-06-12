@@ -129,7 +129,7 @@ class Libros extends \yii\db\ActiveRecord
      */
     public function getUsuariolibros()
     {
-        return $this->hasMany(Usuariolibros::className(), ['libro_id' => 'id'])->inverseOf('usuariolibros');
+        return $this->hasMany(Usuariolibros::className(), ['libro_id' => 'id'])->inverseOf('libro');
     }
 
     public function getCriticasWithUsers($sort = null)
@@ -144,6 +144,6 @@ class Libros extends \yii\db\ActiveRecord
 
     public function getNotificacioneslibros()
     {
-        return $this->hasOne(Notificacioneslibros::className(), ['libro_id' => 'id'])->inverseOf('libros');
+        return $this->hasOne(Notificacioneslibros::className(), ['libro_id' => 'id'])->inverseOf('libro');
     }
 }
