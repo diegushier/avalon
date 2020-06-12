@@ -99,7 +99,7 @@ $this->registerJs($js);
     <div class="row col-lg-8 col-sm-12">
 
         <div class="col-lg-4 col-sm-12">
-            <img src="<?= Yii::getAlias('@imgUserUrl/' . $model->id . '.jpg') ?>" class="mt-3 ml-1 mb-3 mr-3 p-1 w-100 shadow" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.png') ?>'">
+            <img src="<?= Yii::getAlias('@imgUserUrl/' . $model->id . '.jpg') ?>" class="mt-3 ml-1 mb-3 mr-3 p-1 w-100 shadow" onerror="this.src = '<?= Yii::getAlias('@imgUrl/notfound.jpg') ?>'">
             <div class="row">
                 <?php if (Yii::$app->user->identity->id !== $model->id) : ?>
                     <button class="btn btn-dark col-lg-5 ml-lg-3 mb-lg-1" id="follow"></button>
