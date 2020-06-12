@@ -26,7 +26,7 @@ $(id).append(
         "<button class='btn btn-secondary btn-sm dropdown-toggle' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>"+
             "<i class='fas fa-bullhorn'></i>"+
         "</button>"+
-        "<div class='dropdown-menu' style='width: 200px;' id='notif'>"+
+        "<div class='dropdown-menu card-body' style='width: 200px;' id='notif'>"+
             "<div class='alert alert-warning'>No hay novedades</div>"+
         "</div>"+
     "</div>"+
@@ -42,7 +42,7 @@ $.ajax({
             $('#notif').empty()
             $.each(data, (k, v) => {
                 $('#notif').append(
-                    "<a class='p-1 a-links' style='font-size: 10px' href='index.php?r=libros%2Fview&id="+ v['libro_id'] +"'>"+v['mensaje']+"</a>"
+                    "<a class='p-1 a-links btn btn-orange w-100' style='font-size: 10px' href='index.php?r=libros%2Fview&id="+ v['libro_id'] +"'>"+v['mensaje']+"</a>"
                 )
             })
         }
