@@ -26,11 +26,22 @@ $(id).append(
         "<button class='btn btn-secondary btn-sm dropdown-toggle' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>"+
             "<i class='fas fa-bullhorn'></i>"+
         "</button>"+
-        "<div class='dropdown-menu card-body' style='width: 200px;' id='notif'>"+
-            "<div class='alert alert-warning'>No hay novedades</div>"+
+        "<div class='dropdown-menu p-0' style='width: 200px;'>"+
+            "<ul class='list-group text-center' id='notif'>"+
+                "<li class='list-group-item text-white' style='background-color: #3E3F3A;'>Novedades</li>"+
+                "<li class='list-group-item bg-orange text-white' id='off'>Sin novedades</li>"+
+                "<li class='list-group-item bg-orange text-white nov'>Sin novedades</li>"+
+                "<li class='list-group-item bg-orange text-white nov'>Sin novedades</li>"+
+                "<li class='list-group-item text-white' style='background-color: #3E3F3A;' id='last'>Limpiar</li>"+
+            "</ul>"+
         "</div>"+
     "</div>"+
-    "</li>");
+    "</li>"
+);
+
+$('#last').click(() => {
+    $('.nov').remove();
+})
 
 
 $.ajax({
@@ -38,13 +49,18 @@ $.ajax({
     url: '$urllibros',
     data: {},
     success:function(data = null) {
+        console.log('hola')
         if (data != null) {
-            $('#notif').empty()
+            $('#off').remove()
             $.each(data, (k, v) => {
                 $('#notif').append(
-                    "<a class='p-1 a-links btn btn-orange w-100' style='font-size: 10px' href='index.php?r=libros%2Fview&id="+ v['libro_id'] +"'>"+v['mensaje']+"</a>"
+                    "<a class='list-group-item bg-orange w-100 notif-list nov' href='index.php?r=libros%2Fview&id="+ 
+                    v['libro_id'] +"'>" + 
+                    v['mensaje'] + "</a>"
                 )
             })
+
+            $('#notif').append($('#last'));
         }
     },
     error: () => {
@@ -60,9 +76,13 @@ $.ajax({
             $('#notif').empty()
             $.each(data, (k, v) => {
                 $('#notif').append(
-                    "<a class='p-1 a-links' style='font-size: 10px' href='index.php?r=shows%2Fview&id="+ v['show_id'] +"'>"+v['mensaje']+"</a>"
+                    "<a class='list-group-item bg-orange w-100 notif-list nov' href='index.php?r=shows%2Fview&id="
+                    + v['show_id'] + "'>"
+                    + v['mensaje'] + "</a>"
                 )
             })
+
+            $('#notif').append($('#last'));
         }
     },
     error: () => {
