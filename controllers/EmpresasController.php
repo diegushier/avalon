@@ -9,6 +9,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * EmpresasController implements the CRUD actions for Empresas model.
@@ -54,22 +55,37 @@ class EmpresasController extends Controller
         ]);
     }
 
+    public function actionLista()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return Paises::find()->select('nombre')->all();
+    }
+
+    public function actionSearch($entidad)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $model = Empresas::find()->where(['entidad_id' => $entidad])->one();
+        if (isset($model)) {
+            return $model;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Creates a new Empresas model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id, $name, $pais_id)
     {
         $model = new Empresas();
+        $model->nombre = $name;
+        $model->entidad_id = $id;
+        $model->pais_id = $pais_id;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return $pais_id;
     }
 
     /**

@@ -125,6 +125,17 @@ class UsuariosController extends Controller
         return $this->redirect(['/site/login']);
     }
 
+    public function actionSearch($entidad)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $model = Usuarios::find()->where(['id' => $entidad])->one();
+        if (isset($model->clave)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     /**
      * Modificación de un usuario o su empresa.
      *
@@ -136,37 +147,21 @@ class UsuariosController extends Controller
         $usuario = Usuarios::find()->where(['id' => Yii::$app->user->id])->one();
         $empresa = $usuario->getEmpresas()->one();
         $model = new Modificar();
-        $model->setAttributes([
-            'nickname' => $usuario->nickname,
-            'correo' => $usuario->correo,
-            'pais_id' => $usuario->pais_id,
-            'clave' => $usuario->clave,
-            'passwd' => $usuario->passwd,
-        ]);
-
         $paises = Paises::lista();
+
         $render = [
             'model' => $model,
             'paises' => ['' => ''] + $paises,
         ];
 
         if ($empresa) {
-            $model->setAttributes([
-                'nombre' => $empresa->nombre,
-                'empresa_pais_id' => $empresa->pais_id,
-                'entidad_id' => $empresa->entidad_id,
-            ]);
             $render += ['empresa' => $empresa];
         }
-
-        $this->updatearClave($usuario, $params);
-        $model->imagen = UploadedFile::getInstance($model, 'imagen');
 
         if ($model->create($params)) {
             Yii::$app->session->setFlash('success', 'Se ha modificado correctamente.');
             return $this->goHome();
         }
-
 
         if (Yii::$app->request->isAjax && $usuario->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
@@ -309,19 +304,18 @@ class UsuariosController extends Controller
      * @param [Usuario] $model
      * @param [POST] $params
      */
-    protected function updatearClave($model, $params)
+    public function actionUpclave($id, $clave)
     {
-        if (isset($params['Modificar']['clave'])) {
-            if ($params['Modificar']['clave'] === $model->clave) {
-                $model->setAttribute('clave', null);
-                if ($model->update()) {
-                    Yii::$app->session->setFlash('success', 'El usuario se ha comfirmado');
-                    return $this->redirect(['/site/index']);
-                } else {
-                    Yii::$app->session->setFlash('error', 'la clave no es correcta.');
-                }
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $model= Usuarios::find()->where(['id' => $id])->one();
+        if ($clave === $model->clave) {
+            $model->setAttribute('clave', null);
+            if ($model->update()) {
+                return  true;
             }
         }
+
+        return false;
     }
 
     /**
