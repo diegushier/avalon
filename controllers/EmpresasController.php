@@ -83,9 +83,9 @@ class EmpresasController extends Controller
         $model->nombre = $name;
         $model->entidad_id = $id;
         $model->pais_id = $pais_id;
+        $model->save();
 
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return $pais_id;
+        return $this->redirect('site/index');
     }
 
     /**

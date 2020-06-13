@@ -126,10 +126,7 @@ function sendEmpData(id, url, user) {
                 id: user,
                 name: $('#nombreEmp').val(),
                 pais_id: $('#paisEmp').val(),
-            },
-            success: function (data) {
-                console.log('Empresa = ' + data)
-            },
+            }
         })
     })
 }
