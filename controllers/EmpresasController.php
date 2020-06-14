@@ -61,12 +61,12 @@ class EmpresasController extends Controller
         return Paises::find()->select('nombre')->all();
     }
 
-    public function actionSearch($entidad)
+    public function actionSearch($entidad_id)
     {
+        $model = Empresas::find()->joinWith('pais')->where(['entidad_id' => $entidad_id])->one();
         Yii::$app->response->format = Response::FORMAT_JSON;
-        $model = Empresas::find()->where(['entidad_id' => $entidad])->one();
         if (isset($model)) {
-            return $model;
+            return [$model->nombre, $model->pais->nombre];
         } else {
             return false;
         }
@@ -79,13 +79,24 @@ class EmpresasController extends Controller
      */
     public function actionCreate($id, $name, $pais_id)
     {
-        $model = new Empresas();
-        $model->nombre = $name;
-        $model->entidad_id = $id;
-        $model->pais_id = $pais_id;
-        $model->save();
+        $model = Empresas::find()
+            ->where(['entidad_id' => $id])
+            ->one();
 
-        return $this->redirect('site/index');
+        if ($model) {
+            $model->nombre = $name;
+            $model->pais_id = $pais_id;
+            $model->save();
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return true;
+        } else {
+            $model = new Empresas();
+            $model->nombre = $name;
+            $model->entidad_id = $id;
+            $model->pais_id = $pais_id;
+            $model->save();
+            return $this->redirect('site/index');
+        }
     }
 
     /**

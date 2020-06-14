@@ -12,6 +12,7 @@ $urlSend = Url::to(['usuarios/upclave']);
 $urlUserAuth = Url::to(['usuarios/search']);
 $urlPais = Url::to(['empresas/lista']);
 $urlEmpSend = Url::to(['empresas/create']);
+$urlEmpSearch = Url::to(['empresas/search']);
 $user_id = Yii::$app->user->id;
 $nombre = $model->nombre;
 
@@ -20,9 +21,10 @@ $js = <<<EOT
     var urlUserAuth = "$urlUserAuth";
     var urlSend = "$urlSend";
     var urlEmpSend = "$urlEmpSend";
+    var urlEmpSearch = "$urlEmpSearch";
     var urlPais = "$urlPais";
 
-    setter(id, urlUserAuth, urlSend, urlEmpSend, urlPais)
+    setter(id, urlUserAuth, urlSend, urlEmpSend, urlPais, urlEmpSearch)
     getUser(id, urlUserAuth)    
 EOT;
 
