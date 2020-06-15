@@ -25,7 +25,7 @@ $js = <<<EOT
     var urlPais = "$urlPais";
 
     setter(id, urlUserAuth, urlSend, urlEmpSend, urlPais, urlEmpSearch)
-    getUser(id, urlUserAuth)    
+    getUser(id, 'user', urlUserAuth)    
 EOT;
 
 $this->registerJsFile(
@@ -51,21 +51,21 @@ $this->title = 'Modificar perfil';
         <div class="col-lg-8 col-sm-12">
 
             <section class="border rounded p-3">
-                <h5>Nombre</h5>
+                <h5 class="border-bottom">Nombre</h5>
                 <?= $form->field($model, 'nickname')->textInput(['autofocus' => true, 'value' => Yii::$app->user->identity->nickname]) ?>
                 <small style="color: #777">*Este nombre es el que verán el resto de personas. Puede ser duplicado.</small>
             </section>
             <br>
 
             <section class="border rounded p-3">
-                <h5>Correo</h5>
+                <h5 class="border-bottom">Correo</h5>
                 <?= $form->field($model, 'correo')->textInput() ?>
                 <?= $form->field($model, 'pais_id')->dropDownList($paises) ?>
             </section>
             <br>
 
             <section class="border rounded p-3">
-                <h5>Contraseñas</h5>
+                <h5 class="border-bottom">Contraseñas</h5>
                 <?= $form->field($model, 'passwd')->passwordInput() ?>
                 <?= $form->field($model, 'passwd_repeat')->passwordInput() ?>
             </section>
@@ -113,17 +113,14 @@ $this->title = 'Modificar perfil';
                     </div>
                 </div>
             </div>
+            <br>
+            <hr>
+            <br>
+            <br>
+            <div class="m-auto" id="formEmp">
+            </div>
         </div>
     </div>
     <?php ActiveForm::end(); ?>
-
-    <hr>
-    <br><br><br>
-
-    <div class="row">
-        <div class="col-sm-12 col-lg-8" id="formEmp">
-        </div>
-    </div>
-
 
 </div>

@@ -6,7 +6,9 @@ var urlEmpSearch;
 var urlPais;
 
 var nombre = '',
-    pais = 'Eliga un país';
+    pais = 'Eliga un país',
+    titulo = 'Crear empresa',
+    btn = 'Crear';
 var paises = [];
 var hrefUser = $('#comfirmDeleteUser').attr('href');
 
@@ -110,7 +112,7 @@ function showForm(opc, emp = null) {
     switch (opc) {
         case 'auth':
             $('#formEmp').append(
-                `<section>
+                `<section class="border rounded p-3">
                     <h2>Confirmación de usuarios</h2>
                     <p>Esto no es más que una medida de seguridad.</p>
                     <form>
@@ -129,38 +131,37 @@ function showForm(opc, emp = null) {
             break;
         case 'create':
             if (emp != null) {
-                setEmp(emp);
+                nombre = emp[0];
+                pais = emp[1];
+                titulo = 'Modificar empresa';
+                btn = 'Cambiar';
             }
+
             $('#formEmp').append(`
-            <section>
-                <h2>Crear empresa</h2>
+            <section class="border rounded p-3">
+                <h2 class="border-bottom">${titulo} <i class="fas fa-cog" style='font-size: 20px;' id="unlock"></i></h2>
                 <form>
-                    <div class='form-group'>
-                        <label for='nombreEmp'>Nombre de la empresa</label>
+                    <div class='form-group' id='nombreEmpSec'>
+                        <label for='nombreEmp' class='ml-2'>Nombre de la empresa</label>
                         <input type='text' class='form-control' id='nombreEmp' aria-describedby='nombreInfo' placeholder='${nombre}'>
                         <small id='nombreInfo' class='form-text text-muted'>
                             Este será el nombre que lo identifique como empresa.
                         </small>
                     </div>
-                    <div class='form-group'>
+                    <div class='form-group' class='ml-2' id='paisEmpSec'>
                         <label for='paisEmp'>Pais</label>
-                        <select class='form-control' id='paisEmp'>
+                        <select class='form-control ' id='paisEmp'>
                             <option>${pais}</option>
                         </select>
                     </div>
-                    <a class='btn btn-dark text-white' id='sendata'>Crear</a>
+                    <a class='btn btn-dark text-white' id='sendata'>${btn}</a>
                 </form>
                 </section>`);
             getPaises(urlPais);
             break;
         default:
-            console.log('Fail forms')
+            console.error('Fail forms')
     }
-}
-
-function setEmp(emp) {
-    nombre  = emp[0];
-    pais = emp[1];
 }
 
 function getUser(id, url) {
@@ -185,17 +186,36 @@ function getEmp(id, url) {
         method: 'GET',
         url: url,
         data: {
-            entidad_id: id,
+            entidad: id,
         },
         success: function (data) {
             if (data) {
                 showForm('create', data)
                 sendEmpData('#sendata', urlEmpSend, id)
+                ableProp('#nombreEmp');
+                ableProp('#paisEmp');
             } else {
                 showForm('auth');
             }
         },
     })
+}
+
+function ableProp(id) {
+    var aux = true;
+    $(id).prop('disabled', true);
+    $(id).addClass('border-0')
+    $('#unlock').click(() => {
+        if (aux) {
+            $(id).prop('disabled', false);
+            $(id).removeClass('border-0')
+        } else {
+            $(id).prop('disabled', true);
+            $(id).addClass('border-0')
+        }
+        aux = !aux;
+    })
+
 }
 
 function setter(id, url1, url2, url3, url4, url5) {

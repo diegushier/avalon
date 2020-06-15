@@ -61,9 +61,9 @@ class EmpresasController extends Controller
         return Paises::find()->select('nombre')->all();
     }
 
-    public function actionSearch($entidad_id)
+    public function actionSearch($entidad)
     {
-        $model = Empresas::find()->joinWith('pais')->where(['entidad_id' => $entidad_id])->one();
+        $model = Empresas::find()->joinWith('pais')->where(['entidad_id' => $entidad])->one();
         Yii::$app->response->format = Response::FORMAT_JSON;
         if (isset($model)) {
             return [$model->nombre, $model->pais->nombre];
