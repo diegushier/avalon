@@ -14,6 +14,8 @@ use yii\helpers\Url;
 AppAsset::register($this);
 $urllibros = Url::to(['notificacioneslibros/checker']);
 $urlshows = Url::to(['notificacionesshows/checker']);
+$urluser = Url::to(['usuarios/view']);
+
 $js = <<<EOT
 
 ref = window.location.href;
@@ -33,6 +35,14 @@ $(id).append(
                 "<li class='list-group-item text-white' style='background-color: #3E3F3A;' id='last'>Limpiar</li>"+
             "</ul>"+
         "</div>"+
+    "</div>"+
+    "</li>"+
+
+    "<li class='nav-item ml-1'  id='user-view'>"+
+    "<div class='btn-group'>"+
+        "<a class='btn btn-secondary btn-sm' href='$urluser'>"+
+            "<i class='fas fa-eye'></i>"+
+        "</a>"+
     "</div>"+
     "</li>"
 );
