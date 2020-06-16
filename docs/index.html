@@ -37,27 +37,31 @@
 <a class="list-group-item" href="#navigation-1" data-toggle="collapse" data-parent="#navigation">Objetivos generales <b class="caret"></b></a><div id="navigation-1" class="submenu panel-collapse collapse"></div>
 <a class="list-group-item" href="#navigation-2" data-toggle="collapse" data-parent="#navigation">Elemento de innovación <b class="caret"></b></a><div id="navigation-2" class="submenu panel-collapse collapse"></div></div>    </div>
     <div class="col-md-9 guide-content" role="main">
-        <p>% NetFlox
-% Francisco Barba García
-% Curso 2018/19</p>
+        <p>% Avalon  <br />
+% Diego Hilderink Domínguez 
+% Curso 2019/20</p>
 <h1>Descripción general del proyecto <span id="descripcion-general-del-proyecto"></span><a href="#descripcion-general-del-proyecto" class="hashlink">&para;</a></h1>
 <div class="toc"><ol><li><a href="#funcionalidad-principal-de-la-aplicacion">Funcionalidad principal de la aplicación</a></li>
 <li><a href="#objetivos-generales">Objetivos generales</a></li></ol></div>
-<p>Este proyecto, NetFlox, estará basado sorprendentemente en la plataforma poco conocida NetFlix.
-El proyecto tendrá como objetivo la visualizacion, a los usuarios logueados, de las peliculas y series disponibles en NetFlox.
-El administrador tendrá a su disposición una interfaz con la cual poder administrar las peliculas y series disponibles para los usuarios.</p>
-<h2>Funcionalidad principal de la aplicación <span id="funcionalidad-principal-de-la-aplicacion"></span><a href="#funcionalidad-principal-de-la-aplicacion" class="hashlink">&para;</a></h2><p>La funcionalidad principal del proyecto será la posibilidad a los usuarios logueados, de la visualización de series y peliculas online, así como la gestion por parte del administrador de dichas series/peliculas.</p>
+<p>Desarrollo, implementación y despliegue de una aplicación que permite a las productoras y editoras, presentar sus peliculas, series o libros y ser valoradas por los usuarios. El administrador dispondrá de una interfaz que le permitirá realizar las acciones de moderador.</p>
+<h2>Funcionalidad principal de la aplicación <span id="funcionalidad-principal-de-la-aplicacion"></span><a href="#funcionalidad-principal-de-la-aplicacion" class="hashlink">&para;</a></h2><p> Por un lado a las empresas productoras, subir sus proyectos ya sean películas, series o libros y que sean valorados y opinados por los usuarios. Por otro lado, los usuarios "comunes", pueden comentar, tener una biblioteca donde obsevar que ver o que ha visto y un calendario que muestre los próximos lanzamientos.</p>
 <h2>Objetivos generales <span id="objetivos-generales"></span><a href="#objetivos-generales" class="hashlink">&para;</a></h2><ul>
-<li>Objetivo: "gestionar las películas y series a la disposición de los usuarios, así como la descarga de las peliculas/series de los mismos".</li>
-<li><p>Casos de uso:</p>
-<p>  · Usuarios: "registrarse", "buscar una serie por diferentes parametros (categoria, titulo...)", "descargar una serie", "valorar una serie", "marcar una serie como vista", "abandonar una serie", "descargar un capitulo de una serie", "valorar el capitulo de una serie", "marcar un capitulo de una serie como visto", "buscar una pelicula por diferentes parametros (categoria, titulo...)", "descargar una pelicula", "valorar una pelicula", "abandonar una pelicula", "marcar una pelicula como vista", "seguir a un usuario", "ser seguido por otro usuario", "dejar de seguir a un usuario", "bloquear a un usuario para que no te siga", "ver valoraciones reciente de quien sigues", "comentar valoraciones de otro usuario", "recomendar una valoracion (dar like)", "criticar una valoración(dar dislike)", "ver la pagina de valoraciones publicas", "buscar una valoración por diferentes parametros (usuario creador, pelicula, serie...)", "marcarse objetivos (terminarse una serie o una pelicula)".</p>
-<p>  · Administrador: "añadir una categoria", "modificar una categoria", "eliminar una categoria", "añadir un participante", "modificar un participante", "borrar un participante", "añadir una nueva serie", "modificar una serie", "borrar una serie", "añadir un capitulo a una serie", "modificar el capitulo de una serie", "borrar el capitulo de una serie", "añadir una pelicula", "modificar una pelicula", "borrar una pelicula", "añadir un participante a una serie", "quitar un participante de una serie", "añadir un participante a una pelicula", "quitar un participante de una pelicula", "eliminar un usuario".</p>
-<p>  · Ambos: "loguearse", "desloguearse".</p>
-<p>  · Extra: "crear un usuario con una invitacion(cuenta Premium)", "dar Premium a una cuenta normal", "quitar Premium de una cuenta", "peliculas y series Premium", "crear valoraciones destacadas".</p>
+<li>Objetivo: "Gestionar películas, series y libros y recoger valoraciones sobre estos".</li>
+<li><p>Casos de uso: </p>
+<ul>
+<li><p>Empresas: "registrarse", "añadir peliculas, serie o libros", "eliminarlos", "modificarlos", "asignar fecha de lanzamiento", "buscar película, serie o libro según criterios(nombre, fecha, empresa...)", "dejar comentario", "valorar comentario", "añadir actores", "eliminar actores", "modificar actores", "ver perfil de usuario", "bloquear usuarios", "modificar perfil".</p>
+</li>
+<li><p>Usuarios: "registrarse", "buscar película, serie o libro según criterios(nombre, fecha, empresa...)", "marcar película, serie o libro como pendiente", "desmarcar como pendiente", "seguir serie", "dejar de seguir serie", "marcar pelicula, serie, libro como visto", "desmarcar como visto", "valorar una película, serie o libro", "comentar una película, serie o libro", "valorar comentario", "seguir usuario", "ver perfil de usuario", "bloquear usuario", "modificar perfil".</p>
+</li>
+<li><p>Admin: "eliminar película, serie o libro", "eliminar capitulo" , "eliminar/bloquear ususario o empresa", "eliminar comentario", "modificar película, serie o libro", "modificar usuario o empresa", "modificar calendario"</p>
+</li>
+<li><p>Todos: "logueo", "deslogueo"</p>
 </li>
 </ul>
-<h1>Elemento de innovación <span id="elemento-de-innovacion"></span><a href="#elemento-de-innovacion" class="hashlink">&para;</a></h1><p>Amazon Web Services para el almacenamiento de las peliculas, series y sus respectivas imagenes, así como los thumbnail de los usuarios.
-Diferenciación de usuarios por roles.</p>
+</li>
+</ul>
+<h1>Elemento de innovación <span id="elemento-de-innovacion"></span><a href="#elemento-de-innovacion" class="hashlink">&para;</a></h1><p>Empleo de la API Calendar de Google, con el que se gestionarán las fechas de lanzamientos.
+Empleo de la API Mail de Google, con el que se gestionarán las verificaciones de usuario.</p>
         <div class="toplink"><a href="#" class="h1" title="go to top"><span class="glyphicon glyphicon-arrow-up"></a></div>
     </div>
 </div>
@@ -66,7 +70,7 @@ Diferenciación de usuarios por roles.</p>
 </div>
 
 <footer class="footer">
-        <p class="pull-right"><small>Page generated on Tue, 16 Jun 2020 15:00:33 +0000</small></p>
+        <p class="pull-right"><small>Page generated on Tue, 16 Jun 2020 15:18:02 +0000</small></p>
     Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a></footer>
 
 <script>jQuery(function ($) {
