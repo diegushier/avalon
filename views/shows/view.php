@@ -180,7 +180,7 @@ $this->registerCssFile('@web/css/comentario.css');
             <?php endif ?>
             <div class="btn-group dropdown mb-2">
                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="seg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Segimiento
+                    Seguimiento
                 </a>
 
                 <div class="dropdown-menu p-0 ml-1 border-0" aria-labelledby="dropdownMenuLink" id="seguimiento-group">

@@ -477,6 +477,9 @@ VALUES ('Afghanistan')
 INSERT INTO usuarios(nickname, username, correo, passwd, pais_id)
 VALUES  ('Lunargenta', 'diego', 'diego.hilderink@iesdonana.org', crypt('Altair1995', gen_salt('bf', 11)) ,208);
 
+INSERT INTO usuarios(nickname, username, correo, passwd, pais_id)
+VALUES  ('Susana', 'susana', 'susana@mail.com', crypt('Susan@123', gen_salt('bf', 11)) ,208);
+
 INSERT INTO usuarios(nickname, username, correo, passwd, pais_id, clave)
 VALUES  ('Admin', 'admin', 'diegohilderink@gmail.com', crypt('admin', gen_salt('bf', 11)) ,208, 'jnvc4');
 
@@ -801,9 +804,10 @@ VALUES  ('Christopher Nolan', '')
     ,   ('Michael Kostroff', '')
     ,   ('Clark Johnson', '')
     ,   ('Michael B. Jordan', '')
-    ,   ('Luis Soravilla', 'Ingeniero industrial y licenciado cum laude en Humanidades. También se ha formado en el ámbito de la comunicación empresaria, en el mundo editorial, en energía y medio ambiente. Actualmente, es lector profesional y colabora en otras tareas de edición con algunas editoriales.')
-    ,   ('Santiago Posteguillo', 'Santiago Posteguillo Gómez es un escritor español. Ha alcanzado la fama por varias novelas cuya trama transcurre en la antigua Roma. El 16 de octubre de 2018 fue galardonado con el Premio Planeta con su novela Yo, Julia.')
-    ,   ('Arturo Pérez-Reverte', 'Arturo Pérez-Reverte Gutiérrez es un escritor y periodista español, miembro de la Real Academia Española desde 2003. Antiguo corresponsal de RTVE y reportero destacado en diversos conflictos armados y guerras, es el autor, entre otras, de la saga Las aventuras del capitán Alatriste.');
+    ,   ('Susana Navarro', '')
+    ,   ('Luis Soravilla', '')
+    ,   ('Santiago Posteguillo', '')
+    ,   ('Arturo Pérez-Reverte', '');
 
 INSERT INTO roles(nombre)
 VALUES  ('director')
