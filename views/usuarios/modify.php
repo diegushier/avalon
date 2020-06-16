@@ -14,7 +14,6 @@ $urlPais = Url::to(['empresas/lista']);
 $urlEmpSend = Url::to(['empresas/create']);
 $urlEmpSearch = Url::to(['empresas/search']);
 $user_id = Yii::$app->user->id;
-$nombre = $model->nombre;
 
 $js = <<<EOT
     var id = $user_id;
@@ -25,11 +24,31 @@ $js = <<<EOT
     var urlPais = "$urlPais";
 
     setter(id, urlUserAuth, urlSend, urlEmpSend, urlPais, urlEmpSearch)
-    getUser(id, 'user', urlUserAuth)    
+    getUser(id, 'user', urlUserAuth)   
+
+    arr = { '#imageform-imagen': '#setImg'}
+    $.each(arr, (k, v) => {
+        $(k).change(function () {
+            var input = this;
+            var url = $(this).val();
+            var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+            if (input.files && input.files[0] && (ext == 'gif' || ext == 'png' || ext == 'jpeg' || ext == 'jpg')) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $(v).attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+            else {
+                $(v).attr('src', '/assets/no_preview.png');
+            }
+        });
+    }) 
 EOT;
 
 $this->registerJsFile(
-    '@web/js/modify.js',
+    '@web/js/modifyEmpresa.js',
     ['depends' => [\yii\web\JqueryAsset::className()]]
 );
 $this->registerJs($js);
@@ -45,20 +64,16 @@ $this->title = 'Modificar perfil';
         <div class="col-lg-2 col-sm-12 w-100">
             <span class="btn btn-default btn-file">
                 <img id="setImg" src="<?= Yii::getAlias('@imgUrl/plus.png') ?>" class="plus w-100" alt="">
-                <?= $form->field($model, 'imagen')->fileInput(['class' => ''])->label(false) ?>
+                <?= $form->field($imagen, 'imagen')->fileInput(['class' => ''])->label(false) ?>
             </span>
         </div>
         <div class="col-lg-8 col-sm-12">
 
             <section class="border rounded p-3">
-                <h5 class="border-bottom">Nombre</h5>
+                <h5 class="border-bottom">Datos generales</h5>
                 <?= $form->field($model, 'nickname')->textInput(['autofocus' => true, 'value' => Yii::$app->user->identity->nickname]) ?>
                 <small style="color: #777">*Este nombre es el que verán el resto de personas. Puede ser duplicado.</small>
-            </section>
-            <br>
 
-            <section class="border rounded p-3">
-                <h5 class="border-bottom">Correo</h5>
                 <?= $form->field($model, 'correo')->textInput() ?>
                 <?= $form->field($model, 'pais_id')->dropDownList($paises) ?>
             </section>
@@ -91,10 +106,6 @@ $this->title = 'Modificar perfil';
                                 <div class="modal-body">
                                     ¿Esta usted seguro de eliminar este usuario?
                                     La acción será irreversible.
-
-                                    <div>
-                                        <input type="text" id='deleteUser' placeholder="Escriba su nombre para comfirmar" class="col-12 form-control mt-2">
-                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <?= Html::a('Eliminar', ['delete'], [

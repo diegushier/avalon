@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Empresas;
+use app\models\ImageForm;
 use app\models\Modificar;
 use app\models\Paises;
 use app\models\Usuariolibros;
@@ -144,32 +145,25 @@ class UsuariosController extends Controller
     public function actionModify()
     {
         $params = Yii::$app->request->post();
-        $usuario = Usuarios::find()->where(['id' => Yii::$app->user->id])->one();
-        $empresa = $usuario->getEmpresas()->one();
-        $model = new Modificar();
+        $model = Usuarios::find()->where(['id' => Yii::$app->user->id])->one();
+        $imagen = new ImageForm();
         $paises = Paises::lista();
 
         $render = [
             'model' => $model,
             'paises' => ['' => ''] + $paises,
+            'imagen' => $imagen,
         ];
 
-        if ($empresa) {
-            $render += ['empresa' => $empresa];
-        }
+        if ($model->load($params) && $model->save($params)) {
+            if ($params['ImageForm']['imagen'] !== '') {
+                $imagen->imagen = UploadedFile::getInstance($imagen, 'imagen');
+                $imagen->upload($model->id, 'user');
+            }
 
-        if ($model->create($params)) {
             Yii::$app->session->setFlash('success', 'Se ha modificado correctamente.');
             return $this->goHome();
         }
-
-        if (Yii::$app->request->isAjax && $usuario->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
-
-        $model->passwd = '';
-        $model->passwd_repeat = '';
 
         return $this->render('modify', $render);
     }
@@ -318,25 +312,7 @@ class UsuariosController extends Controller
         return false;
     }
 
-    /**
-     * Modificación de una empresa en caso de existir. En caso contrario genera un nuevo modelo.
-     *
-     * @param [boolean] $exists
-     * @param [Empresa] $empresa
-     * @return void
-     */
-    protected function updatearEmpresa($exists, $empresa)
-    {
-        if (!$exists) {
-            $empresa = new Empresas();
-        }
-
-        if ($empresa->load(Yii::$app->request->post()) && $empresa->save()) {
-            Yii::$app->session->setFlash('success', 'Se ha modificado la empresa.');
-        };
-
-        return $empresa;
-    }
+    
 
     /**
      * Envio de un email al correo solicitante.

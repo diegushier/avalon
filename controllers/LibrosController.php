@@ -237,7 +237,7 @@ class LibrosController extends Controller
 
                 if ($params['ImageForm']['imagen'] !== '') {
                     $imagen->imagen = UploadedFile::getInstance($imagen, 'imagen');
-                    $imagen->upload($model->id, $tipo);
+                    $imagen->upload($model->id, 'libro');
                 }
             }
             return $this->redirect(['view', 'id' => $model->id]);
