@@ -30,8 +30,6 @@ $(id).append(
             "<ul class='list-group text-center' id='notif'>"+
                 "<li class='list-group-item text-white' style='background-color: #3E3F3A;'>Novedades</li>"+
                 "<li class='list-group-item bg-orange text-white' id='off'>Sin novedades</li>"+
-                "<li class='list-group-item bg-orange text-white nov'>Sin novedades</li>"+
-                "<li class='list-group-item bg-orange text-white nov'>Sin novedades</li>"+
                 "<li class='list-group-item text-white' style='background-color: #3E3F3A;' id='last'>Limpiar</li>"+
             "</ul>"+
         "</div>"+
