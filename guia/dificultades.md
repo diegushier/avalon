@@ -1,5 +1,6 @@
 # Dificultades encontradas
 
-Explicar, indicando también las soluciones adoptadas en cada caso.
+##### Encontrar un plugin que fuera válido para el empleo de Google Calendar.
+##### Un formulário que fuera capaz de modificar al usuario o a la empresa por independiente.
 
-Incluir aquí el elemento de innovación que se indicó en la propuesta.
+##### Las acciones de notificaciones de usuarios. 
