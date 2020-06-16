@@ -6,4 +6,4 @@ Incluir.
 
 ## Diagramas de estructura lógica de datos
 
-Incluir.
+![Base de datos](images/db/db.Login.png)
