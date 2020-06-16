@@ -4,17 +4,21 @@ class SeriesCest
 {
     public function _before(\FunctionalTester $I)
     {
-        $I->amOnRoute('shows/series');
+        $I->amOnRoute('site/login');
     }
 
     public function openSeriesPage(\FunctionalTester $I)
     {
-        $I->see('Series', 'h1');
+        $I->amLoggedInAs(\app\models\User::findByUsername('admin'));
+        $I->amOnPage('/');
+        $I->see('Series', 'a');
     }
-
+    
     public function openSeriesElement(\FunctionalTester $I)
     {
-        $I->click('Ver');
-        $I->see('Jessica Jones', 'td');
+        $I->amLoggedInAs(\app\models\User::findByUsername('admin'));
+        $I->amOnPage('/');
+        $I->see('Series', 'a');
+        $I->click('Series');
     }
 }
