@@ -19,9 +19,6 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-/**
- * ShowsController implements the CRUD actions for Shows model.
- */
 class ShowsController extends Controller
 {
     public function behaviors()
@@ -49,6 +46,7 @@ class ShowsController extends Controller
 
     /**
      * Listado de todas las películas.
+     * 
      * @return mixed
      */
     public function actionPeliculas()

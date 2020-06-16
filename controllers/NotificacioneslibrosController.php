@@ -39,6 +39,12 @@ class NotificacioneslibrosController extends Controller
         ];
     }
 
+    /**
+     * Crea una nueva notificación de libro
+     *
+     * @return void
+     */
+
     public function actionCreate($libro_id)
     {
         $model = new Notificacioneslibros();
@@ -53,6 +59,12 @@ class NotificacioneslibrosController extends Controller
         $model->save();
     }
 
+
+    /**
+     * Comprueba si hay notificaciones nuevas.
+     *
+     * @return $model
+     */
     public function actionChecker()
     {
         $date = date('Y-m-d', strtotime('+1 week'));
@@ -62,6 +74,12 @@ class NotificacioneslibrosController extends Controller
             return $data;
         }
     }
+
+    /**
+     * Modifica una notificación de libro
+     *
+     * @return mixed
+     */
 
     public function actionUpdate($id, $modelid)
     {
@@ -77,6 +95,12 @@ class NotificacioneslibrosController extends Controller
         ]);
     }
 
+    /**
+     * Encuentra un modelo de notificación según id
+     *
+     * @param integer $id
+     * @return model
+     */
     protected function findModel($id)
     {
         if (($model = Notificacioneslibros::findOne($id)) !== null) {

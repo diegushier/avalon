@@ -25,6 +25,12 @@ class NotificacionesshowsController extends Controller
         ];
     }
 
+    /**
+     * Crea una nueva notificación de shows
+     *
+     * @param integer $show_id
+     * @return boolean
+     */
     public function actionCreate($show_id)
     {
         $model = new Notificacionesshows();
@@ -46,6 +52,12 @@ class NotificacionesshowsController extends Controller
         return false;
     }
 
+
+    /**
+     * Comprueba si existen notificaciones referentes a una semana
+     *
+     * @return model
+     */
     public function actionChecker()
     {
         $date = date('Y-m-d', strtotime('+1 week'));
@@ -56,6 +68,13 @@ class NotificacionesshowsController extends Controller
         }
     }
 
+    /**
+     * Modifica una notificación de tipo show
+     *
+     * @param integer $id
+     * @param integer $modelid
+     * @return mixed
+     */
     public function actionUpdate($id, $modelid)
     {
         $model = $this->findModel($id);
@@ -69,6 +88,12 @@ class NotificacionesshowsController extends Controller
             'modelid' => $modelid
         ]);
     }
+
+    /**
+     * Encuentra un modelo según id
+     *
+     * @param integer id
+     */
 
     protected function findModel($id)
     {

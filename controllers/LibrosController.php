@@ -157,12 +157,25 @@ class LibrosController extends Controller
         return $this->render('view', $render);
     }
 
+    /**
+     * Genera un nuevo comentario
+     * @param mixed $params
+     */
+
     protected function newComment($params)
     {
         $model = new Criticas();
         $model->load($params);
         $model->save();
     }
+
+    /**
+     * Genera un nuevo seguimiento a un libro.
+     *
+     * @param integer $id
+     * @param string $tipo
+     * @param integer $seguimiento_id
+     */
 
     public function actionSeg($id, $tipo, $seguimiento_id)
     {
@@ -322,6 +335,12 @@ class LibrosController extends Controller
 
         return $this->redirect(['index']);
     }
+
+    /**
+     * Elimina las relaciones referentes al modelo
+     * 
+     * @param mixed $data
+     */
 
     protected function deleteAlters($data)
     {

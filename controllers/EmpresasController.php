@@ -55,11 +55,23 @@ class EmpresasController extends Controller
         ]);
     }
 
+    /**
+     * Devuelve una lista de paises.
+     * @return mixed
+     */
+
     public function actionLista()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         return Paises::find()->select('nombre')->all();
     }
+
+    /**
+     * Busca una empresa según entidad_id. Si existe devuelve el modelo.abnf
+     *
+     * @param mixed $entidad
+     * @return mixed
+     */
 
     public function actionSearch($entidad)
     {

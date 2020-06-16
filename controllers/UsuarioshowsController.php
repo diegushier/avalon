@@ -57,6 +57,8 @@ class UsuarioshowsController extends Controller
 
     /**
      * Modifica la línea requeria en la correspondiente tabla de la base de datos..
+     * @param integer $id
+     * @return void 
      */
     public function actionUpdate($id)
     {
@@ -73,6 +75,10 @@ class UsuarioshowsController extends Controller
 
     /**
      * Elimina la fila correspondiente fila en la base de datos, en caso de que la columna de seguimientoeste vacía.
+     *
+     * @param integer $id
+     * @param integer $objeto
+     * @return void
      */
     public function actionDelete($id, $objeto)
     {
@@ -87,6 +93,12 @@ class UsuarioshowsController extends Controller
         }
     }
 
+    /**
+     * Encontrar un modelo según su id.
+     *
+     * @param integer $id
+     * @return model
+     */
     protected function findModel($id)
     {
         if (($model = Usuarioshows::findOne($id)) !== null) {

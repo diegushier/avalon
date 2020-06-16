@@ -2,9 +2,7 @@
 
 namespace app\controllers;
 
-use app\models\Empresas;
 use app\models\ImageForm;
-use app\models\Modificar;
 use app\models\Paises;
 use app\models\Usuariolibros;
 use app\models\Usuarios;
@@ -45,6 +43,8 @@ class UsuariosController extends Controller
 
     /**
      * Vista del usuario Logueado.
+     *
+     * @return mixed
      */
     public function actionView($id = null)
     {
@@ -71,6 +71,8 @@ class UsuariosController extends Controller
 
     /**
      * Registro de un nuevo usuario.
+     *
+     * @return mixed
      */
     public function actionRegistrar()
     {
@@ -92,8 +94,6 @@ class UsuariosController extends Controller
 
         $paises = Paises::lista();
 
-
-
         return $this->render('registrar', [
             'model' => $model,
             'paises' => ['' => ''] + $paises,
@@ -102,6 +102,8 @@ class UsuariosController extends Controller
 
     /**
      * Eliminación o desvinculación de un usuario dependiendo de la situación.
+     *
+     * @return mixed
      */
     public function actionDelete()
     {
@@ -126,6 +128,12 @@ class UsuariosController extends Controller
         return $this->redirect(['/site/login']);
     }
 
+    /**
+     * Función ajax que devuelve si un usuario esta autenticado o no.
+     *
+     * @param integer $entidad
+     * @return boolean
+     */
     public function actionSearch($entidad)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -170,6 +178,7 @@ class UsuariosController extends Controller
 
     /**
      * Recuperación de la cuenta de un usuario mediante su correo.
+     * @return mixed
      */
     public function actionRecuperar()
     {
@@ -206,6 +215,12 @@ class UsuariosController extends Controller
         ]);
     }
 
+
+    /**
+     * Obtiene la lista de peliculas, libros y series,
+     *
+     * @return mixed
+     */
     public function actionLista()
     {
         $model = Yii::$app->user->identity->id;
@@ -253,6 +268,12 @@ class UsuariosController extends Controller
         return $this->render('lista', $render);
     }
 
+    /**
+     * Check if $model has relations.
+     *
+     * @param relation $data
+     * @return mixed
+     */
     protected function chech($data)
     {
         $result = [];
@@ -267,7 +288,7 @@ class UsuariosController extends Controller
     /**
      * Comprobación de la existencia de un usuario en caso de requerir recuperar la cuenta.
      *
-     * @param [string] $token
+     * @param string $token
      */
     public function actionComprobar($token)
     {
@@ -311,8 +332,6 @@ class UsuariosController extends Controller
 
         return false;
     }
-
-    
 
     /**
      * Envio de un email al correo solicitante.
